@@ -29,16 +29,20 @@ gem install vellum_ai
 require "vellum_ai"
 
 
-client = Vellum::Client.new(api_key: "YOUR_API_KEY")
+client = Vellum::Client.new(api_key: ENV['VELLUM_API_KEY'])
 
-result = client.generate(
-    deployment_name: "my-deployment",
-    requests=[{
-        input_values: [{"question": "Can I get a refund?"}]
-    }]
+result = client.execute_prompt(
+    prompt_deployment_name: "my-deployment",
+    inputs: [
+        {
+            "type": "STRING",
+            "name": "question",
+            "value": "Can I get a refund?"
+        }
+    ],
 )
 
-puts result.text
+puts result.outputs[0].value
 ```
 
 ## Async Client
@@ -47,16 +51,20 @@ puts result.text
 require "vellum_ai"
 
 
-client = Vellum::AsyncClient.new(api_key: "YOUR_API_KEY")
+client = Vellum::AsyncClient.new(api_key: ENV['VELLUM_API_KEY'])
 
-result = client.generate(
-    deployment_name: "my-deployment",
-    requests=[{
-        input_values: {"question": "Can I get a refund?"}
-    }]
+result = client.execute_prompt(
+    prompt_deployment_name: "my-deployment",
+    inputs: [
+        {
+            "type": "STRING",
+            "name": "question",
+            "value": "Can I get a refund?"
+        }
+    ],
 )
 
-puts result.wait.text
+puts result.wait.outputs[0].value
 ```
 
 ## Uploading documents
@@ -67,7 +75,7 @@ Documents can be uploaded to Vellum via either the UI or this API. Once uploaded
 require "vellum_ai"
 
 
-client = Vellum::Client.new(api_key: "YOUR_API_KEY")
+client = Vellum::Client.new(api_key: ENV['VELLUM_API_KEY'])
 result = client.documents.upload(
     # File to upload
     contents: "/path/to/your/file.txt",
