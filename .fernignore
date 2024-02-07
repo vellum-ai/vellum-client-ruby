@@ -1,1 +1,6 @@
 # Specify files that shouldn't be modified by Fern
+
+.github/workflows/publish.yml
+test/test_helper.rb
+test/test_vellum.rb
+README.md
