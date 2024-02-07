@@ -1,6 +1,8 @@
 name: Publish Ruby Gem
 
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
