@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday-multipart", "~> 1.0"
   spec.add_dependency "faraday-retry", "~> 2.2"
   spec.add_dependency "mini_mime", "~> 1.1"
+  spec.licenses = ["MIT"]
 end
