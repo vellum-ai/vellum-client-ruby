@@ -1,7 +1,6 @@
 name: Publish Ruby Gem
 
-on:
-  push:
+on: [push]
 
 jobs:
   build-and-publish:
