@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "vellum_ai"
-  spec.version = "v0.3.2"
+  spec.version = "0.3.4"
   spec.authors = Vellum::Gemconfig::AUTHORS
   spec.email = Vellum::Gemconfig::EMAIL
   spec.summary = Vellum::Gemconfig::SUMMARY
@@ -23,5 +23,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday-multipart", "~> 1.0"
   spec.add_dependency "faraday-retry", "~> 2.2"
   spec.add_dependency "mini_mime", "~> 1.1"
-  spec.licenses = ["MIT"]
 end
