@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "vellum_ai"
-  spec.version = "v0.3.0"
+  spec.version = "0.3.0"
   spec.authors = Vellum::Gemconfig::AUTHORS
   spec.email = Vellum::Gemconfig::EMAIL
   spec.summary = Vellum::Gemconfig::SUMMARY
