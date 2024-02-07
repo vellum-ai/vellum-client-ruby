@@ -20,7 +20,7 @@ module Vellum
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "Vellum",
-        "X-Fern-SDK-Version": "v0.3.0",
+        "X-Fern-SDK-Version": "v0.3.2",
         "X_API_KEY": api_key.to_s
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -46,7 +46,7 @@ module Vellum
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "Vellum",
-        "X-Fern-SDK-Version": "v0.3.0",
+        "X-Fern-SDK-Version": "v0.3.2",
         "X_API_KEY": api_key.to_s
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
