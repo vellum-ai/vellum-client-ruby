@@ -50,9 +50,6 @@ module Vellum
 
     # Executes a deployed Prompt and returns the result.
     #
-    # Note: This endpoint temporarily does not support prompts with function calling, support is coming soon.
-    # In the meantime, we recommend still using the `/generate` endpoint for prompts with function calling.
-    #
     # @param inputs [Array<Hash>] The list of inputs defined in the Prompt's deployment with their corresponding values.Request of type Array<PromptDeploymentInputRequest>, as a Hash
     # @param prompt_deployment_id [String] The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name.
     # @param prompt_deployment_name [String] The name of the Prompt Deployment. Must provide either this or prompt_deployment_id.
@@ -273,9 +270,6 @@ module Vellum
     end
 
     # Executes a deployed Prompt and returns the result.
-    #
-    # Note: This endpoint temporarily does not support prompts with function calling, support is coming soon.
-    # In the meantime, we recommend still using the `/generate` endpoint for prompts with function calling.
     #
     # @param inputs [Array<Hash>] The list of inputs defined in the Prompt's deployment with their corresponding values.Request of type Array<PromptDeploymentInputRequest>, as a Hash
     # @param prompt_deployment_id [String] The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name.
