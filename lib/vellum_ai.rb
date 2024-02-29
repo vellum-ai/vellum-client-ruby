@@ -6,6 +6,7 @@ require_relative "requests"
 require_relative "vellum_ai/deployments/client"
 require_relative "vellum_ai/document_indexes/client"
 require_relative "vellum_ai/documents/client"
+require_relative "vellum_ai/folder_entities/client"
 require_relative "vellum_ai/model_versions/client"
 require_relative "vellum_ai/registered_prompts/client"
 require_relative "vellum_ai/sandboxes/client"
@@ -27,8 +28,8 @@ require_relative "vellum_ai/types/submit_workflow_execution_actual_request"
 
 module Vellum
   class Client
-    attr_reader :deployments, :document_indexes, :documents, :model_versions, :registered_prompts, :sandboxes,
-                :test_suites, :workflow_deployments
+    attr_reader :deployments, :document_indexes, :documents, :folder_entities, :model_versions, :registered_prompts,
+                :sandboxes, :test_suites, :workflow_deployments
 
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -41,6 +42,7 @@ module Vellum
       @deployments = DeploymentsClient.new(request_client: @request_client)
       @document_indexes = DocumentIndexesClient.new(request_client: @request_client)
       @documents = DocumentsClient.new(request_client: @request_client)
+      @folder_entities = FolderEntitiesClient.new(request_client: @request_client)
       @model_versions = ModelVersionsClient.new(request_client: @request_client)
       @registered_prompts = RegisteredPromptsClient.new(request_client: @request_client)
       @sandboxes = SandboxesClient.new(request_client: @request_client)
@@ -248,8 +250,8 @@ module Vellum
   end
 
   class AsyncClient
-    attr_reader :deployments, :document_indexes, :documents, :model_versions, :registered_prompts, :sandboxes,
-                :test_suites, :workflow_deployments
+    attr_reader :deployments, :document_indexes, :documents, :folder_entities, :model_versions, :registered_prompts,
+                :sandboxes, :test_suites, :workflow_deployments
 
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -262,6 +264,7 @@ module Vellum
       @deployments = AsyncDeploymentsClient.new(request_client: @async_request_client)
       @document_indexes = AsyncDocumentIndexesClient.new(request_client: @async_request_client)
       @documents = AsyncDocumentsClient.new(request_client: @async_request_client)
+      @folder_entities = AsyncFolderEntitiesClient.new(request_client: @async_request_client)
       @model_versions = AsyncModelVersionsClient.new(request_client: @async_request_client)
       @registered_prompts = AsyncRegisteredPromptsClient.new(request_client: @async_request_client)
       @sandboxes = AsyncSandboxesClient.new(request_client: @async_request_client)
