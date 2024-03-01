@@ -22,7 +22,7 @@ module Vellum
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
-    # @param status [DEPLOYMENTS_LIST_REQUEST_STATUS] The current status of the deployment
+    # @param status [DEPLOYMENTS_LIST_REQUEST_STATUS] status
     # @param request_options [RequestOptions]
     # @return [PaginatedSlimDeploymentReadList]
     def list(limit: nil, offset: nil, ordering: nil, status: nil, request_options: nil)
@@ -92,7 +92,7 @@ module Vellum
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
-    # @param status [DEPLOYMENTS_LIST_REQUEST_STATUS] The current status of the deployment
+    # @param status [DEPLOYMENTS_LIST_REQUEST_STATUS] status
     # @param request_options [RequestOptions]
     # @return [PaginatedSlimDeploymentReadList]
     def list(limit: nil, offset: nil, ordering: nil, status: nil, request_options: nil)

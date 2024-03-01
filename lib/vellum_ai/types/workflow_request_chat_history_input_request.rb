@@ -4,6 +4,7 @@ require_relative "chat_message_request"
 require "json"
 
 module Vellum
+  # The input for a chat history variable in a Workflow.
   class WorkflowRequestChatHistoryInputRequest
     attr_reader :name, :value, :additional_properties
 

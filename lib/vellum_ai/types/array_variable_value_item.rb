@@ -1,24 +1,23 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "node_output_compiled_string_value"
-require_relative "node_output_compiled_number_value"
-require_relative "node_output_compiled_json_value"
-require_relative "node_output_compiled_chat_history_value"
-require_relative "node_output_compiled_search_results_value"
-require_relative "node_output_compiled_error_value"
-require_relative "node_output_compiled_array_value"
-require_relative "node_output_compiled_function_value"
+require_relative "string_variable_value"
+require_relative "number_variable_value"
+require_relative "json_variable_value"
+require_relative "chat_history_variable_value"
+require_relative "search_results_variable_value"
+require_relative "error_variable_value"
+require_relative "function_call_variable_value"
 
 module Vellum
-  class NodeOutputCompiledValue
+  class ArrayVariableValueItem
     attr_reader :member, :discriminant
 
     private_class_method :new
     alias kind_of? is_a?
     # @param member [Object]
     # @param discriminant [String]
-    # @return [NodeOutputCompiledValue]
+    # @return [ArrayVariableValueItem]
     def initialize(member:, discriminant:)
       # @type [Object]
       @member = member
@@ -26,31 +25,29 @@ module Vellum
       @discriminant = discriminant
     end
 
-    # Deserialize a JSON object to an instance of NodeOutputCompiledValue
+    # Deserialize a JSON object to an instance of ArrayVariableValueItem
     #
     # @param json_object [JSON]
-    # @return [NodeOutputCompiledValue]
+    # @return [ArrayVariableValueItem]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       member = case struct.type
                when "STRING"
-                 NodeOutputCompiledStringValue.from_json(json_object: json_object)
+                 StringVariableValue.from_json(json_object: json_object)
                when "NUMBER"
-                 NodeOutputCompiledNumberValue.from_json(json_object: json_object)
+                 NumberVariableValue.from_json(json_object: json_object)
                when "JSON"
-                 NodeOutputCompiledJsonValue.from_json(json_object: json_object)
+                 JsonVariableValue.from_json(json_object: json_object)
                when "CHAT_HISTORY"
-                 NodeOutputCompiledChatHistoryValue.from_json(json_object: json_object)
+                 ChatHistoryVariableValue.from_json(json_object: json_object)
                when "SEARCH_RESULTS"
-                 NodeOutputCompiledSearchResultsValue.from_json(json_object: json_object)
+                 SearchResultsVariableValue.from_json(json_object: json_object)
                when "ERROR"
-                 NodeOutputCompiledErrorValue.from_json(json_object: json_object)
-               when "ARRAY"
-                 NodeOutputCompiledArrayValue.from_json(json_object: json_object)
+                 ErrorVariableValue.from_json(json_object: json_object)
                when "FUNCTION_CALL"
-                 NodeOutputCompiledFunctionValue.from_json(json_object: json_object)
+                 FunctionCallVariableValue.from_json(json_object: json_object)
                else
-                 NodeOutputCompiledStringValue.from_json(json_object: json_object)
+                 StringVariableValue.from_json(json_object: json_object)
                end
       new(member: member, discriminant: struct.type)
     end
@@ -72,8 +69,6 @@ module Vellum
         { **@member.to_json, type: @discriminant }.to_json
       when "ERROR"
         { **@member.to_json, type: @discriminant }.to_json
-      when "ARRAY"
-        { **@member.to_json, type: @discriminant }.to_json
       when "FUNCTION_CALL"
         { **@member.to_json, type: @discriminant }.to_json
       else
@@ -89,21 +84,19 @@ module Vellum
     def self.validate_raw(obj:)
       case obj.type
       when "STRING"
-        NodeOutputCompiledStringValue.validate_raw(obj: obj)
+        StringVariableValue.validate_raw(obj: obj)
       when "NUMBER"
-        NodeOutputCompiledNumberValue.validate_raw(obj: obj)
+        NumberVariableValue.validate_raw(obj: obj)
       when "JSON"
-        NodeOutputCompiledJsonValue.validate_raw(obj: obj)
+        JsonVariableValue.validate_raw(obj: obj)
       when "CHAT_HISTORY"
-        NodeOutputCompiledChatHistoryValue.validate_raw(obj: obj)
+        ChatHistoryVariableValue.validate_raw(obj: obj)
       when "SEARCH_RESULTS"
-        NodeOutputCompiledSearchResultsValue.validate_raw(obj: obj)
+        SearchResultsVariableValue.validate_raw(obj: obj)
       when "ERROR"
-        NodeOutputCompiledErrorValue.validate_raw(obj: obj)
-      when "ARRAY"
-        NodeOutputCompiledArrayValue.validate_raw(obj: obj)
+        ErrorVariableValue.validate_raw(obj: obj)
       when "FUNCTION_CALL"
-        NodeOutputCompiledFunctionValue.validate_raw(obj: obj)
+        FunctionCallVariableValue.validate_raw(obj: obj)
       else
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -117,50 +110,44 @@ module Vellum
       @member.is_a?(obj)
     end
 
-    # @param member [NodeOutputCompiledStringValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [StringVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.string(member:)
       new(member: member, discriminant: "STRING")
     end
 
-    # @param member [NodeOutputCompiledNumberValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [NumberVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.number(member:)
       new(member: member, discriminant: "NUMBER")
     end
 
-    # @param member [NodeOutputCompiledJsonValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [JsonVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.json(member:)
       new(member: member, discriminant: "JSON")
     end
 
-    # @param member [NodeOutputCompiledChatHistoryValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [ChatHistoryVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.chat_history(member:)
       new(member: member, discriminant: "CHAT_HISTORY")
     end
 
-    # @param member [NodeOutputCompiledSearchResultsValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [SearchResultsVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.search_results(member:)
       new(member: member, discriminant: "SEARCH_RESULTS")
     end
 
-    # @param member [NodeOutputCompiledErrorValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [ErrorVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.error(member:)
       new(member: member, discriminant: "ERROR")
     end
 
-    # @param member [NodeOutputCompiledArrayValue]
-    # @return [NodeOutputCompiledValue]
-    def self.array(member:)
-      new(member: member, discriminant: "ARRAY")
-    end
-
-    # @param member [NodeOutputCompiledFunctionValue]
-    # @return [NodeOutputCompiledValue]
+    # @param member [FunctionCallVariableValue]
+    # @return [ArrayVariableValueItem]
     def self.function_call(member:)
       new(member: member, discriminant: "FUNCTION_CALL")
     end

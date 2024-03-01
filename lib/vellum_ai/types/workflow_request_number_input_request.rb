@@ -3,6 +3,7 @@
 require "json"
 
 module Vellum
+  # The input for a number variable in a Workflow.
   class WorkflowRequestNumberInputRequest
     attr_reader :name, :value, :additional_properties
 

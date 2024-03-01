@@ -56,7 +56,7 @@ module Vellum
     # @param prompt_deployment_id [String] The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name.
     # @param prompt_deployment_name [String] The name of the Prompt Deployment. Must provide either this or prompt_deployment_id.
     # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Prompt Deployment
-    # @param external_id [String]
+    # @param external_id [String] "Optionally include a unique identifier for tracking purposes. Must be unique for a given prompt deployment.
     # @param expand_meta [Hash] The name of the Prompt Deployment. Must provide either this or prompt_deployment_id.Request of type PromptDeploymentExpandMetaRequestRequest, as a Hash
     #   * :model_name (Boolean)
     #   * :latency (Boolean)
@@ -100,7 +100,7 @@ module Vellum
     # @param workflow_deployment_name [String] The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.
     # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment
     # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding values.Request of type Array<WorkflowRequestInputRequest>, as a Hash
-    # @param external_id [String] Optionally include a unique identifier for monitoring purposes.
+    # @param external_id [String] Optionally include a unique identifier for monitoring purposes. Must be unique for a given workflow deployment.
     # @param request_options [RequestOptions]
     # @return [ExecuteWorkflowResponse]
     def execute_workflow(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil,
@@ -278,7 +278,7 @@ module Vellum
     # @param prompt_deployment_id [String] The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name.
     # @param prompt_deployment_name [String] The name of the Prompt Deployment. Must provide either this or prompt_deployment_id.
     # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Prompt Deployment
-    # @param external_id [String]
+    # @param external_id [String] "Optionally include a unique identifier for tracking purposes. Must be unique for a given prompt deployment.
     # @param expand_meta [Hash] The name of the Prompt Deployment. Must provide either this or prompt_deployment_id.Request of type PromptDeploymentExpandMetaRequestRequest, as a Hash
     #   * :model_name (Boolean)
     #   * :latency (Boolean)
@@ -322,7 +322,7 @@ module Vellum
     # @param workflow_deployment_name [String] The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.
     # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment
     # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding values.Request of type Array<WorkflowRequestInputRequest>, as a Hash
-    # @param external_id [String] Optionally include a unique identifier for monitoring purposes.
+    # @param external_id [String] Optionally include a unique identifier for monitoring purposes. Must be unique for a given workflow deployment.
     # @param request_options [RequestOptions]
     # @return [ExecuteWorkflowResponse]
     def execute_workflow(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil,
