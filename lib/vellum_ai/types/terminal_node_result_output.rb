@@ -6,6 +6,8 @@ require_relative "terminal_node_number_result"
 require_relative "terminal_node_json_result"
 require_relative "terminal_node_chat_history_result"
 require_relative "terminal_node_search_results_result"
+require_relative "terminal_node_array_result"
+require_relative "terminal_node_function_call_result"
 require_relative "terminal_node_error_result"
 
 module Vellum
@@ -41,6 +43,10 @@ module Vellum
                  TerminalNodeChatHistoryResult.from_json(json_object: json_object)
                when "SEARCH_RESULTS"
                  TerminalNodeSearchResultsResult.from_json(json_object: json_object)
+               when "ARRAY"
+                 TerminalNodeArrayResult.from_json(json_object: json_object)
+               when "FUNCTION_CALL"
+                 TerminalNodeFunctionCallResult.from_json(json_object: json_object)
                when "ERROR"
                  TerminalNodeErrorResult.from_json(json_object: json_object)
                else
@@ -63,6 +69,10 @@ module Vellum
       when "CHAT_HISTORY"
         { **@member.to_json, type: @discriminant }.to_json
       when "SEARCH_RESULTS"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ARRAY"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "FUNCTION_CALL"
         { **@member.to_json, type: @discriminant }.to_json
       when "ERROR"
         { **@member.to_json, type: @discriminant }.to_json
@@ -88,6 +98,10 @@ module Vellum
         TerminalNodeChatHistoryResult.validate_raw(obj: obj)
       when "SEARCH_RESULTS"
         TerminalNodeSearchResultsResult.validate_raw(obj: obj)
+      when "ARRAY"
+        TerminalNodeArrayResult.validate_raw(obj: obj)
+      when "FUNCTION_CALL"
+        TerminalNodeFunctionCallResult.validate_raw(obj: obj)
       when "ERROR"
         TerminalNodeErrorResult.validate_raw(obj: obj)
       else
@@ -131,6 +145,18 @@ module Vellum
     # @return [TerminalNodeResultOutput]
     def self.search_results(member:)
       new(member: member, discriminant: "SEARCH_RESULTS")
+    end
+
+    # @param member [TerminalNodeArrayResult]
+    # @return [TerminalNodeResultOutput]
+    def self.array(member:)
+      new(member: member, discriminant: "ARRAY")
+    end
+
+    # @param member [TerminalNodeFunctionCallResult]
+    # @return [TerminalNodeResultOutput]
+    def self.function_call(member:)
+      new(member: member, discriminant: "FUNCTION_CALL")
     end
 
     # @param member [TerminalNodeErrorResult]

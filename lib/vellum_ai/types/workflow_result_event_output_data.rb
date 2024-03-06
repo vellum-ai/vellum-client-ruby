@@ -6,6 +6,8 @@ require_relative "workflow_result_event_output_data_number"
 require_relative "workflow_result_event_output_data_json"
 require_relative "workflow_result_event_output_data_chat_history"
 require_relative "workflow_result_event_output_data_search_results"
+require_relative "workflow_result_event_output_data_array"
+require_relative "workflow_result_event_output_data_function_call"
 require_relative "workflow_result_event_output_data_error"
 
 module Vellum
@@ -41,6 +43,10 @@ module Vellum
                  WorkflowResultEventOutputDataChatHistory.from_json(json_object: json_object)
                when "SEARCH_RESULTS"
                  WorkflowResultEventOutputDataSearchResults.from_json(json_object: json_object)
+               when "ARRAY"
+                 WorkflowResultEventOutputDataArray.from_json(json_object: json_object)
+               when "FUNCTION_CALL"
+                 WorkflowResultEventOutputDataFunctionCall.from_json(json_object: json_object)
                when "ERROR"
                  WorkflowResultEventOutputDataError.from_json(json_object: json_object)
                else
@@ -63,6 +69,10 @@ module Vellum
       when "CHAT_HISTORY"
         { **@member.to_json, type: @discriminant }.to_json
       when "SEARCH_RESULTS"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ARRAY"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "FUNCTION_CALL"
         { **@member.to_json, type: @discriminant }.to_json
       when "ERROR"
         { **@member.to_json, type: @discriminant }.to_json
@@ -88,6 +98,10 @@ module Vellum
         WorkflowResultEventOutputDataChatHistory.validate_raw(obj: obj)
       when "SEARCH_RESULTS"
         WorkflowResultEventOutputDataSearchResults.validate_raw(obj: obj)
+      when "ARRAY"
+        WorkflowResultEventOutputDataArray.validate_raw(obj: obj)
+      when "FUNCTION_CALL"
+        WorkflowResultEventOutputDataFunctionCall.validate_raw(obj: obj)
       when "ERROR"
         WorkflowResultEventOutputDataError.validate_raw(obj: obj)
       else
@@ -131,6 +145,18 @@ module Vellum
     # @return [WorkflowResultEventOutputData]
     def self.search_results(member:)
       new(member: member, discriminant: "SEARCH_RESULTS")
+    end
+
+    # @param member [WorkflowResultEventOutputDataArray]
+    # @return [WorkflowResultEventOutputData]
+    def self.array(member:)
+      new(member: member, discriminant: "ARRAY")
+    end
+
+    # @param member [WorkflowResultEventOutputDataFunctionCall]
+    # @return [WorkflowResultEventOutputData]
+    def self.function_call(member:)
+      new(member: member, discriminant: "FUNCTION_CALL")
     end
 
     # @param member [WorkflowResultEventOutputDataError]

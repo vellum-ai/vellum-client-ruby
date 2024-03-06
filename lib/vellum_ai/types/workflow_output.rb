@@ -6,6 +6,7 @@ require_relative "workflow_output_number"
 require_relative "workflow_output_json"
 require_relative "workflow_output_chat_history"
 require_relative "workflow_output_search_results"
+require_relative "workflow_output_array"
 require_relative "workflow_output_error"
 require_relative "workflow_output_function_call"
 require_relative "workflow_output_image"
@@ -43,6 +44,8 @@ module Vellum
                  WorkflowOutputChatHistory.from_json(json_object: json_object)
                when "SEARCH_RESULTS"
                  WorkflowOutputSearchResults.from_json(json_object: json_object)
+               when "ARRAY"
+                 WorkflowOutputArray.from_json(json_object: json_object)
                when "ERROR"
                  WorkflowOutputError.from_json(json_object: json_object)
                when "FUNCTION_CALL"
@@ -69,6 +72,8 @@ module Vellum
       when "CHAT_HISTORY"
         { **@member.to_json, type: @discriminant }.to_json
       when "SEARCH_RESULTS"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ARRAY"
         { **@member.to_json, type: @discriminant }.to_json
       when "ERROR"
         { **@member.to_json, type: @discriminant }.to_json
@@ -98,6 +103,8 @@ module Vellum
         WorkflowOutputChatHistory.validate_raw(obj: obj)
       when "SEARCH_RESULTS"
         WorkflowOutputSearchResults.validate_raw(obj: obj)
+      when "ARRAY"
+        WorkflowOutputArray.validate_raw(obj: obj)
       when "ERROR"
         WorkflowOutputError.validate_raw(obj: obj)
       when "FUNCTION_CALL"
@@ -145,6 +152,12 @@ module Vellum
     # @return [WorkflowOutput]
     def self.search_results(member:)
       new(member: member, discriminant: "SEARCH_RESULTS")
+    end
+
+    # @param member [WorkflowOutputArray]
+    # @return [WorkflowOutput]
+    def self.array(member:)
+      new(member: member, discriminant: "ARRAY")
     end
 
     # @param member [WorkflowOutputError]

@@ -12,7 +12,7 @@ module Vellum
     # @param value [Array<ArrayVariableValueItem>]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [NodeInputCompiledArrayValue]
-    def initialize(node_input_id:, key:, value:, additional_properties: nil)
+    def initialize(node_input_id:, key:, value: nil, additional_properties: nil)
       # @type [String]
       @node_input_id = node_input_id
       # @type [String]
@@ -53,7 +53,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.node_input_id.is_a?(String) != false || raise("Passed value for field obj.node_input_id is not the expected type, validation failed.")
       obj.key.is_a?(String) != false || raise("Passed value for field obj.key is not the expected type, validation failed.")
-      obj.value.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end

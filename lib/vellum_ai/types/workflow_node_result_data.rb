@@ -8,6 +8,7 @@ require_relative "code_execution_node_result"
 require_relative "conditional_node_result"
 require_relative "api_node_result"
 require_relative "terminal_node_result"
+require_relative "subworkflow_node_result"
 
 module Vellum
   class WorkflowNodeResultData
@@ -46,6 +47,8 @@ module Vellum
                  ApiNodeResult.from_json(json_object: json_object)
                when "TERMINAL"
                  TerminalNodeResult.from_json(json_object: json_object)
+               when "SUBWORKFLOW"
+                 SubworkflowNodeResult.from_json(json_object: json_object)
                else
                  PromptNodeResult.from_json(json_object: json_object)
                end
@@ -70,6 +73,8 @@ module Vellum
       when "API"
         { **@member.to_json, type: @discriminant }.to_json
       when "TERMINAL"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "SUBWORKFLOW"
         { **@member.to_json, type: @discriminant }.to_json
       else
         { "type": @discriminant, value: @member }.to_json
@@ -97,6 +102,8 @@ module Vellum
         ApiNodeResult.validate_raw(obj: obj)
       when "TERMINAL"
         TerminalNodeResult.validate_raw(obj: obj)
+      when "SUBWORKFLOW"
+        SubworkflowNodeResult.validate_raw(obj: obj)
       else
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -150,6 +157,12 @@ module Vellum
     # @return [WorkflowNodeResultData]
     def self.terminal(member:)
       new(member: member, discriminant: "TERMINAL")
+    end
+
+    # @param member [SubworkflowNodeResult]
+    # @return [WorkflowNodeResultData]
+    def self.subworkflow(member:)
+      new(member: member, discriminant: "SUBWORKFLOW")
     end
   end
 end

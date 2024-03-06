@@ -8,6 +8,7 @@ module Vellum
     internal_server_error: "INTERNAL_SERVER_ERROR",
     node_execution: "NODE_EXECUTION",
     llm_provider: "LLM_PROVIDER",
-    invalid_template: "INVALID_TEMPLATE"
+    invalid_template: "INVALID_TEMPLATE",
+    user_defined_error: "USER_DEFINED_ERROR"
   }.freeze
 end
