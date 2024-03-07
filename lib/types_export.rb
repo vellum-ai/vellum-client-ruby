@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "vellum_ai/deployments/types/deployments_list_request_status"
+require_relative "vellum_ai/document_indexes/types/document_indexes_list_request_status"
 require_relative "vellum_ai/workflow_deployments/types/workflow_deployments_list_request_status"
 require_relative "vellum_ai/types/api_node_result"
 require_relative "vellum_ai/types/api_node_result_data"
@@ -123,6 +124,7 @@ require_relative "vellum_ai/types/normalized_log_probs"
 require_relative "vellum_ai/types/normalized_token_log_probs"
 require_relative "vellum_ai/types/number_enum"
 require_relative "vellum_ai/types/number_variable_value"
+require_relative "vellum_ai/types/paginated_document_index_read_list"
 require_relative "vellum_ai/types/paginated_slim_deployment_read_list"
 require_relative "vellum_ai/types/paginated_slim_document_list"
 require_relative "vellum_ai/types/paginated_slim_workflow_deployment_list"
