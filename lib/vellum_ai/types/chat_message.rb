@@ -6,20 +6,23 @@ require "json"
 
 module Vellum
   class ChatMessage
-    attr_reader :text, :role, :content, :additional_properties
+    attr_reader :text, :role, :content, :source, :additional_properties
 
     # @param text [String]
     # @param role [CHAT_MESSAGE_ROLE]
     # @param content [ChatMessageContent]
+    # @param source [String] An optional identifier representing who or what generated this message.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [ChatMessage]
-    def initialize(role:, text: nil, content: nil, additional_properties: nil)
+    def initialize(role:, text: nil, content: nil, source: nil, additional_properties: nil)
       # @type [String]
       @text = text
       # @type [CHAT_MESSAGE_ROLE]
       @role = role
       # @type [ChatMessageContent]
       @content = content
+      # @type [String] An optional identifier representing who or what generated this message.
+      @source = source
       # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
     end
@@ -39,14 +42,15 @@ module Vellum
         content = parsed_json["content"].to_json
         content = ChatMessageContent.from_json(json_object: content)
       end
-      new(text: text, role: role, content: content, additional_properties: struct)
+      source = struct.source
+      new(text: text, role: role, content: content, source: source, additional_properties: struct)
     end
 
     # Serialize an instance of ChatMessage to a JSON object
     #
     # @return [JSON]
     def to_json(*_args)
-      { "text": @text, "role": CHAT_MESSAGE_ROLE[@role] || @role, "content": @content }.to_json
+      { "text": @text, "role": CHAT_MESSAGE_ROLE[@role] || @role, "content": @content, "source": @source }.to_json
     end
 
     # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -57,6 +61,7 @@ module Vellum
       obj.text&.is_a?(String) != false || raise("Passed value for field obj.text is not the expected type, validation failed.")
       obj.role.is_a?(CHAT_MESSAGE_ROLE) != false || raise("Passed value for field obj.role is not the expected type, validation failed.")
       obj.content.nil? || ChatMessageContent.validate_raw(obj: obj.content)
+      obj.source&.is_a?(String) != false || raise("Passed value for field obj.source is not the expected type, validation failed.")
     end
   end
 end

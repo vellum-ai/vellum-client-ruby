@@ -5,11 +5,12 @@ require "date"
 require_relative "workflow_result_event_output_data"
 require_relative "workflow_event_error"
 require_relative "workflow_output"
+require_relative "execution_vellum_value"
 require "json"
 
 module Vellum
   class WorkflowResultEvent
-    attr_reader :id, :state, :ts, :output, :error, :outputs, :additional_properties
+    attr_reader :id, :state, :ts, :output, :error, :outputs, :inputs, :additional_properties
 
     # @param id [String]
     # @param state [WORKFLOW_NODE_RESULT_EVENT_STATE]
@@ -17,9 +18,10 @@ module Vellum
     # @param output [WorkflowResultEventOutputData]
     # @param error [WorkflowEventError]
     # @param outputs [Array<WorkflowOutput>]
+    # @param inputs [Array<ExecutionVellumValue>]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [WorkflowResultEvent]
-    def initialize(id:, state:, ts:, output: nil, error: nil, outputs: nil, additional_properties: nil)
+    def initialize(id:, state:, ts:, output: nil, error: nil, outputs: nil, inputs: nil, additional_properties: nil)
       # @type [String]
       @id = id
       # @type [WORKFLOW_NODE_RESULT_EVENT_STATE]
@@ -32,6 +34,8 @@ module Vellum
       @error = error
       # @type [Array<WorkflowOutput>]
       @outputs = outputs
+      # @type [Array<ExecutionVellumValue>]
+      @inputs = inputs
       # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
     end
@@ -62,7 +66,12 @@ module Vellum
         v = v.to_json
         WorkflowOutput.from_json(json_object: v)
       end
-      new(id: id, state: state, ts: ts, output: output, error: error, outputs: outputs, additional_properties: struct)
+      inputs = parsed_json["inputs"].map do |v|
+        v = v.to_json
+        ExecutionVellumValue.from_json(json_object: v)
+      end
+      new(id: id, state: state, ts: ts, output: output, error: error, outputs: outputs, inputs: inputs,
+          additional_properties: struct)
     end
 
     # Serialize an instance of WorkflowResultEvent to a JSON object
@@ -75,7 +84,8 @@ module Vellum
         "ts": @ts,
         "output": @output,
         "error": @error,
-        "outputs": @outputs
+        "outputs": @outputs,
+        "inputs": @inputs
       }.to_json
     end
 
@@ -90,6 +100,7 @@ module Vellum
       obj.output.nil? || WorkflowResultEventOutputData.validate_raw(obj: obj.output)
       obj.error.nil? || WorkflowEventError.validate_raw(obj: obj.error)
       obj.outputs&.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
+      obj.inputs&.is_a?(Array) != false || raise("Passed value for field obj.inputs is not the expected type, validation failed.")
     end
   end
 end

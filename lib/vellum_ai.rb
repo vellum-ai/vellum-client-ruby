@@ -96,11 +96,11 @@ module Vellum
 
     # Executes a deployed Workflow and returns its outputs.
     #
+    # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding values.Request of type Array<WorkflowRequestInputRequest>, as a Hash
     # @param workflow_deployment_id [String] The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.
     # @param workflow_deployment_name [String] The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.
     # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment
-    # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding values.Request of type Array<WorkflowRequestInputRequest>, as a Hash
-    # @param external_id [String] Optionally include a unique identifier for monitoring purposes. Must be unique for a given workflow deployment.
+    # @param external_id [String] Optionally include a unique identifier for tracking purposes. Must be unique for a given workflow deployment.
     # @param request_options [RequestOptions]
     # @return [ExecuteWorkflowResponse]
     def execute_workflow(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil,
@@ -111,10 +111,10 @@ module Vellum
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
+          inputs: inputs,
           workflow_deployment_id: workflow_deployment_id,
           workflow_deployment_name: workflow_deployment_name,
           release_tag: release_tag,
-          inputs: inputs,
           external_id: external_id
         }.compact
         req.url "#{@request_client.default_environment[:Predict]}/v1/execute-workflow"
@@ -318,11 +318,11 @@ module Vellum
 
     # Executes a deployed Workflow and returns its outputs.
     #
+    # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding values.Request of type Array<WorkflowRequestInputRequest>, as a Hash
     # @param workflow_deployment_id [String] The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.
     # @param workflow_deployment_name [String] The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.
     # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment
-    # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding values.Request of type Array<WorkflowRequestInputRequest>, as a Hash
-    # @param external_id [String] Optionally include a unique identifier for monitoring purposes. Must be unique for a given workflow deployment.
+    # @param external_id [String] Optionally include a unique identifier for tracking purposes. Must be unique for a given workflow deployment.
     # @param request_options [RequestOptions]
     # @return [ExecuteWorkflowResponse]
     def execute_workflow(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil,
@@ -333,10 +333,10 @@ module Vellum
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = {
           **(request_options&.additional_body_parameters || {}),
+          inputs: inputs,
           workflow_deployment_id: workflow_deployment_id,
           workflow_deployment_name: workflow_deployment_name,
           release_tag: release_tag,
-          inputs: inputs,
           external_id: external_id
         }.compact
         req.url "#{@async_request_client.default_environment[:Predict]}/v1/execute-workflow"

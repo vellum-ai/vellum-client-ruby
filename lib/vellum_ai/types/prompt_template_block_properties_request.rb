@@ -7,11 +7,12 @@ require "json"
 
 module Vellum
   class PromptTemplateBlockPropertiesRequest
-    attr_reader :chat_role, :chat_message_unterminated, :template, :template_type, :function_name,
+    attr_reader :chat_role, :chat_message_unterminated, :chat_source, :template, :template_type, :function_name,
                 :function_description, :function_parameters, :function_forced, :blocks, :additional_properties
 
     # @param chat_role [CHAT_MESSAGE_ROLE]
     # @param chat_message_unterminated [Boolean]
+    # @param chat_source [String]
     # @param template [String]
     # @param template_type [VELLUM_VARIABLE_TYPE]
     # @param function_name [String]
@@ -21,12 +22,14 @@ module Vellum
     # @param blocks [Array<PromptTemplateBlockRequest>]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [PromptTemplateBlockPropertiesRequest]
-    def initialize(chat_role: nil, chat_message_unterminated: nil, template: nil, template_type: nil,
+    def initialize(chat_role: nil, chat_message_unterminated: nil, chat_source: nil, template: nil, template_type: nil,
                    function_name: nil, function_description: nil, function_parameters: nil, function_forced: nil, blocks: nil, additional_properties: nil)
       # @type [CHAT_MESSAGE_ROLE]
       @chat_role = chat_role
       # @type [Boolean]
       @chat_message_unterminated = chat_message_unterminated
+      # @type [String]
+      @chat_source = chat_source
       # @type [String]
       @template = template
       # @type [VELLUM_VARIABLE_TYPE]
@@ -54,6 +57,7 @@ module Vellum
       parsed_json = JSON.parse(json_object)
       chat_role = CHAT_MESSAGE_ROLE.key(parsed_json["chat_role"]) || parsed_json["chat_role"]
       chat_message_unterminated = struct.chat_message_unterminated
+      chat_source = struct.chat_source
       template = struct.template
       template_type = VELLUM_VARIABLE_TYPE.key(parsed_json["template_type"]) || parsed_json["template_type"]
       function_name = struct.function_name
@@ -64,8 +68,8 @@ module Vellum
         v = v.to_json
         PromptTemplateBlockRequest.from_json(json_object: v)
       end
-      new(chat_role: chat_role, chat_message_unterminated: chat_message_unterminated, template: template,
-          template_type: template_type, function_name: function_name, function_description: function_description, function_parameters: function_parameters, function_forced: function_forced, blocks: blocks, additional_properties: struct)
+      new(chat_role: chat_role, chat_message_unterminated: chat_message_unterminated, chat_source: chat_source,
+          template: template, template_type: template_type, function_name: function_name, function_description: function_description, function_parameters: function_parameters, function_forced: function_forced, blocks: blocks, additional_properties: struct)
     end
 
     # Serialize an instance of PromptTemplateBlockPropertiesRequest to a JSON object
@@ -75,6 +79,7 @@ module Vellum
       {
         "chat_role": CHAT_MESSAGE_ROLE[@chat_role] || @chat_role,
         "chat_message_unterminated": @chat_message_unterminated,
+        "chat_source": @chat_source,
         "template": @template,
         "template_type": VELLUM_VARIABLE_TYPE[@template_type] || @template_type,
         "function_name": @function_name,
@@ -92,6 +97,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.chat_role&.is_a?(CHAT_MESSAGE_ROLE) != false || raise("Passed value for field obj.chat_role is not the expected type, validation failed.")
       obj.chat_message_unterminated&.is_a?(Boolean) != false || raise("Passed value for field obj.chat_message_unterminated is not the expected type, validation failed.")
+      obj.chat_source&.is_a?(String) != false || raise("Passed value for field obj.chat_source is not the expected type, validation failed.")
       obj.template&.is_a?(String) != false || raise("Passed value for field obj.template is not the expected type, validation failed.")
       obj.template_type&.is_a?(VELLUM_VARIABLE_TYPE) != false || raise("Passed value for field obj.template_type is not the expected type, validation failed.")
       obj.function_name&.is_a?(String) != false || raise("Passed value for field obj.function_name is not the expected type, validation failed.")

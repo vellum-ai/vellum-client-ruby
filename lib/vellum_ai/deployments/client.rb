@@ -60,9 +60,11 @@ module Vellum
     # @param deployment_id [String] The ID of the deployment. Must provide either this or deployment_name.
     # @param deployment_name [String] The name of the deployment. Must provide either this or deployment_id.
     # @param inputs [Array<Hash>] The list of inputs defined in the Prompt's deployment with their corresponding values.Request of type Array<PromptDeploymentInputRequest>, as a Hash
+    # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment
     # @param request_options [RequestOptions]
     # @return [DeploymentProviderPayloadResponse]
-    def retrieve_provider_payload(inputs:, deployment_id: nil, deployment_name: nil, request_options: nil)
+    def retrieve_provider_payload(inputs:, deployment_id: nil, deployment_name: nil, release_tag: nil,
+                                  request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
@@ -71,7 +73,8 @@ module Vellum
           **(request_options&.additional_body_parameters || {}),
           deployment_id: deployment_id,
           deployment_name: deployment_name,
-          inputs: inputs
+          inputs: inputs,
+          release_tag: release_tag
         }.compact
         req.url "#{@request_client.default_environment[:Default]}/v1/deployments/provider-payload"
       end
@@ -134,9 +137,11 @@ module Vellum
     # @param deployment_id [String] The ID of the deployment. Must provide either this or deployment_name.
     # @param deployment_name [String] The name of the deployment. Must provide either this or deployment_id.
     # @param inputs [Array<Hash>] The list of inputs defined in the Prompt's deployment with their corresponding values.Request of type Array<PromptDeploymentInputRequest>, as a Hash
+    # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment
     # @param request_options [RequestOptions]
     # @return [DeploymentProviderPayloadResponse]
-    def retrieve_provider_payload(inputs:, deployment_id: nil, deployment_name: nil, request_options: nil)
+    def retrieve_provider_payload(inputs:, deployment_id: nil, deployment_name: nil, release_tag: nil,
+                                  request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -146,7 +151,8 @@ module Vellum
             **(request_options&.additional_body_parameters || {}),
             deployment_id: deployment_id,
             deployment_name: deployment_name,
-            inputs: inputs
+            inputs: inputs,
+            release_tag: release_tag
           }.compact
           req.url "#{@request_client.default_environment[:Default]}/v1/deployments/provider-payload"
         end
