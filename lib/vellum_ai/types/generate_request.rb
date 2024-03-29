@@ -8,14 +8,14 @@ module Vellum
     attr_reader :input_values, :chat_history, :external_ids, :additional_properties
 
     # @param input_values [Hash{String => String}] Key/value pairs for each template variable defined in the deployment's prompt.
-    # @param chat_history [Array<ChatMessageRequest>] Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.
+    # @param chat_history [Array<ChatMessageRequest>] Optionally provide a list of chat messages that'll be used in place of the special chat_history variable, if included in the prompt.
     # @param external_ids [Array<String>] Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [GenerateRequest]
     def initialize(input_values:, chat_history: nil, external_ids: nil, additional_properties: nil)
       # @type [Hash{String => String}] Key/value pairs for each template variable defined in the deployment's prompt.
       @input_values = input_values
-      # @type [Array<ChatMessageRequest>] Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.
+      # @type [Array<ChatMessageRequest>] Optionally provide a list of chat messages that'll be used in place of the special chat_history variable, if included in the prompt.
       @chat_history = chat_history
       # @type [Array<String>] Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.
       @external_ids = external_ids

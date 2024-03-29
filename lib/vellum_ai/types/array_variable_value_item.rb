@@ -8,6 +8,7 @@ require_relative "chat_history_variable_value"
 require_relative "search_results_variable_value"
 require_relative "error_variable_value"
 require_relative "function_call_variable_value"
+require_relative "image_variable_value"
 
 module Vellum
   class ArrayVariableValueItem
@@ -46,6 +47,8 @@ module Vellum
                  ErrorVariableValue.from_json(json_object: json_object)
                when "FUNCTION_CALL"
                  FunctionCallVariableValue.from_json(json_object: json_object)
+               when "IMAGE"
+                 ImageVariableValue.from_json(json_object: json_object)
                else
                  StringVariableValue.from_json(json_object: json_object)
                end
@@ -70,6 +73,8 @@ module Vellum
       when "ERROR"
         { **@member.to_json, type: @discriminant }.to_json
       when "FUNCTION_CALL"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "IMAGE"
         { **@member.to_json, type: @discriminant }.to_json
       else
         { "type": @discriminant, value: @member }.to_json
@@ -97,6 +102,8 @@ module Vellum
         ErrorVariableValue.validate_raw(obj: obj)
       when "FUNCTION_CALL"
         FunctionCallVariableValue.validate_raw(obj: obj)
+      when "IMAGE"
+        ImageVariableValue.validate_raw(obj: obj)
       else
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -150,6 +157,12 @@ module Vellum
     # @return [ArrayVariableValueItem]
     def self.function_call(member:)
       new(member: member, discriminant: "FUNCTION_CALL")
+    end
+
+    # @param member [ImageVariableValue]
+    # @return [ArrayVariableValueItem]
+    def self.image(member:)
+      new(member: member, discriminant: "IMAGE")
     end
   end
 end

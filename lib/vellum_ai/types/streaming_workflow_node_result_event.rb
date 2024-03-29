@@ -8,19 +8,21 @@ require "json"
 module Vellum
   # An event that indicates that the node has execution is in progress.
   class StreamingWorkflowNodeResultEvent
-    attr_reader :id, :node_id, :node_result_id, :ts, :data, :output, :output_index, :additional_properties
+    attr_reader :id, :node_id, :node_result_id, :ts, :data, :source_execution_id, :output, :output_index,
+                :additional_properties
 
     # @param id [String]
     # @param node_id [String]
     # @param node_result_id [String]
     # @param ts [DateTime]
     # @param data [WorkflowNodeResultData]
+    # @param source_execution_id [String]
     # @param output [NodeOutputCompiledValue]
     # @param output_index [Integer]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [StreamingWorkflowNodeResultEvent]
-    def initialize(id:, node_id:, node_result_id:, ts: nil, data: nil, output: nil, output_index: nil,
-                   additional_properties: nil)
+    def initialize(id:, node_id:, node_result_id:, ts: nil, data: nil, source_execution_id: nil, output: nil,
+                   output_index: nil, additional_properties: nil)
       # @type [String]
       @id = id
       # @type [String]
@@ -31,6 +33,8 @@ module Vellum
       @ts = ts
       # @type [WorkflowNodeResultData]
       @data = data
+      # @type [String]
+      @source_execution_id = source_execution_id
       # @type [NodeOutputCompiledValue]
       @output = output
       # @type [Integer]
@@ -56,6 +60,7 @@ module Vellum
         data = parsed_json["data"].to_json
         data = WorkflowNodeResultData.from_json(json_object: data)
       end
+      source_execution_id = struct.source_execution_id
       if parsed_json["output"].nil?
         output = nil
       else
@@ -63,8 +68,8 @@ module Vellum
         output = NodeOutputCompiledValue.from_json(json_object: output)
       end
       output_index = struct.output_index
-      new(id: id, node_id: node_id, node_result_id: node_result_id, ts: ts, data: data, output: output,
-          output_index: output_index, additional_properties: struct)
+      new(id: id, node_id: node_id, node_result_id: node_result_id, ts: ts, data: data,
+          source_execution_id: source_execution_id, output: output, output_index: output_index, additional_properties: struct)
     end
 
     # Serialize an instance of StreamingWorkflowNodeResultEvent to a JSON object
@@ -77,6 +82,7 @@ module Vellum
         "node_result_id": @node_result_id,
         "ts": @ts,
         "data": @data,
+        "source_execution_id": @source_execution_id,
         "output": @output,
         "output_index": @output_index
       }.to_json
@@ -92,6 +98,7 @@ module Vellum
       obj.node_result_id.is_a?(String) != false || raise("Passed value for field obj.node_result_id is not the expected type, validation failed.")
       obj.ts&.is_a?(DateTime) != false || raise("Passed value for field obj.ts is not the expected type, validation failed.")
       obj.data.nil? || WorkflowNodeResultData.validate_raw(obj: obj.data)
+      obj.source_execution_id&.is_a?(String) != false || raise("Passed value for field obj.source_execution_id is not the expected type, validation failed.")
       obj.output.nil? || NodeOutputCompiledValue.validate_raw(obj: obj.output)
       obj.output_index&.is_a?(Integer) != false || raise("Passed value for field obj.output_index is not the expected type, validation failed.")
     end

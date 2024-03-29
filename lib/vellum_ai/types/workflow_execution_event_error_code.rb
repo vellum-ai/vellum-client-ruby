@@ -4,6 +4,7 @@ module Vellum
   # @type [WORKFLOW_EXECUTION_EVENT_ERROR_CODE]
   WORKFLOW_EXECUTION_EVENT_ERROR_CODE = {
     workflow_initialization: "WORKFLOW_INITIALIZATION",
+    workflow_cancelled: "WORKFLOW_CANCELLED",
     node_execution_count_limit_reached: "NODE_EXECUTION_COUNT_LIMIT_REACHED",
     internal_server_error: "INTERNAL_SERVER_ERROR",
     node_execution: "NODE_EXECUTION",

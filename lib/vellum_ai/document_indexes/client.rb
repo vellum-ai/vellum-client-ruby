@@ -95,6 +95,78 @@ module Vellum
       end
       DocumentIndexRead.from_json(json_object: response.body)
     end
+
+    # Used to fully update a Document Index given its ID.
+    #
+    # @param id [String] A UUID string identifying this document index.
+    # @param label [String] A human-readable label for the document index
+    # @param status [ENTITY_STATUS] The current status of the document index
+    #   * `ACTIVE` - Active
+    #   * `ARCHIVED` - Archived
+    # @param environment [ENVIRONMENT_ENUM] The environment this document index is used in
+    #   * `DEVELOPMENT` - Development
+    #   * `STAGING` - Staging
+    #   * `PRODUCTION` - Production
+    # @param request_options [RequestOptions]
+    # @return [DocumentIndexRead]
+    def update(id:, label:, status: nil, environment: nil, request_options: nil)
+      response = @request_client.conn.put do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
+        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.body = {
+          **(request_options&.additional_body_parameters || {}),
+          label: label,
+          status: status,
+          environment: environment
+        }.compact
+        req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
+      end
+      DocumentIndexRead.from_json(json_object: response.body)
+    end
+
+    # Used to delete a Document Index given its ID.
+    #
+    # @param id [String] A UUID string identifying this document index.
+    # @param request_options [RequestOptions]
+    # @return [Void]
+    def destroy(id:, request_options: nil)
+      @request_client.conn.delete do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
+        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
+      end
+    end
+
+    # Used to partial update a Document Index given its ID.
+    #
+    # @param id [String] A UUID string identifying this document index.
+    # @param label [String] A human-readable label for the document index
+    # @param status [ENTITY_STATUS] The current status of the document index
+    #   * `ACTIVE` - Active
+    #   * `ARCHIVED` - Archived
+    # @param environment [ENVIRONMENT_ENUM] The environment this document index is used in
+    #   * `DEVELOPMENT` - Development
+    #   * `STAGING` - Staging
+    #   * `PRODUCTION` - Production
+    # @param request_options [RequestOptions]
+    # @return [DocumentIndexRead]
+    def partial_update(id:, label: nil, status: nil, environment: nil, request_options: nil)
+      response = @request_client.conn.patch do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
+        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.body = {
+          **(request_options&.additional_body_parameters || {}),
+          label: label,
+          status: status,
+          environment: environment
+        }.compact
+        req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
+      end
+      DocumentIndexRead.from_json(json_object: response.body)
+    end
   end
 
   class AsyncDocumentIndexesClient
@@ -184,6 +256,84 @@ module Vellum
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
+        end
+        DocumentIndexRead.from_json(json_object: response.body)
+      end
+    end
+
+    # Used to fully update a Document Index given its ID.
+    #
+    # @param id [String] A UUID string identifying this document index.
+    # @param label [String] A human-readable label for the document index
+    # @param status [ENTITY_STATUS] The current status of the document index
+    #   * `ACTIVE` - Active
+    #   * `ARCHIVED` - Archived
+    # @param environment [ENVIRONMENT_ENUM] The environment this document index is used in
+    #   * `DEVELOPMENT` - Development
+    #   * `STAGING` - Staging
+    #   * `PRODUCTION` - Production
+    # @param request_options [RequestOptions]
+    # @return [DocumentIndexRead]
+    def update(id:, label:, status: nil, environment: nil, request_options: nil)
+      Async do
+        response = @request_client.conn.put do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
+          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.body = {
+            **(request_options&.additional_body_parameters || {}),
+            label: label,
+            status: status,
+            environment: environment
+          }.compact
+          req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
+        end
+        DocumentIndexRead.from_json(json_object: response.body)
+      end
+    end
+
+    # Used to delete a Document Index given its ID.
+    #
+    # @param id [String] A UUID string identifying this document index.
+    # @param request_options [RequestOptions]
+    # @return [Void]
+    def destroy(id:, request_options: nil)
+      Async do
+        @request_client.conn.delete do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
+          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
+        end
+      end
+    end
+
+    # Used to partial update a Document Index given its ID.
+    #
+    # @param id [String] A UUID string identifying this document index.
+    # @param label [String] A human-readable label for the document index
+    # @param status [ENTITY_STATUS] The current status of the document index
+    #   * `ACTIVE` - Active
+    #   * `ARCHIVED` - Archived
+    # @param environment [ENVIRONMENT_ENUM] The environment this document index is used in
+    #   * `DEVELOPMENT` - Development
+    #   * `STAGING` - Staging
+    #   * `PRODUCTION` - Production
+    # @param request_options [RequestOptions]
+    # @return [DocumentIndexRead]
+    def partial_update(id:, label: nil, status: nil, environment: nil, request_options: nil)
+      Async do
+        response = @request_client.conn.patch do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
+          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.body = {
+            **(request_options&.additional_body_parameters || {}),
+            label: label,
+            status: status,
+            environment: environment
+          }.compact
           req.url "#{@request_client.default_environment[:Default]}/v1/document-indexes/#{id}"
         end
         DocumentIndexRead.from_json(json_object: response.body)
