@@ -13,7 +13,7 @@ module Vellum
     # @param value [VellumImage]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [WorkflowOutputImage]
-    def initialize(id:, name:, value:, additional_properties: nil)
+    def initialize(id:, name:, value: nil, additional_properties: nil)
       # @type [String]
       @id = id
       # @type [String] The output's name, as defined in the workflow
@@ -56,7 +56,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      VellumImage.validate_raw(obj: obj.value)
+      obj.value.nil? || VellumImage.validate_raw(obj: obj.value)
     end
   end
 end

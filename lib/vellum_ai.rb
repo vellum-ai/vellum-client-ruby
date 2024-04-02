@@ -10,6 +10,7 @@ require_relative "vellum_ai/folder_entities/client"
 require_relative "vellum_ai/model_versions/client"
 require_relative "vellum_ai/registered_prompts/client"
 require_relative "vellum_ai/sandboxes/client"
+require_relative "vellum_ai/test_suite_runs/client"
 require_relative "vellum_ai/test_suites/client"
 require_relative "vellum_ai/workflow_deployments/client"
 require_relative "vellum_ai/types/prompt_deployment_input_request"
@@ -29,7 +30,7 @@ require_relative "vellum_ai/types/submit_workflow_execution_actual_request"
 module Vellum
   class Client
     attr_reader :deployments, :document_indexes, :documents, :folder_entities, :model_versions, :registered_prompts,
-                :sandboxes, :test_suites, :workflow_deployments
+                :sandboxes, :test_suite_runs, :test_suites, :workflow_deployments
 
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -46,6 +47,7 @@ module Vellum
       @model_versions = ModelVersionsClient.new(request_client: @request_client)
       @registered_prompts = RegisteredPromptsClient.new(request_client: @request_client)
       @sandboxes = SandboxesClient.new(request_client: @request_client)
+      @test_suite_runs = TestSuiteRunsClient.new(request_client: @request_client)
       @test_suites = TestSuitesClient.new(request_client: @request_client)
       @workflow_deployments = WorkflowDeploymentsClient.new(request_client: @request_client)
     end
@@ -251,7 +253,7 @@ module Vellum
 
   class AsyncClient
     attr_reader :deployments, :document_indexes, :documents, :folder_entities, :model_versions, :registered_prompts,
-                :sandboxes, :test_suites, :workflow_deployments
+                :sandboxes, :test_suite_runs, :test_suites, :workflow_deployments
 
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -268,6 +270,7 @@ module Vellum
       @model_versions = AsyncModelVersionsClient.new(request_client: @async_request_client)
       @registered_prompts = AsyncRegisteredPromptsClient.new(request_client: @async_request_client)
       @sandboxes = AsyncSandboxesClient.new(request_client: @async_request_client)
+      @test_suite_runs = AsyncTestSuiteRunsClient.new(request_client: @async_request_client)
       @test_suites = AsyncTestSuitesClient.new(request_client: @async_request_client)
       @workflow_deployments = AsyncWorkflowDeploymentsClient.new(request_client: @async_request_client)
     end
