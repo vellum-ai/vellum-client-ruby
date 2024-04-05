@@ -7,6 +7,8 @@ require_relative "templating_node_json_result"
 require_relative "templating_node_chat_history_result"
 require_relative "templating_node_search_results_result"
 require_relative "templating_node_error_result"
+require_relative "templating_node_array_result"
+require_relative "templating_node_function_call_result"
 
 module Vellum
   class TemplatingNodeResultOutput
@@ -43,6 +45,10 @@ module Vellum
                  TemplatingNodeSearchResultsResult.from_json(json_object: json_object)
                when "ERROR"
                  TemplatingNodeErrorResult.from_json(json_object: json_object)
+               when "ARRAY"
+                 TemplatingNodeArrayResult.from_json(json_object: json_object)
+               when "FUNCTION_CALL"
+                 TemplatingNodeFunctionCallResult.from_json(json_object: json_object)
                else
                  TemplatingNodeStringResult.from_json(json_object: json_object)
                end
@@ -65,6 +71,10 @@ module Vellum
       when "SEARCH_RESULTS"
         { **@member.to_json, type: @discriminant }.to_json
       when "ERROR"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ARRAY"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "FUNCTION_CALL"
         { **@member.to_json, type: @discriminant }.to_json
       else
         { "type": @discriminant, value: @member }.to_json
@@ -90,6 +100,10 @@ module Vellum
         TemplatingNodeSearchResultsResult.validate_raw(obj: obj)
       when "ERROR"
         TemplatingNodeErrorResult.validate_raw(obj: obj)
+      when "ARRAY"
+        TemplatingNodeArrayResult.validate_raw(obj: obj)
+      when "FUNCTION_CALL"
+        TemplatingNodeFunctionCallResult.validate_raw(obj: obj)
       else
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -137,6 +151,18 @@ module Vellum
     # @return [TemplatingNodeResultOutput]
     def self.error(member:)
       new(member: member, discriminant: "ERROR")
+    end
+
+    # @param member [TemplatingNodeArrayResult]
+    # @return [TemplatingNodeResultOutput]
+    def self.array(member:)
+      new(member: member, discriminant: "ARRAY")
+    end
+
+    # @param member [TemplatingNodeFunctionCallResult]
+    # @return [TemplatingNodeResultOutput]
+    def self.function_call(member:)
+      new(member: member, discriminant: "FUNCTION_CALL")
     end
   end
 end

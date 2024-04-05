@@ -22,7 +22,7 @@ module Vellum
     # @param exec_config [TestSuiteRunExecConfig] Configuration that defines how the Test Suite should be run
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [TestSuiteRunRead]
-    def initialize(id:, created:, test_suite:, state: nil, exec_config: nil, additional_properties: nil)
+    def initialize(id:, created:, test_suite:, state:, exec_config: nil, additional_properties: nil)
       # @type [String]
       @id = id
       # @type [DateTime]
@@ -89,7 +89,7 @@ module Vellum
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       TestSuiteRunTestSuite.validate_raw(obj: obj.test_suite)
-      obj.state&.is_a?(TEST_SUITE_RUN_STATE) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
+      obj.state.is_a?(TEST_SUITE_RUN_STATE) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.exec_config.nil? || TestSuiteRunExecConfig.validate_raw(obj: obj.exec_config)
     end
   end

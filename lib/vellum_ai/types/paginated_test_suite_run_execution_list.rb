@@ -13,7 +13,7 @@ module Vellum
     # @param results [Array<TestSuiteRunExecution>]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [PaginatedTestSuiteRunExecutionList]
-    def initialize(count: nil, next_: nil, previous: nil, results: nil, additional_properties: nil)
+    def initialize(count:, results:, next_: nil, previous: nil, additional_properties: nil)
       # @type [Integer]
       @count = count
       # @type [String]
@@ -55,10 +55,10 @@ module Vellum
     # @param obj [Object]
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.count&.is_a?(Integer) != false || raise("Passed value for field obj.count is not the expected type, validation failed.")
+      obj.count.is_a?(Integer) != false || raise("Passed value for field obj.count is not the expected type, validation failed.")
       obj.next_&.is_a?(String) != false || raise("Passed value for field obj.next_ is not the expected type, validation failed.")
       obj.previous&.is_a?(String) != false || raise("Passed value for field obj.previous is not the expected type, validation failed.")
-      obj.results&.is_a?(Array) != false || raise("Passed value for field obj.results is not the expected type, validation failed.")
+      obj.results.is_a?(Array) != false || raise("Passed value for field obj.results is not the expected type, validation failed.")
     end
   end
 end

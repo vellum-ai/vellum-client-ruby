@@ -8,6 +8,7 @@ require_relative "node_input_compiled_chat_history_value"
 require_relative "node_input_compiled_search_results_value"
 require_relative "node_input_compiled_error_value"
 require_relative "node_input_compiled_array_value"
+require_relative "node_input_compiled_function_call"
 
 module Vellum
   class NodeInputVariableCompiledValue
@@ -46,6 +47,8 @@ module Vellum
                  NodeInputCompiledErrorValue.from_json(json_object: json_object)
                when "ARRAY"
                  NodeInputCompiledArrayValue.from_json(json_object: json_object)
+               when "FUNCTION_CALL"
+                 NodeInputCompiledFunctionCall.from_json(json_object: json_object)
                else
                  NodeInputCompiledStringValue.from_json(json_object: json_object)
                end
@@ -70,6 +73,8 @@ module Vellum
       when "ERROR"
         { **@member.to_json, type: @discriminant }.to_json
       when "ARRAY"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "FUNCTION_CALL"
         { **@member.to_json, type: @discriminant }.to_json
       else
         { "type": @discriminant, value: @member }.to_json
@@ -97,6 +102,8 @@ module Vellum
         NodeInputCompiledErrorValue.validate_raw(obj: obj)
       when "ARRAY"
         NodeInputCompiledArrayValue.validate_raw(obj: obj)
+      when "FUNCTION_CALL"
+        NodeInputCompiledFunctionCall.validate_raw(obj: obj)
       else
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -150,6 +157,12 @@ module Vellum
     # @return [NodeInputVariableCompiledValue]
     def self.array(member:)
       new(member: member, discriminant: "ARRAY")
+    end
+
+    # @param member [NodeInputCompiledFunctionCall]
+    # @return [NodeInputVariableCompiledValue]
+    def self.function_call(member:)
+      new(member: member, discriminant: "FUNCTION_CALL")
     end
   end
 end

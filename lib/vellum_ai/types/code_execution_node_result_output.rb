@@ -7,6 +7,8 @@ require_relative "code_execution_node_json_result"
 require_relative "code_execution_node_chat_history_result"
 require_relative "code_execution_node_search_results_result"
 require_relative "code_execution_node_error_result"
+require_relative "code_execution_node_array_result"
+require_relative "code_execution_node_function_call_result"
 
 module Vellum
   class CodeExecutionNodeResultOutput
@@ -43,6 +45,10 @@ module Vellum
                  CodeExecutionNodeSearchResultsResult.from_json(json_object: json_object)
                when "ERROR"
                  CodeExecutionNodeErrorResult.from_json(json_object: json_object)
+               when "ARRAY"
+                 CodeExecutionNodeArrayResult.from_json(json_object: json_object)
+               when "FUNCTION_CALL"
+                 CodeExecutionNodeFunctionCallResult.from_json(json_object: json_object)
                else
                  CodeExecutionNodeStringResult.from_json(json_object: json_object)
                end
@@ -65,6 +71,10 @@ module Vellum
       when "SEARCH_RESULTS"
         { **@member.to_json, type: @discriminant }.to_json
       when "ERROR"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ARRAY"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "FUNCTION_CALL"
         { **@member.to_json, type: @discriminant }.to_json
       else
         { "type": @discriminant, value: @member }.to_json
@@ -90,6 +100,10 @@ module Vellum
         CodeExecutionNodeSearchResultsResult.validate_raw(obj: obj)
       when "ERROR"
         CodeExecutionNodeErrorResult.validate_raw(obj: obj)
+      when "ARRAY"
+        CodeExecutionNodeArrayResult.validate_raw(obj: obj)
+      when "FUNCTION_CALL"
+        CodeExecutionNodeFunctionCallResult.validate_raw(obj: obj)
       else
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -137,6 +151,18 @@ module Vellum
     # @return [CodeExecutionNodeResultOutput]
     def self.error(member:)
       new(member: member, discriminant: "ERROR")
+    end
+
+    # @param member [CodeExecutionNodeArrayResult]
+    # @return [CodeExecutionNodeResultOutput]
+    def self.array(member:)
+      new(member: member, discriminant: "ARRAY")
+    end
+
+    # @param member [CodeExecutionNodeFunctionCallResult]
+    # @return [CodeExecutionNodeResultOutput]
+    def self.function_call(member:)
+      new(member: member, discriminant: "FUNCTION_CALL")
     end
   end
 end

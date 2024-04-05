@@ -23,7 +23,7 @@ module Vellum
     # @param exec_config [Hash] Configuration that defines how the Test Suite should be runRequest of type TestSuiteRunExecConfigRequest, as a Hash
     # @param request_options [RequestOptions]
     # @return [TestSuiteRunRead]
-    def create(exec_config:, test_suite_id: nil, request_options: nil)
+    def create(test_suite_id:, exec_config:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
@@ -58,7 +58,7 @@ module Vellum
     # @param offset [Integer] The initial index from which to return the results.
     # @param request_options [RequestOptions]
     # @return [PaginatedTestSuiteRunExecutionList]
-    def list_test_suite_run_executions(id:, limit: nil, offset: nil, request_options: nil)
+    def list_executions(id:, limit: nil, offset: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X_API_KEY"] = request_options.api_key unless request_options&.api_key.nil?
@@ -90,7 +90,7 @@ module Vellum
     # @param exec_config [Hash] Configuration that defines how the Test Suite should be runRequest of type TestSuiteRunExecConfigRequest, as a Hash
     # @param request_options [RequestOptions]
     # @return [TestSuiteRunRead]
-    def create(exec_config:, test_suite_id: nil, request_options: nil)
+    def create(test_suite_id:, exec_config:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -129,7 +129,7 @@ module Vellum
     # @param offset [Integer] The initial index from which to return the results.
     # @param request_options [RequestOptions]
     # @return [PaginatedTestSuiteRunExecutionList]
-    def list_test_suite_run_executions(id:, limit: nil, offset: nil, request_options: nil)
+    def list_executions(id:, limit: nil, offset: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
