@@ -1,5 +1,6 @@
 # Vellum Ruby Library
 
+[![Gem Version](https://img.shields.io/badge/vellum_ai-v0.3.15-red?logo=ruby)](https://rubygems.org/gems/vellum_ai)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 
