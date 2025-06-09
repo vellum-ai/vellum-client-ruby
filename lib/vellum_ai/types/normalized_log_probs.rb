@@ -1,50 +1,63 @@
 # frozen_string_literal: true
-
 require_relative "normalized_token_log_probs"
+require "ostruct"
 require "json"
 
 module Vellum
   class NormalizedLogProbs
-    attr_reader :tokens, :likelihood, :additional_properties
+  # @return [Array<Vellum::NormalizedTokenLogProbs>] 
+    attr_reader :tokens
+  # @return [Float] 
+    attr_reader :likelihood
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param tokens [Array<NormalizedTokenLogProbs>]
-    # @param likelihood [Float]
+    OMIT = Object.new
+
+    # @param tokens [Array<Vellum::NormalizedTokenLogProbs>] 
+    # @param likelihood [Float] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [NormalizedLogProbs]
-    def initialize(tokens:, likelihood: nil, additional_properties: nil)
-      # @type [Array<NormalizedTokenLogProbs>]
+    # @return [Vellum::NormalizedLogProbs]
+    def initialize(tokens:, likelihood: OMIT, additional_properties: nil)
       @tokens = tokens
-      # @type [Float]
-      @likelihood = likelihood
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @likelihood = likelihood if likelihood != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "tokens": tokens, "likelihood": likelihood }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of NormalizedLogProbs
+# Deserialize a JSON object to an instance of NormalizedLogProbs
     #
-    # @param json_object [JSON]
-    # @return [NormalizedLogProbs]
+    # @param json_object [String] 
+    # @return [Vellum::NormalizedLogProbs]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      tokens = parsed_json["tokens"].map do |v|
-        v = v.to_json
-        NormalizedTokenLogProbs.from_json(json_object: v)
-      end
-      likelihood = struct.likelihood
-      new(tokens: tokens, likelihood: likelihood, additional_properties: struct)
+      tokens = parsed_json["tokens"]&.map do | item |
+  item = item.to_json
+  Vellum::NormalizedTokenLogProbs.from_json(json_object: item)
+end
+      likelihood = parsed_json["likelihood"]
+      new(
+        tokens: tokens,
+        likelihood: likelihood,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of NormalizedLogProbs to a JSON object
+# Serialize an instance of NormalizedLogProbs to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "tokens": @tokens, "likelihood": @likelihood }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.tokens.is_a?(Array) != false || raise("Passed value for field obj.tokens is not the expected type, validation failed.")

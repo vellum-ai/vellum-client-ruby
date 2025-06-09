@@ -1,16 +1,32 @@
 # frozen_string_literal: true
 
 module Vellum
-  # @type [VELLUM_VARIABLE_TYPE]
-  VELLUM_VARIABLE_TYPE = {
-    string: "STRING",
-    number: "NUMBER",
-    json: "JSON",
-    chat_history: "CHAT_HISTORY",
-    search_results: "SEARCH_RESULTS",
-    error: "ERROR",
-    array: "ARRAY",
-    function_call: "FUNCTION_CALL",
-    image: "IMAGE"
-  }.freeze
+# * `STRING` - STRING
+#  * `NUMBER` - NUMBER
+#  * `JSON` - JSON
+#  * `CHAT_HISTORY` - CHAT_HISTORY
+#  * `SEARCH_RESULTS` - SEARCH_RESULTS
+#  * `ERROR` - ERROR
+#  * `ARRAY` - ARRAY
+#  * `FUNCTION_CALL` - FUNCTION_CALL
+#  * `IMAGE` - IMAGE
+#  * `AUDIO` - AUDIO
+#  * `DOCUMENT` - DOCUMENT
+#  * `NULL` - NULL
+  class VellumVariableType
+
+    STRING = "STRING"
+    NUMBER = "NUMBER"
+    JSON_ = "JSON"
+    CHAT_HISTORY = "CHAT_HISTORY"
+    SEARCH_RESULTS = "SEARCH_RESULTS"
+    ERROR = "ERROR"
+    ARRAY = "ARRAY"
+    FUNCTION_CALL = "FUNCTION_CALL"
+    IMAGE = "IMAGE"
+    AUDIO = "AUDIO"
+    DOCUMENT = "DOCUMENT"
+    NULL = "NULL"
+
+  end
 end

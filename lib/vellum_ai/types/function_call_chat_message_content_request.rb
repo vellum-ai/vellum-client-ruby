@@ -1,52 +1,69 @@
 # frozen_string_literal: true
-
 require_relative "function_call_chat_message_content_value_request"
+require "ostruct"
 require "json"
 
 module Vellum
-  # A function call value that is used in a chat message.
+# A function call value that is used in a chat message.
   class FunctionCallChatMessageContentRequest
-    attr_reader :value, :additional_properties
+  # @return [String] 
+    attr_reader :type
+  # @return [Vellum::FunctionCallChatMessageContentValueRequest] 
+    attr_reader :value
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param value [FunctionCallChatMessageContentValueRequest]
+    OMIT = Object.new
+
+    # @param type [String] 
+    # @param value [Vellum::FunctionCallChatMessageContentValueRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [FunctionCallChatMessageContentRequest]
-    def initialize(value:, additional_properties: nil)
-      # @type [FunctionCallChatMessageContentValueRequest]
+    # @return [Vellum::FunctionCallChatMessageContentRequest]
+    def initialize(type:, value:, additional_properties: nil)
+      @type = type
       @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "type": type, "value": value }
     end
-
-    # Deserialize a JSON object to an instance of FunctionCallChatMessageContentRequest
+# Deserialize a JSON object to an instance of
+#  FunctionCallChatMessageContentRequest
     #
-    # @param json_object [JSON]
-    # @return [FunctionCallChatMessageContentRequest]
+    # @param json_object [String] 
+    # @return [Vellum::FunctionCallChatMessageContentRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      if parsed_json["value"].nil?
-        value = nil
-      else
+      type = parsed_json["type"]
+      unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
-        value = FunctionCallChatMessageContentValueRequest.from_json(json_object: value)
+        value = Vellum::FunctionCallChatMessageContentValueRequest.from_json(json_object: value)
+      else
+        value = nil
       end
-      new(value: value, additional_properties: struct)
+      new(
+        type: type,
+        value: value,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of FunctionCallChatMessageContentRequest to a JSON object
+# Serialize an instance of FunctionCallChatMessageContentRequest to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      FunctionCallChatMessageContentValueRequest.validate_raw(obj: obj.value)
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      Vellum::FunctionCallChatMessageContentValueRequest.validate_raw(obj: obj.value)
     end
   end
 end

@@ -1,90 +1,71 @@
 # frozen_string_literal: true
-
+require "ostruct"
 require "json"
-require_relative "fulfilled_function_call"
-require_relative "rejected_function_call"
 
 module Vellum
+# The final resolved function call value.
   class FunctionCall
-    attr_reader :member, :discriminant
+  # @return [Hash{String => Object}] 
+    attr_reader :arguments
+  # @return [String] 
+    attr_reader :id
+  # @return [String] 
+    attr_reader :name
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    private_class_method :new
-    alias kind_of? is_a?
-    # @param member [Object]
-    # @param discriminant [String]
-    # @return [FunctionCall]
-    def initialize(member:, discriminant:)
-      # @type [Object]
-      @member = member
-      # @type [String]
-      @discriminant = discriminant
+    OMIT = Object.new
+
+    # @param arguments [Hash{String => Object}] 
+    # @param id [String] 
+    # @param name [String] 
+    # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
+    # @return [Vellum::FunctionCall]
+    def initialize(arguments:, id: OMIT, name:, additional_properties: nil)
+      @arguments = arguments
+      @id = id if id != OMIT
+      @name = name
+      @additional_properties = additional_properties
+      @_field_set = { "arguments": arguments, "id": id, "name": name }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of FunctionCall
+# Deserialize a JSON object to an instance of FunctionCall
     #
-    # @param json_object [JSON]
-    # @return [FunctionCall]
+    # @param json_object [String] 
+    # @return [Vellum::FunctionCall]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      member = case struct.state
-               when "FULFILLED"
-                 FulfilledFunctionCall.from_json(json_object: json_object)
-               when "REJECTED"
-                 RejectedFunctionCall.from_json(json_object: json_object)
-               else
-                 FulfilledFunctionCall.from_json(json_object: json_object)
-               end
-      new(member: member, discriminant: struct.state)
+      parsed_json = JSON.parse(json_object)
+      arguments = parsed_json["arguments"]
+      id = parsed_json["id"]
+      name = parsed_json["name"]
+      new(
+        arguments: arguments,
+        id: id,
+        name: name,
+        additional_properties: struct
+      )
     end
-
-    # For Union Types, to_json functionality is delegated to the wrapped member.
+# Serialize an instance of FunctionCall to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      case @discriminant
-      when "FULFILLED"
-        { **@member.to_json, state: @discriminant }.to_json
-      when "REJECTED"
-        { **@member.to_json, state: @discriminant }.to_json
-      else
-        { "state": @discriminant, value: @member }.to_json
-      end
-      @member.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      case obj.state
-      when "FULFILLED"
-        FulfilledFunctionCall.validate_raw(obj: obj)
-      when "REJECTED"
-        RejectedFunctionCall.validate_raw(obj: obj)
-      else
-        raise("Passed value matched no type within the union, validation failed.")
-      end
-    end
-
-    # For Union Types, is_a? functionality is delegated to the wrapped member.
-    #
-    # @param obj [Object]
-    # @return [Boolean]
-    def is_a?(obj)
-      @member.is_a?(obj)
-    end
-
-    # @param member [FulfilledFunctionCall]
-    # @return [FunctionCall]
-    def self.fulfilled(member:)
-      new(member: member, discriminant: "FULFILLED")
-    end
-
-    # @param member [RejectedFunctionCall]
-    # @return [FunctionCall]
-    def self.rejected(member:)
-      new(member: member, discriminant: "REJECTED")
+      obj.arguments.is_a?(Hash) != false || raise("Passed value for field obj.arguments is not the expected type, validation failed.")
+      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
 end

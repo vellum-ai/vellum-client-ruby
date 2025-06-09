@@ -1,56 +1,104 @@
 # frozen_string_literal: true
-
 require_relative "vellum_variable_type"
+require_relative "vellum_value"
+require_relative "vellum_variable_extensions"
+require "ostruct"
 require "json"
 
 module Vellum
   class VellumVariable
-    attr_reader :id, :key, :type, :additional_properties
+  # @return [String] 
+    attr_reader :id
+  # @return [String] 
+    attr_reader :key
+  # @return [Vellum::VellumVariableType] 
+    attr_reader :type
+  # @return [Boolean] 
+    attr_reader :required
+  # @return [Vellum::VellumValue] 
+    attr_reader :default
+  # @return [Vellum::VellumVariableExtensions] 
+    attr_reader :extensions
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param id [String]
-    # @param key [String]
-    # @param type [VELLUM_VARIABLE_TYPE]
+    OMIT = Object.new
+
+    # @param id [String] 
+    # @param key [String] 
+    # @param type [Vellum::VellumVariableType] 
+    # @param required [Boolean] 
+    # @param default [Vellum::VellumValue] 
+    # @param extensions [Vellum::VellumVariableExtensions] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [VellumVariable]
-    def initialize(id:, key:, type:, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::VellumVariable]
+    def initialize(id:, key:, type:, required: OMIT, default: OMIT, extensions: OMIT, additional_properties: nil)
       @id = id
-      # @type [String]
       @key = key
-      # @type [VELLUM_VARIABLE_TYPE]
       @type = type
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @required = required if required != OMIT
+      @default = default if default != OMIT
+      @extensions = extensions if extensions != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "id": id, "key": key, "type": type, "required": required, "default": default, "extensions": extensions }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of VellumVariable
+# Deserialize a JSON object to an instance of VellumVariable
     #
-    # @param json_object [JSON]
-    # @return [VellumVariable]
+    # @param json_object [String] 
+    # @return [Vellum::VellumVariable]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      id = struct.id
-      key = struct.key
-      type = VELLUM_VARIABLE_TYPE.key(parsed_json["type"]) || parsed_json["type"]
-      new(id: id, key: key, type: type, additional_properties: struct)
+      id = parsed_json["id"]
+      key = parsed_json["key"]
+      type = parsed_json["type"]
+      required = parsed_json["required"]
+      unless parsed_json["default"].nil?
+        default = parsed_json["default"].to_json
+        default = Vellum::VellumValue.from_json(json_object: default)
+      else
+        default = nil
+      end
+      unless parsed_json["extensions"].nil?
+        extensions = parsed_json["extensions"].to_json
+        extensions = Vellum::VellumVariableExtensions.from_json(json_object: extensions)
+      else
+        extensions = nil
+      end
+      new(
+        id: id,
+        key: key,
+        type: type,
+        required: required,
+        default: default,
+        extensions: extensions,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of VellumVariable to a JSON object
+# Serialize an instance of VellumVariable to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "id": @id, "key": @key, "type": VELLUM_VARIABLE_TYPE[@type] || @type }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.key.is_a?(String) != false || raise("Passed value for field obj.key is not the expected type, validation failed.")
-      obj.type.is_a?(VELLUM_VARIABLE_TYPE) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.type.is_a?(Vellum::VellumVariableType) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.required&.is_a?(Boolean) != false || raise("Passed value for field obj.required is not the expected type, validation failed.")
+      obj.default.nil? || Vellum::VellumValue.validate_raw(obj: obj.default)
+      obj.extensions.nil? || Vellum::VellumVariableExtensions.validate_raw(obj: obj.extensions)
     end
   end
 end

@@ -1,10 +1,18 @@
 # frozen_string_literal: true
-
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
+require_relative "lib/gemconfig"
 require_relative "lib/gemconfig"
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do | spec |
   spec.name = "vellum_ai"
-  spec.version = "0.3.15"
+  spec.version = "0.3.3"
+  spec.licenses = ["MIT"]
   spec.authors = Vellum::Gemconfig::AUTHORS
   spec.email = Vellum::Gemconfig::EMAIL
   spec.summary = Vellum::Gemconfig::SUMMARY
@@ -14,13 +22,14 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = Vellum::Gemconfig::SOURCE_CODE_URI
   spec.metadata["changelog_uri"] = Vellum::Gemconfig::CHANGELOG_URI
-  spec.files = Dir.glob("lib/**/*")
+  spec.files = Dir.glob("lib/**/*") << "LICENSE"
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.add_dependency "async-http-faraday", "~> 0.12"
-  spec.add_dependency "faraday", "~> 2.7"
-  spec.add_dependency "faraday-multipart", "~> 1.0"
-  spec.add_dependency "faraday-retry", "~> 2.2"
-  spec.add_dependency "mini_mime", "~> 1.1"
+  spec.add_dependency "faraday", ">= 1.10", "< 3.0"
+  spec.add_dependency "faraday-net_http", ">= 1.0", "< 4.0"
+  spec.add_dependency "faraday-retry", ">= 1.0", "< 3.0"
+  spec.add_dependency "async-http-faraday", ">= 0.0", "< 1.0"
+  spec.add_dependency "mini_mime"
+  spec.add_dependency "faraday-multipart", ">= 0.0", "< 2.0"
 end

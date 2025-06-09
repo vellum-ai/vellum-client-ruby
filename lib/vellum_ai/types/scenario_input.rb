@@ -1,70 +1,74 @@
 # frozen_string_literal: true
-
-require_relative "scenario_input_type_enum"
-require_relative "chat_message"
 require "json"
+require_relative "scenario_input_string_variable_value"
+require_relative "scenario_input_json_variable_value"
+require_relative "scenario_input_chat_history_variable_value"
 
 module Vellum
   class ScenarioInput
-    attr_reader :key, :type, :value, :chat_history, :additional_properties
 
-    # @param key [String]
-    # @param type [SCENARIO_INPUT_TYPE_ENUM]
-    # @param value [String]
-    # @param chat_history [Array<ChatMessage>]
-    # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [ScenarioInput]
-    def initialize(key:, type: nil, value: nil, chat_history: nil, additional_properties: nil)
-      # @type [String]
-      @key = key
-      # @type [SCENARIO_INPUT_TYPE_ENUM]
-      @type = type
-      # @type [String]
-      @value = value
-      # @type [Array<ChatMessage>]
-      @chat_history = chat_history
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
-      @additional_properties = additional_properties
-    end
 
-    # Deserialize a JSON object to an instance of ScenarioInput
+# Deserialize a JSON object to an instance of ScenarioInput
     #
-    # @param json_object [JSON]
-    # @return [ScenarioInput]
+    # @param json_object [String] 
+    # @return [Vellum::ScenarioInput]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      parsed_json = JSON.parse(json_object)
-      key = struct.key
-      type = SCENARIO_INPUT_TYPE_ENUM.key(parsed_json["type"]) || parsed_json["type"]
-      value = struct.value
-      chat_history = parsed_json["chat_history"].map do |v|
-        v = v.to_json
-        ChatMessage.from_json(json_object: v)
+      begin
+        Vellum::ScenarioInputStringVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ScenarioInputStringVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
       end
-      new(key: key, type: type, value: value, chat_history: chat_history, additional_properties: struct)
+      begin
+        Vellum::ScenarioInputJsonVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ScenarioInputJsonVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ScenarioInputChatHistoryVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ScenarioInputChatHistoryVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+ return struct
     end
-
-    # Serialize an instance of ScenarioInput to a JSON object
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @return [JSON]
-    def to_json(*_args)
-      {
-        "key": @key,
-        "type": SCENARIO_INPUT_TYPE_ENUM[@type] || @type,
-        "value": @value,
-        "chat_history": @chat_history
-      }.to_json
-    end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
-    #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.key.is_a?(String) != false || raise("Passed value for field obj.key is not the expected type, validation failed.")
-      obj.type&.is_a?(SCENARIO_INPUT_TYPE_ENUM) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
-      obj.chat_history&.is_a?(Array) != false || raise("Passed value for field obj.chat_history is not the expected type, validation failed.")
+      begin
+        return Vellum::ScenarioInputStringVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ScenarioInputJsonVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ScenarioInputChatHistoryVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      raise("Passed value matched no type within the union, validation failed.")
     end
   end
 end

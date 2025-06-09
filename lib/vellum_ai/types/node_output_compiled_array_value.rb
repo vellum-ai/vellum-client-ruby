@@ -1,54 +1,83 @@
 # frozen_string_literal: true
-
-require_relative "array_variable_value_item"
+require_relative "vellum_value"
+require_relative "workflow_node_result_event_state"
+require "ostruct"
 require "json"
 
 module Vellum
+# An output returned by a node that is of type ARRAY.
   class NodeOutputCompiledArrayValue
-    attr_reader :node_output_id, :value, :additional_properties
+  # @return [String] 
+    attr_reader :type
+  # @return [Array<Vellum::VellumValue>] 
+    attr_reader :value
+  # @return [String] 
+    attr_reader :node_output_id
+  # @return [Vellum::WorkflowNodeResultEventState] 
+    attr_reader :state
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param node_output_id [String]
-    # @param value [Array<ArrayVariableValueItem>]
+    OMIT = Object.new
+
+    # @param type [String] 
+    # @param value [Array<Vellum::VellumValue>] 
+    # @param node_output_id [String] 
+    # @param state [Vellum::WorkflowNodeResultEventState] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [NodeOutputCompiledArrayValue]
-    def initialize(node_output_id:, value: nil, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::NodeOutputCompiledArrayValue]
+    def initialize(type:, value: OMIT, node_output_id:, state: OMIT, additional_properties: nil)
+      @type = type
+      @value = value if value != OMIT
       @node_output_id = node_output_id
-      # @type [Array<ArrayVariableValueItem>]
-      @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @state = state if state != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "type": type, "value": value, "node_output_id": node_output_id, "state": state }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of NodeOutputCompiledArrayValue
+# Deserialize a JSON object to an instance of NodeOutputCompiledArrayValue
     #
-    # @param json_object [JSON]
-    # @return [NodeOutputCompiledArrayValue]
+    # @param json_object [String] 
+    # @return [Vellum::NodeOutputCompiledArrayValue]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      node_output_id = struct.node_output_id
-      value = parsed_json["value"].map do |v|
-        v = v.to_json
-        ArrayVariableValueItem.from_json(json_object: v)
-      end
-      new(node_output_id: node_output_id, value: value, additional_properties: struct)
+      type = parsed_json["type"]
+      value = parsed_json["value"]&.map do | item |
+  item = item.to_json
+  Vellum::VellumValue.from_json(json_object: item)
+end
+      node_output_id = parsed_json["node_output_id"]
+      state = parsed_json["state"]
+      new(
+        type: type,
+        value: value,
+        node_output_id: node_output_id,
+        state: state,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of NodeOutputCompiledArrayValue to a JSON object
+# Serialize an instance of NodeOutputCompiledArrayValue to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "node_output_id": @node_output_id, "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.node_output_id.is_a?(String) != false || raise("Passed value for field obj.node_output_id is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.node_output_id.is_a?(String) != false || raise("Passed value for field obj.node_output_id is not the expected type, validation failed.")
+      obj.state&.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
     end
   end
 end

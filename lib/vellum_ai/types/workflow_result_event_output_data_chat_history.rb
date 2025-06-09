@@ -1,82 +1,107 @@
 # frozen_string_literal: true
-
 require_relative "workflow_node_result_event_state"
 require_relative "chat_message"
+require "ostruct"
 require "json"
 
 module Vellum
-  # A Chat History output streamed from a Workflow execution.
+# A Chat History output streamed from a Workflow execution.
   class WorkflowResultEventOutputDataChatHistory
-    attr_reader :id, :name, :state, :node_id, :delta, :value, :additional_properties
+  # @return [String] 
+    attr_reader :id
+  # @return [String] 
+    attr_reader :name
+  # @return [Vellum::WorkflowNodeResultEventState] 
+    attr_reader :state
+  # @return [String] 
+    attr_reader :node_id
+  # @return [String] The newly output string value. Only relevant for string outputs with a state of
+#  STREAMING.
+    attr_reader :delta
+  # @return [String] 
+    attr_reader :type
+  # @return [Array<Vellum::ChatMessage>] 
+    attr_reader :value
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param id [String]
-    # @param name [String]
-    # @param state [WORKFLOW_NODE_RESULT_EVENT_STATE]
-    # @param node_id [String]
-    # @param delta [String] The newly output string value. Only relevant for string outputs with a state of STREAMING.
-    # @param value [Array<ChatMessage>]
+    OMIT = Object.new
+
+    # @param id [String] 
+    # @param name [String] 
+    # @param state [Vellum::WorkflowNodeResultEventState] 
+    # @param node_id [String] 
+    # @param delta [String] The newly output string value. Only relevant for string outputs with a state of
+#  STREAMING.
+    # @param type [String] 
+    # @param value [Array<Vellum::ChatMessage>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [WorkflowResultEventOutputDataChatHistory]
-    def initialize(name:, state:, node_id:, id: nil, delta: nil, value: nil, additional_properties: nil)
-      # @type [String]
-      @id = id
-      # @type [String]
+    # @return [Vellum::WorkflowResultEventOutputDataChatHistory]
+    def initialize(id: OMIT, name:, state:, node_id:, delta: OMIT, type:, value: OMIT, additional_properties: nil)
+      @id = id if id != OMIT
       @name = name
-      # @type [WORKFLOW_NODE_RESULT_EVENT_STATE]
       @state = state
-      # @type [String]
       @node_id = node_id
-      # @type [String] The newly output string value. Only relevant for string outputs with a state of STREAMING.
-      @delta = delta
-      # @type [Array<ChatMessage>]
-      @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @delta = delta if delta != OMIT
+      @type = type
+      @value = value if value != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "id": id, "name": name, "state": state, "node_id": node_id, "delta": delta, "type": type, "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of WorkflowResultEventOutputDataChatHistory
+# Deserialize a JSON object to an instance of
+#  WorkflowResultEventOutputDataChatHistory
     #
-    # @param json_object [JSON]
-    # @return [WorkflowResultEventOutputDataChatHistory]
+    # @param json_object [String] 
+    # @return [Vellum::WorkflowResultEventOutputDataChatHistory]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      id = struct.id
-      name = struct.name
-      state = WORKFLOW_NODE_RESULT_EVENT_STATE.key(parsed_json["state"]) || parsed_json["state"]
-      node_id = struct.node_id
-      delta = struct.delta
-      value = parsed_json["value"].map do |v|
-        v = v.to_json
-        ChatMessage.from_json(json_object: v)
-      end
-      new(id: id, name: name, state: state, node_id: node_id, delta: delta, value: value, additional_properties: struct)
+      id = parsed_json["id"]
+      name = parsed_json["name"]
+      state = parsed_json["state"]
+      node_id = parsed_json["node_id"]
+      delta = parsed_json["delta"]
+      type = parsed_json["type"]
+      value = parsed_json["value"]&.map do | item |
+  item = item.to_json
+  Vellum::ChatMessage.from_json(json_object: item)
+end
+      new(
+        id: id,
+        name: name,
+        state: state,
+        node_id: node_id,
+        delta: delta,
+        type: type,
+        value: value,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of WorkflowResultEventOutputDataChatHistory to a JSON object
+# Serialize an instance of WorkflowResultEventOutputDataChatHistory to a JSON
+#  object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      {
-        "id": @id,
-        "name": @name,
-        "state": WORKFLOW_NODE_RESULT_EVENT_STATE[@state] || @state,
-        "node_id": @node_id,
-        "delta": @delta,
-        "value": @value
-      }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.state.is_a?(WORKFLOW_NODE_RESULT_EVENT_STATE) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
+      obj.state.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
       obj.delta&.is_a?(String) != false || raise("Passed value for field obj.delta is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end

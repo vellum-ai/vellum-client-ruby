@@ -1,45 +1,75 @@
 # frozen_string_literal: true
-
+require_relative "deployment_provider_payload_response_payload"
+require_relative "compile_prompt_meta"
+require "ostruct"
 require "json"
 
 module Vellum
   class DeploymentProviderPayloadResponse
-    attr_reader :payload, :additional_properties
+  # @return [Vellum::DeploymentProviderPayloadResponsePayload] 
+    attr_reader :payload
+  # @return [Vellum::CompilePromptMeta] 
+    attr_reader :meta
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param payload [Hash{String => String}]
+    OMIT = Object.new
+
+    # @param payload [Vellum::DeploymentProviderPayloadResponsePayload] 
+    # @param meta [Vellum::CompilePromptMeta] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [DeploymentProviderPayloadResponse]
-    def initialize(payload:, additional_properties: nil)
-      # @type [Hash{String => String}]
+    # @return [Vellum::DeploymentProviderPayloadResponse]
+    def initialize(payload:, meta: OMIT, additional_properties: nil)
       @payload = payload
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @meta = meta if meta != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "payload": payload, "meta": meta }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of DeploymentProviderPayloadResponse
+# Deserialize a JSON object to an instance of DeploymentProviderPayloadResponse
     #
-    # @param json_object [JSON]
-    # @return [DeploymentProviderPayloadResponse]
+    # @param json_object [String] 
+    # @return [Vellum::DeploymentProviderPayloadResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      JSON.parse(json_object)
-      payload = struct.payload
-      new(payload: payload, additional_properties: struct)
+      parsed_json = JSON.parse(json_object)
+      unless parsed_json["payload"].nil?
+        payload = parsed_json["payload"].to_json
+        payload = Vellum::DeploymentProviderPayloadResponsePayload.from_json(json_object: payload)
+      else
+        payload = nil
+      end
+      unless parsed_json["meta"].nil?
+        meta = parsed_json["meta"].to_json
+        meta = Vellum::CompilePromptMeta.from_json(json_object: meta)
+      else
+        meta = nil
+      end
+      new(
+        payload: payload,
+        meta: meta,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of DeploymentProviderPayloadResponse to a JSON object
+# Serialize an instance of DeploymentProviderPayloadResponse to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "payload": @payload }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.payload.is_a?(Hash) != false || raise("Passed value for field obj.payload is not the expected type, validation failed.")
+      Vellum::DeploymentProviderPayloadResponsePayload.validate_raw(obj: obj.payload)
+      obj.meta.nil? || Vellum::CompilePromptMeta.validate_raw(obj: obj.meta)
     end
   end
 end
