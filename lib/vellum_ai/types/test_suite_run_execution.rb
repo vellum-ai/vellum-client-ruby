@@ -1,63 +1,77 @@
 # frozen_string_literal: true
-
 require_relative "test_suite_run_execution_output"
 require_relative "test_suite_run_execution_metric_result"
+require "ostruct"
 require "json"
 
 module Vellum
   class TestSuiteRunExecution
-    attr_reader :id, :test_case_id, :outputs, :metric_results, :additional_properties
+  # @return [String] 
+    attr_reader :id
+  # @return [String] 
+    attr_reader :test_case_id
+  # @return [Array<Vellum::TestSuiteRunExecutionOutput>] 
+    attr_reader :outputs
+  # @return [Array<Vellum::TestSuiteRunExecutionMetricResult>] 
+    attr_reader :metric_results
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param id [String]
-    # @param test_case_id [String]
-    # @param outputs [Array<TestSuiteRunExecutionOutput>]
-    # @param metric_results [Array<TestSuiteRunExecutionMetricResult>]
+    OMIT = Object.new
+
+    # @param id [String] 
+    # @param test_case_id [String] 
+    # @param outputs [Array<Vellum::TestSuiteRunExecutionOutput>] 
+    # @param metric_results [Array<Vellum::TestSuiteRunExecutionMetricResult>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [TestSuiteRunExecution]
+    # @return [Vellum::TestSuiteRunExecution]
     def initialize(id:, test_case_id:, outputs:, metric_results:, additional_properties: nil)
-      # @type [String]
       @id = id
-      # @type [String]
       @test_case_id = test_case_id
-      # @type [Array<TestSuiteRunExecutionOutput>]
       @outputs = outputs
-      # @type [Array<TestSuiteRunExecutionMetricResult>]
       @metric_results = metric_results
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "id": id, "test_case_id": test_case_id, "outputs": outputs, "metric_results": metric_results }
     end
-
-    # Deserialize a JSON object to an instance of TestSuiteRunExecution
+# Deserialize a JSON object to an instance of TestSuiteRunExecution
     #
-    # @param json_object [JSON]
-    # @return [TestSuiteRunExecution]
+    # @param json_object [String] 
+    # @return [Vellum::TestSuiteRunExecution]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      id = struct.id
-      test_case_id = struct.test_case_id
-      outputs = parsed_json["outputs"].map do |v|
-        v = v.to_json
-        TestSuiteRunExecutionOutput.from_json(json_object: v)
-      end
-      metric_results = parsed_json["metric_results"].map do |v|
-        v = v.to_json
-        TestSuiteRunExecutionMetricResult.from_json(json_object: v)
-      end
-      new(id: id, test_case_id: test_case_id, outputs: outputs, metric_results: metric_results,
-          additional_properties: struct)
+      id = parsed_json["id"]
+      test_case_id = parsed_json["test_case_id"]
+      outputs = parsed_json["outputs"]&.map do | item |
+  item = item.to_json
+  Vellum::TestSuiteRunExecutionOutput.from_json(json_object: item)
+end
+      metric_results = parsed_json["metric_results"]&.map do | item |
+  item = item.to_json
+  Vellum::TestSuiteRunExecutionMetricResult.from_json(json_object: item)
+end
+      new(
+        id: id,
+        test_case_id: test_case_id,
+        outputs: outputs,
+        metric_results: metric_results,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of TestSuiteRunExecution to a JSON object
+# Serialize an instance of TestSuiteRunExecution to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "id": @id, "test_case_id": @test_case_id, "outputs": @outputs, "metric_results": @metric_results }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")

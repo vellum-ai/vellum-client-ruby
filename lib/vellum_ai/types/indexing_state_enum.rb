@@ -1,12 +1,18 @@
 # frozen_string_literal: true
 
 module Vellum
-  # @type [INDEXING_STATE_ENUM]
-  INDEXING_STATE_ENUM = {
-    awaiting_processing: "AWAITING_PROCESSING",
-    queued: "QUEUED",
-    indexing: "INDEXING",
-    indexed: "INDEXED",
-    failed: "FAILED"
-  }.freeze
+# * `AWAITING_PROCESSING` - Awaiting Processing
+#  * `QUEUED` - Queued
+#  * `INDEXING` - Indexing
+#  * `INDEXED` - Indexed
+#  * `FAILED` - Failed
+  class IndexingStateEnum
+
+    AWAITING_PROCESSING = "AWAITING_PROCESSING"
+    QUEUED = "QUEUED"
+    INDEXING = "INDEXING"
+    INDEXED = "INDEXED"
+    FAILED = "FAILED"
+
+  end
 end

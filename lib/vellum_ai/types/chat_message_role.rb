@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module Vellum
-  # @type [CHAT_MESSAGE_ROLE]
-  CHAT_MESSAGE_ROLE = { system: "SYSTEM", assistant: "ASSISTANT", user: "USER", function: "FUNCTION" }.freeze
+# * `SYSTEM` - System
+#  * `ASSISTANT` - Assistant
+#  * `USER` - User
+#  * `FUNCTION` - Function
+  class ChatMessageRole
+
+    SYSTEM = "SYSTEM"
+    ASSISTANT = "ASSISTANT"
+    USER = "USER"
+    FUNCTION = "FUNCTION"
+
+  end
 end

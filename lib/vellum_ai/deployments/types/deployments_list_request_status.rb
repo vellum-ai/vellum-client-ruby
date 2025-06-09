@@ -2,7 +2,11 @@
 
 module Vellum
   module Deployments
-    # @type [DEPLOYMENTS_LIST_REQUEST_STATUS]
-    DEPLOYMENTS_LIST_REQUEST_STATUS = { active: "ACTIVE", archived: "ARCHIVED" }.freeze
+    class DeploymentsListRequestStatus
+
+      ACTIVE = "ACTIVE"
+      ARCHIVED = "ARCHIVED"
+
+    end
   end
 end

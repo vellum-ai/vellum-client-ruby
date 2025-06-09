@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require "json"
 require_relative "workflow_request_string_input_request"
 require_relative "workflow_request_json_input_request"
@@ -8,109 +7,84 @@ require_relative "workflow_request_number_input_request"
 
 module Vellum
   class WorkflowRequestInputRequest
-    attr_reader :member, :discriminant
 
-    private_class_method :new
-    alias kind_of? is_a?
-    # @param member [Object]
-    # @param discriminant [String]
-    # @return [WorkflowRequestInputRequest]
-    def initialize(member:, discriminant:)
-      # @type [Object]
-      @member = member
-      # @type [String]
-      @discriminant = discriminant
-    end
 
-    # Deserialize a JSON object to an instance of WorkflowRequestInputRequest
+# Deserialize a JSON object to an instance of WorkflowRequestInputRequest
     #
-    # @param json_object [JSON]
-    # @return [WorkflowRequestInputRequest]
+    # @param json_object [String] 
+    # @return [Vellum::WorkflowRequestInputRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      member = case struct.type
-               when "STRING"
-                 WorkflowRequestStringInputRequest.from_json(json_object: json_object)
-               when "JSON"
-                 WorkflowRequestJsonInputRequest.from_json(json_object: json_object)
-               when "CHAT_HISTORY"
-                 WorkflowRequestChatHistoryInputRequest.from_json(json_object: json_object)
-               when "NUMBER"
-                 WorkflowRequestNumberInputRequest.from_json(json_object: json_object)
-               else
-                 WorkflowRequestStringInputRequest.from_json(json_object: json_object)
-               end
-      new(member: member, discriminant: struct.type)
-    end
-
-    # For Union Types, to_json functionality is delegated to the wrapped member.
-    #
-    # @return [JSON]
-    def to_json(*_args)
-      case @discriminant
-      when "STRING"
-        { **@member.to_json, type: @discriminant }.to_json
-      when "JSON"
-        { **@member.to_json, type: @discriminant }.to_json
-      when "CHAT_HISTORY"
-        { **@member.to_json, type: @discriminant }.to_json
-      when "NUMBER"
-        { **@member.to_json, type: @discriminant }.to_json
-      else
-        { "type": @discriminant, value: @member }.to_json
+      begin
+        Vellum::WorkflowRequestStringInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestStringInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
       end
-      @member.to_json
+      begin
+        Vellum::WorkflowRequestJsonInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestJsonInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowRequestChatHistoryInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestChatHistoryInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowRequestNumberInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestNumberInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+ return struct
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      case obj.type
-      when "STRING"
-        WorkflowRequestStringInputRequest.validate_raw(obj: obj)
-      when "JSON"
-        WorkflowRequestJsonInputRequest.validate_raw(obj: obj)
-      when "CHAT_HISTORY"
-        WorkflowRequestChatHistoryInputRequest.validate_raw(obj: obj)
-      when "NUMBER"
-        WorkflowRequestNumberInputRequest.validate_raw(obj: obj)
-      else
-        raise("Passed value matched no type within the union, validation failed.")
+      begin
+        return Vellum::WorkflowRequestStringInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
       end
-    end
-
-    # For Union Types, is_a? functionality is delegated to the wrapped member.
-    #
-    # @param obj [Object]
-    # @return [Boolean]
-    def is_a?(obj)
-      @member.is_a?(obj)
-    end
-
-    # @param member [WorkflowRequestStringInputRequest]
-    # @return [WorkflowRequestInputRequest]
-    def self.string(member:)
-      new(member: member, discriminant: "STRING")
-    end
-
-    # @param member [WorkflowRequestJsonInputRequest]
-    # @return [WorkflowRequestInputRequest]
-    def self.json(member:)
-      new(member: member, discriminant: "JSON")
-    end
-
-    # @param member [WorkflowRequestChatHistoryInputRequest]
-    # @return [WorkflowRequestInputRequest]
-    def self.chat_history(member:)
-      new(member: member, discriminant: "CHAT_HISTORY")
-    end
-
-    # @param member [WorkflowRequestNumberInputRequest]
-    # @return [WorkflowRequestInputRequest]
-    def self.number(member:)
-      new(member: member, discriminant: "NUMBER")
+      begin
+        return Vellum::WorkflowRequestJsonInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowRequestChatHistoryInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowRequestNumberInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      raise("Passed value matched no type within the union, validation failed.")
     end
   end
 end

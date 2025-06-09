@@ -1,57 +1,78 @@
 # frozen_string_literal: true
-
+require "ostruct"
 require "json"
 
 module Vellum
   class SearchResultDocument
-    attr_reader :id, :label, :external_id, :metadata, :additional_properties
+  # @return [String] The ID of the document.
+    attr_reader :id
+  # @return [String] The human-readable name for the document.
+    attr_reader :label
+  # @return [String] The unique ID of the document as represented in an external system and specified
+#  when it was originally uploaded.
+    attr_reader :external_id
+  # @return [Hash{String => Object}] A previously supplied JSON object containing metadata that can be filtered on
+#  when searching.
+    attr_reader :metadata
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
+
+    OMIT = Object.new
 
     # @param id [String] The ID of the document.
     # @param label [String] The human-readable name for the document.
-    # @param external_id [String] The unique ID of the document as represented in an external system and specified when it was originally uploaded.
-    # @param metadata [Hash{String => String}] A previously supplied JSON object containing metadata that can be filtered on when searching.
+    # @param external_id [String] The unique ID of the document as represented in an external system and specified
+#  when it was originally uploaded.
+    # @param metadata [Hash{String => Object}] A previously supplied JSON object containing metadata that can be filtered on
+#  when searching.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SearchResultDocument]
-    def initialize(id:, label:, external_id: nil, metadata: nil, additional_properties: nil)
-      # @type [String] The ID of the document.
-      @id = id
-      # @type [String] The human-readable name for the document.
+    # @return [Vellum::SearchResultDocument]
+    def initialize(id: OMIT, label:, external_id: OMIT, metadata: OMIT, additional_properties: nil)
+      @id = id if id != OMIT
       @label = label
-      # @type [String] The unique ID of the document as represented in an external system and specified when it was originally uploaded.
-      @external_id = external_id
-      # @type [Hash{String => String}] A previously supplied JSON object containing metadata that can be filtered on when searching.
-      @metadata = metadata
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @external_id = external_id if external_id != OMIT
+      @metadata = metadata if metadata != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "id": id, "label": label, "external_id": external_id, "metadata": metadata }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of SearchResultDocument
+# Deserialize a JSON object to an instance of SearchResultDocument
     #
-    # @param json_object [JSON]
-    # @return [SearchResultDocument]
+    # @param json_object [String] 
+    # @return [Vellum::SearchResultDocument]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      JSON.parse(json_object)
-      id = struct.id
-      label = struct.label
-      external_id = struct.external_id
-      metadata = struct.metadata
-      new(id: id, label: label, external_id: external_id, metadata: metadata, additional_properties: struct)
+      parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
+      label = parsed_json["label"]
+      external_id = parsed_json["external_id"]
+      metadata = parsed_json["metadata"]
+      new(
+        id: id,
+        label: label,
+        external_id: external_id,
+        metadata: metadata,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of SearchResultDocument to a JSON object
+# Serialize an instance of SearchResultDocument to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "id": @id, "label": @label, "external_id": @external_id, "metadata": @metadata }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.external_id&.is_a?(String) != false || raise("Passed value for field obj.external_id is not the expected type, validation failed.")
       obj.metadata&.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")

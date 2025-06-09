@@ -1,118 +1,150 @@
 # frozen_string_literal: true
-
 require_relative "entity_status"
 require_relative "environment_enum"
 require "date"
+require "date"
 require_relative "vellum_variable"
+require "ostruct"
 require "json"
 
 module Vellum
   class SlimWorkflowDeployment
-    attr_reader :id, :name, :label, :status, :environment, :created, :last_deployed_on, :input_variables,
-                :output_variables, :additional_properties
+  # @return [String] 
+    attr_reader :id
+  # @return [String] A name that uniquely identifies this workflow deployment within its workspace
+    attr_reader :name
+  # @return [String] A human-readable label for the workflow deployment
+    attr_reader :label
+  # @return [Vellum::EntityStatus] The current status of the workflow deployment
+#  * `ACTIVE` - Active
+#  * `ARCHIVED` - Archived
+    attr_reader :status
+  # @return [Vellum::EnvironmentEnum] The environment this workflow deployment is used in
+#  * `DEVELOPMENT` - Development
+#  * `STAGING` - Staging
+#  * `PRODUCTION` - Production
+    attr_reader :environment
+  # @return [DateTime] 
+    attr_reader :created
+  # @return [DateTime] 
+    attr_reader :last_deployed_on
+  # @return [Array<Vellum::VellumVariable>] The input variables this Workflow Deployment expects to receive values for when
+#  it is executed.
+    attr_reader :input_variables
+  # @return [Array<Vellum::VellumVariable>] The output variables this Workflow Deployment will produce when it is executed.
+    attr_reader :output_variables
+  # @return [String] A human-readable description of the workflow deployment
+    attr_reader :description
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param id [String]
+    OMIT = Object.new
+
+    # @param id [String] 
     # @param name [String] A name that uniquely identifies this workflow deployment within its workspace
     # @param label [String] A human-readable label for the workflow deployment
-    # @param status [ENTITY_STATUS] The current status of the workflow deployment
-    #   - `ACTIVE` - Active
-    #   - `ARCHIVED` - Archived
-    # @param environment [ENVIRONMENT_ENUM] The environment this workflow deployment is used in
-    #   - `DEVELOPMENT` - Development
-    #   - `STAGING` - Staging
-    #   - `PRODUCTION` - Production
-    # @param created [DateTime]
-    # @param last_deployed_on [DateTime]
-    # @param input_variables [Array<VellumVariable>] The input variables this Workflow Deployment expects to receive values for when it is executed.
-    # @param output_variables [Array<VellumVariable>] The output variables this Workflow Deployment will produce when it is executed.
+    # @param status [Vellum::EntityStatus] The current status of the workflow deployment
+#  * `ACTIVE` - Active
+#  * `ARCHIVED` - Archived
+    # @param environment [Vellum::EnvironmentEnum] The environment this workflow deployment is used in
+#  * `DEVELOPMENT` - Development
+#  * `STAGING` - Staging
+#  * `PRODUCTION` - Production
+    # @param created [DateTime] 
+    # @param last_deployed_on [DateTime] 
+    # @param input_variables [Array<Vellum::VellumVariable>] The input variables this Workflow Deployment expects to receive values for when
+#  it is executed.
+    # @param output_variables [Array<Vellum::VellumVariable>] The output variables this Workflow Deployment will produce when it is executed.
+    # @param description [String] A human-readable description of the workflow deployment
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SlimWorkflowDeployment]
-    def initialize(id:, name:, label:, created:, last_deployed_on:, input_variables:, output_variables:, status: nil,
-                   environment: nil, additional_properties: nil)
-      # @type [String]
-      @id = id
-      # @type [String] A name that uniquely identifies this workflow deployment within its workspace
+    # @return [Vellum::SlimWorkflowDeployment]
+    def initialize(id: OMIT, name:, label:, status: OMIT, environment: OMIT, created: OMIT, last_deployed_on:, input_variables:, output_variables:, description: OMIT, additional_properties: nil)
+      @id = id if id != OMIT
       @name = name
-      # @type [String] A human-readable label for the workflow deployment
       @label = label
-      # @type [ENTITY_STATUS] The current status of the workflow deployment
-      #   - `ACTIVE` - Active
-      #   - `ARCHIVED` - Archived
-      @status = status
-      # @type [ENVIRONMENT_ENUM] The environment this workflow deployment is used in
-      #   - `DEVELOPMENT` - Development
-      #   - `STAGING` - Staging
-      #   - `PRODUCTION` - Production
-      @environment = environment
-      # @type [DateTime]
-      @created = created
-      # @type [DateTime]
+      @status = status if status != OMIT
+      @environment = environment if environment != OMIT
+      @created = created if created != OMIT
       @last_deployed_on = last_deployed_on
-      # @type [Array<VellumVariable>] The input variables this Workflow Deployment expects to receive values for when it is executed.
       @input_variables = input_variables
-      # @type [Array<VellumVariable>] The output variables this Workflow Deployment will produce when it is executed.
       @output_variables = output_variables
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @description = description if description != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "id": id, "name": name, "label": label, "status": status, "environment": environment, "created": created, "last_deployed_on": last_deployed_on, "input_variables": input_variables, "output_variables": output_variables, "description": description }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of SlimWorkflowDeployment
+# Deserialize a JSON object to an instance of SlimWorkflowDeployment
     #
-    # @param json_object [JSON]
-    # @return [SlimWorkflowDeployment]
+    # @param json_object [String] 
+    # @return [Vellum::SlimWorkflowDeployment]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      id = struct.id
-      name = struct.name
-      label = struct.label
-      status = ENTITY_STATUS.key(parsed_json["status"]) || parsed_json["status"]
-      environment = ENVIRONMENT_ENUM.key(parsed_json["environment"]) || parsed_json["environment"]
-      created = DateTime.parse(parsed_json["created"])
-      last_deployed_on = DateTime.parse(parsed_json["last_deployed_on"])
-      input_variables = parsed_json["input_variables"].map do |v|
-        v = v.to_json
-        VellumVariable.from_json(json_object: v)
-      end
-      output_variables = parsed_json["output_variables"].map do |v|
-        v = v.to_json
-        VellumVariable.from_json(json_object: v)
-      end
-      new(id: id, name: name, label: label, status: status, environment: environment, created: created,
-          last_deployed_on: last_deployed_on, input_variables: input_variables, output_variables: output_variables, additional_properties: struct)
+      id = parsed_json["id"]
+      name = parsed_json["name"]
+      label = parsed_json["label"]
+      status = parsed_json["status"]
+      environment = parsed_json["environment"]
+      created = unless parsed_json["created"].nil?
+  DateTime.parse(parsed_json["created"])
+else
+  nil
+end
+      last_deployed_on = unless parsed_json["last_deployed_on"].nil?
+  DateTime.parse(parsed_json["last_deployed_on"])
+else
+  nil
+end
+      input_variables = parsed_json["input_variables"]&.map do | item |
+  item = item.to_json
+  Vellum::VellumVariable.from_json(json_object: item)
+end
+      output_variables = parsed_json["output_variables"]&.map do | item |
+  item = item.to_json
+  Vellum::VellumVariable.from_json(json_object: item)
+end
+      description = parsed_json["description"]
+      new(
+        id: id,
+        name: name,
+        label: label,
+        status: status,
+        environment: environment,
+        created: created,
+        last_deployed_on: last_deployed_on,
+        input_variables: input_variables,
+        output_variables: output_variables,
+        description: description,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of SlimWorkflowDeployment to a JSON object
+# Serialize an instance of SlimWorkflowDeployment to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      {
-        "id": @id,
-        "name": @name,
-        "label": @label,
-        "status": ENTITY_STATUS[@status] || @status,
-        "environment": ENVIRONMENT_ENUM[@environment] || @environment,
-        "created": @created,
-        "last_deployed_on": @last_deployed_on,
-        "input_variables": @input_variables,
-        "output_variables": @output_variables
-      }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
-      obj.status&.is_a?(ENTITY_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
-      obj.environment&.is_a?(ENVIRONMENT_ENUM) != false || raise("Passed value for field obj.environment is not the expected type, validation failed.")
-      obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.status&.is_a?(Vellum::EntityStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+      obj.environment&.is_a?(Vellum::EnvironmentEnum) != false || raise("Passed value for field obj.environment is not the expected type, validation failed.")
+      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       obj.last_deployed_on.is_a?(DateTime) != false || raise("Passed value for field obj.last_deployed_on is not the expected type, validation failed.")
       obj.input_variables.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
       obj.output_variables.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
+      obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
     end
   end
 end

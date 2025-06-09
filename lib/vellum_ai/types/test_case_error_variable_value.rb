@@ -1,56 +1,84 @@
 # frozen_string_literal: true
-
 require_relative "vellum_error"
+require "ostruct"
 require "json"
 
 module Vellum
+# An error value for a variable in a Test Case.
   class TestCaseErrorVariableValue
-    attr_reader :variable_id, :value, :additional_properties
+  # @return [String] 
+    attr_reader :variable_id
+  # @return [String] 
+    attr_reader :name
+  # @return [String] 
+    attr_reader :type
+  # @return [Vellum::VellumError] 
+    attr_reader :value
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param variable_id [String]
-    # @param value [VellumError]
+    OMIT = Object.new
+
+    # @param variable_id [String] 
+    # @param name [String] 
+    # @param type [String] 
+    # @param value [Vellum::VellumError] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [TestCaseErrorVariableValue]
-    def initialize(variable_id:, value: nil, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::TestCaseErrorVariableValue]
+    def initialize(variable_id:, name: OMIT, type:, value: OMIT, additional_properties: nil)
       @variable_id = variable_id
-      # @type [VellumError]
-      @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @name = name if name != OMIT
+      @type = type
+      @value = value if value != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "variable_id": variable_id, "name": name, "type": type, "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of TestCaseErrorVariableValue
+# Deserialize a JSON object to an instance of TestCaseErrorVariableValue
     #
-    # @param json_object [JSON]
-    # @return [TestCaseErrorVariableValue]
+    # @param json_object [String] 
+    # @return [Vellum::TestCaseErrorVariableValue]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      variable_id = struct.variable_id
-      if parsed_json["value"].nil?
-        value = nil
-      else
+      variable_id = parsed_json["variable_id"]
+      name = parsed_json["name"]
+      type = parsed_json["type"]
+      unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
-        value = VellumError.from_json(json_object: value)
+        value = Vellum::VellumError.from_json(json_object: value)
+      else
+        value = nil
       end
-      new(variable_id: variable_id, value: value, additional_properties: struct)
+      new(
+        variable_id: variable_id,
+        name: name,
+        type: type,
+        value: value,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of TestCaseErrorVariableValue to a JSON object
+# Serialize an instance of TestCaseErrorVariableValue to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "variable_id": @variable_id, "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.variable_id.is_a?(String) != false || raise("Passed value for field obj.variable_id is not the expected type, validation failed.")
-      obj.value.nil? || VellumError.validate_raw(obj: obj.value)
+      obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.value.nil? || Vellum::VellumError.validate_raw(obj: obj.value)
     end
   end
 end

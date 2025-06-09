@@ -1,52 +1,68 @@
 # frozen_string_literal: true
-
 require_relative "vellum_image"
+require "ostruct"
 require "json"
 
 module Vellum
-  # An image value that is used in a chat message.
+# An image value that is used in a chat message.
   class ImageChatMessageContent
-    attr_reader :value, :additional_properties
+  # @return [String] 
+    attr_reader :type
+  # @return [Vellum::VellumImage] 
+    attr_reader :value
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param value [VellumImage]
+    OMIT = Object.new
+
+    # @param type [String] 
+    # @param value [Vellum::VellumImage] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [ImageChatMessageContent]
-    def initialize(value:, additional_properties: nil)
-      # @type [VellumImage]
+    # @return [Vellum::ImageChatMessageContent]
+    def initialize(type:, value:, additional_properties: nil)
+      @type = type
       @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "type": type, "value": value }
     end
-
-    # Deserialize a JSON object to an instance of ImageChatMessageContent
+# Deserialize a JSON object to an instance of ImageChatMessageContent
     #
-    # @param json_object [JSON]
-    # @return [ImageChatMessageContent]
+    # @param json_object [String] 
+    # @return [Vellum::ImageChatMessageContent]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      if parsed_json["value"].nil?
-        value = nil
-      else
+      type = parsed_json["type"]
+      unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
-        value = VellumImage.from_json(json_object: value)
+        value = Vellum::VellumImage.from_json(json_object: value)
+      else
+        value = nil
       end
-      new(value: value, additional_properties: struct)
+      new(
+        type: type,
+        value: value,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of ImageChatMessageContent to a JSON object
+# Serialize an instance of ImageChatMessageContent to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      VellumImage.validate_raw(obj: obj.value)
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      Vellum::VellumImage.validate_raw(obj: obj.value)
     end
   end
 end

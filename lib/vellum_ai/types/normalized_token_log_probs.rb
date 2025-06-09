@@ -1,55 +1,71 @@
 # frozen_string_literal: true
-
+require "ostruct"
 require "json"
 
 module Vellum
   class NormalizedTokenLogProbs
-    attr_reader :token, :logprob, :top_logprobs, :text_offset, :additional_properties
+  # @return [String] 
+    attr_reader :token
+  # @return [Float] 
+    attr_reader :logprob
+  # @return [Hash{String => Float}] 
+    attr_reader :top_logprobs
+  # @return [Integer] 
+    attr_reader :text_offset
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param token [String]
-    # @param logprob [Float]
-    # @param top_logprobs [Hash{String => String}]
-    # @param text_offset [Integer]
+    OMIT = Object.new
+
+    # @param token [String] 
+    # @param logprob [Float] 
+    # @param top_logprobs [Hash{String => Float}] 
+    # @param text_offset [Integer] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [NormalizedTokenLogProbs]
-    def initialize(token:, text_offset:, logprob: nil, top_logprobs: nil, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::NormalizedTokenLogProbs]
+    def initialize(token:, logprob: OMIT, top_logprobs: OMIT, text_offset:, additional_properties: nil)
       @token = token
-      # @type [Float]
-      @logprob = logprob
-      # @type [Hash{String => String}]
-      @top_logprobs = top_logprobs
-      # @type [Integer]
+      @logprob = logprob if logprob != OMIT
+      @top_logprobs = top_logprobs if top_logprobs != OMIT
       @text_offset = text_offset
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "token": token, "logprob": logprob, "top_logprobs": top_logprobs, "text_offset": text_offset }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of NormalizedTokenLogProbs
+# Deserialize a JSON object to an instance of NormalizedTokenLogProbs
     #
-    # @param json_object [JSON]
-    # @return [NormalizedTokenLogProbs]
+    # @param json_object [String] 
+    # @return [Vellum::NormalizedTokenLogProbs]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      JSON.parse(json_object)
-      token = struct.token
-      logprob = struct.logprob
-      top_logprobs = struct.top_logprobs
-      text_offset = struct.text_offset
-      new(token: token, logprob: logprob, top_logprobs: top_logprobs, text_offset: text_offset,
-          additional_properties: struct)
+      parsed_json = JSON.parse(json_object)
+      token = parsed_json["token"]
+      logprob = parsed_json["logprob"]
+      top_logprobs = parsed_json["top_logprobs"]
+      text_offset = parsed_json["text_offset"]
+      new(
+        token: token,
+        logprob: logprob,
+        top_logprobs: top_logprobs,
+        text_offset: text_offset,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of NormalizedTokenLogProbs to a JSON object
+# Serialize an instance of NormalizedTokenLogProbs to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "token": @token, "logprob": @logprob, "top_logprobs": @top_logprobs, "text_offset": @text_offset }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.token.is_a?(String) != false || raise("Passed value for field obj.token is not the expected type, validation failed.")
