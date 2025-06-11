@@ -1,50 +1,78 @@
 # frozen_string_literal: true
-
+require "ostruct"
 require "json"
 
 module Vellum
+# A JSON value for a variable in a Test Case.
   class TestCaseJsonVariableValue
-    attr_reader :variable_id, :value, :additional_properties
+  # @return [String] 
+    attr_reader :variable_id
+  # @return [String] 
+    attr_reader :name
+  # @return [String] 
+    attr_reader :type
+  # @return [Object] 
+    attr_reader :value
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param variable_id [String]
-    # @param value [Hash{String => String}]
+    OMIT = Object.new
+
+    # @param variable_id [String] 
+    # @param name [String] 
+    # @param type [String] 
+    # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [TestCaseJsonVariableValue]
-    def initialize(variable_id:, value: nil, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::TestCaseJsonVariableValue]
+    def initialize(variable_id:, name: OMIT, type:, value:, additional_properties: nil)
       @variable_id = variable_id
-      # @type [Hash{String => String}]
+      @name = name if name != OMIT
+      @type = type
       @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "variable_id": variable_id, "name": name, "type": type, "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of TestCaseJsonVariableValue
+# Deserialize a JSON object to an instance of TestCaseJsonVariableValue
     #
-    # @param json_object [JSON]
-    # @return [TestCaseJsonVariableValue]
+    # @param json_object [String] 
+    # @return [Vellum::TestCaseJsonVariableValue]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      JSON.parse(json_object)
-      variable_id = struct.variable_id
-      value = struct.value
-      new(variable_id: variable_id, value: value, additional_properties: struct)
+      parsed_json = JSON.parse(json_object)
+      variable_id = parsed_json["variable_id"]
+      name = parsed_json["name"]
+      type = parsed_json["type"]
+      value = parsed_json["value"]
+      new(
+        variable_id: variable_id,
+        name: name,
+        type: type,
+        value: value,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of TestCaseJsonVariableValue to a JSON object
+# Serialize an instance of TestCaseJsonVariableValue to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "variable_id": @variable_id, "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.variable_id.is_a?(String) != false || raise("Passed value for field obj.variable_id is not the expected type, validation failed.")
-      obj.value&.is_a?(Hash) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end

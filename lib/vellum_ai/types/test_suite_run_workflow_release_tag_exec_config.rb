@@ -1,56 +1,80 @@
 # frozen_string_literal: true
-
 require_relative "test_suite_run_workflow_release_tag_exec_config_data"
+require "ostruct"
 require "json"
 
 module Vellum
-  # Execution configuration for running a Test Suite against a Workflow Deployment
+# Execution configuration for running a Test Suite against a Workflow Deployment
   class TestSuiteRunWorkflowReleaseTagExecConfig
-    attr_reader :data, :test_case_ids, :additional_properties
+  # @return [String] 
+    attr_reader :type
+  # @return [Vellum::TestSuiteRunWorkflowReleaseTagExecConfigData] 
+    attr_reader :data
+  # @return [Array<String>] Optionally specify a subset of test case ids to run. If not provided, all test
+#  cases within the test suite will be run by default.
+    attr_reader :test_case_ids
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param data [TestSuiteRunWorkflowReleaseTagExecConfigData]
-    # @param test_case_ids [Array<String>] Optionally specify a subset of test case ids to run. If not provided, all test cases within the test suite will be run by default.
+    OMIT = Object.new
+
+    # @param type [String] 
+    # @param data [Vellum::TestSuiteRunWorkflowReleaseTagExecConfigData] 
+    # @param test_case_ids [Array<String>] Optionally specify a subset of test case ids to run. If not provided, all test
+#  cases within the test suite will be run by default.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [TestSuiteRunWorkflowReleaseTagExecConfig]
-    def initialize(data:, test_case_ids: nil, additional_properties: nil)
-      # @type [TestSuiteRunWorkflowReleaseTagExecConfigData]
+    # @return [Vellum::TestSuiteRunWorkflowReleaseTagExecConfig]
+    def initialize(type:, data:, test_case_ids: OMIT, additional_properties: nil)
+      @type = type
       @data = data
-      # @type [Array<String>] Optionally specify a subset of test case ids to run. If not provided, all test cases within the test suite will be run by default.
-      @test_case_ids = test_case_ids
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @test_case_ids = test_case_ids if test_case_ids != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "type": type, "data": data, "test_case_ids": test_case_ids }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of TestSuiteRunWorkflowReleaseTagExecConfig
+# Deserialize a JSON object to an instance of
+#  TestSuiteRunWorkflowReleaseTagExecConfig
     #
-    # @param json_object [JSON]
-    # @return [TestSuiteRunWorkflowReleaseTagExecConfig]
+    # @param json_object [String] 
+    # @return [Vellum::TestSuiteRunWorkflowReleaseTagExecConfig]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      if parsed_json["data"].nil?
-        data = nil
-      else
+      type = parsed_json["type"]
+      unless parsed_json["data"].nil?
         data = parsed_json["data"].to_json
-        data = TestSuiteRunWorkflowReleaseTagExecConfigData.from_json(json_object: data)
+        data = Vellum::TestSuiteRunWorkflowReleaseTagExecConfigData.from_json(json_object: data)
+      else
+        data = nil
       end
-      test_case_ids = struct.test_case_ids
-      new(data: data, test_case_ids: test_case_ids, additional_properties: struct)
+      test_case_ids = parsed_json["test_case_ids"]
+      new(
+        type: type,
+        data: data,
+        test_case_ids: test_case_ids,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of TestSuiteRunWorkflowReleaseTagExecConfig to a JSON object
+# Serialize an instance of TestSuiteRunWorkflowReleaseTagExecConfig to a JSON
+#  object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "data": @data, "test_case_ids": @test_case_ids }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      TestSuiteRunWorkflowReleaseTagExecConfigData.validate_raw(obj: obj.data)
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      Vellum::TestSuiteRunWorkflowReleaseTagExecConfigData.validate_raw(obj: obj.data)
       obj.test_case_ids&.is_a?(Array) != false || raise("Passed value for field obj.test_case_ids is not the expected type, validation failed.")
     end
   end

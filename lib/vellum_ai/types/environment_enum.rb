@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module Vellum
-  # @type [ENVIRONMENT_ENUM]
-  ENVIRONMENT_ENUM = { development: "DEVELOPMENT", staging: "STAGING", production: "PRODUCTION" }.freeze
+# * `DEVELOPMENT` - Development
+#  * `STAGING` - Staging
+#  * `PRODUCTION` - Production
+  class EnvironmentEnum
+
+    DEVELOPMENT = "DEVELOPMENT"
+    STAGING = "STAGING"
+    PRODUCTION = "PRODUCTION"
+
+  end
 end

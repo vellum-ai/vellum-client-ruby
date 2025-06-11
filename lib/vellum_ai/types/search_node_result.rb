@@ -1,52 +1,68 @@
 # frozen_string_literal: true
-
 require_relative "search_node_result_data"
+require "ostruct"
 require "json"
 
 module Vellum
-  # A Node Result Event emitted from a Search Node.
+# A Node Result Event emitted from a Search Node.
   class SearchNodeResult
-    attr_reader :data, :additional_properties
+  # @return [String] 
+    attr_reader :type
+  # @return [Vellum::SearchNodeResultData] 
+    attr_reader :data
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param data [SearchNodeResultData]
+    OMIT = Object.new
+
+    # @param type [String] 
+    # @param data [Vellum::SearchNodeResultData] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [SearchNodeResult]
-    def initialize(data:, additional_properties: nil)
-      # @type [SearchNodeResultData]
+    # @return [Vellum::SearchNodeResult]
+    def initialize(type:, data:, additional_properties: nil)
+      @type = type
       @data = data
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "type": type, "data": data }
     end
-
-    # Deserialize a JSON object to an instance of SearchNodeResult
+# Deserialize a JSON object to an instance of SearchNodeResult
     #
-    # @param json_object [JSON]
-    # @return [SearchNodeResult]
+    # @param json_object [String] 
+    # @return [Vellum::SearchNodeResult]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      if parsed_json["data"].nil?
-        data = nil
-      else
+      type = parsed_json["type"]
+      unless parsed_json["data"].nil?
         data = parsed_json["data"].to_json
-        data = SearchNodeResultData.from_json(json_object: data)
+        data = Vellum::SearchNodeResultData.from_json(json_object: data)
+      else
+        data = nil
       end
-      new(data: data, additional_properties: struct)
+      new(
+        type: type,
+        data: data,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of SearchNodeResult to a JSON object
+# Serialize an instance of SearchNodeResult to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "data": @data }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      SearchNodeResultData.validate_raw(obj: obj.data)
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      Vellum::SearchNodeResultData.validate_raw(obj: obj.data)
     end
   end
 end

@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module Vellum
-  # @type [LOGPROBS_ENUM]
-  LOGPROBS_ENUM = { all: "ALL", none: "NONE" }.freeze
+# * `ALL` - ALL
+#  * `NONE` - NONE
+  class LogprobsEnum
+
+    ALL = "ALL"
+    NONE = "NONE"
+
+  end
 end

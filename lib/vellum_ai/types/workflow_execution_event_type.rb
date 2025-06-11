@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module Vellum
-  # @type [WORKFLOW_EXECUTION_EVENT_TYPE]
-  WORKFLOW_EXECUTION_EVENT_TYPE = { node: "NODE", workflow: "WORKFLOW" }.freeze
+# * `NODE` - NODE
+#  * `WORKFLOW` - WORKFLOW
+  class WorkflowExecutionEventType
+
+    NODE = "NODE"
+    WORKFLOW = "WORKFLOW"
+
+  end
 end

@@ -1,54 +1,77 @@
 # frozen_string_literal: true
-
 require_relative "chat_message_request"
+require "ostruct"
 require "json"
 
 module Vellum
+# Named Test Case value that is of type CHAT_HISTORY
   class NamedTestCaseChatHistoryVariableValueRequest
-    attr_reader :name, :value, :additional_properties
+  # @return [String] 
+    attr_reader :type
+  # @return [Array<Vellum::ChatMessageRequest>] 
+    attr_reader :value
+  # @return [String] 
+    attr_reader :name
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param name [String]
-    # @param value [Array<ChatMessageRequest>]
+    OMIT = Object.new
+
+    # @param type [String] 
+    # @param value [Array<Vellum::ChatMessageRequest>] 
+    # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [NamedTestCaseChatHistoryVariableValueRequest]
-    def initialize(name:, value: nil, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::NamedTestCaseChatHistoryVariableValueRequest]
+    def initialize(type:, value: OMIT, name:, additional_properties: nil)
+      @type = type
+      @value = value if value != OMIT
       @name = name
-      # @type [Array<ChatMessageRequest>]
-      @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "type": type, "value": value, "name": name }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of NamedTestCaseChatHistoryVariableValueRequest
+# Deserialize a JSON object to an instance of
+#  NamedTestCaseChatHistoryVariableValueRequest
     #
-    # @param json_object [JSON]
-    # @return [NamedTestCaseChatHistoryVariableValueRequest]
+    # @param json_object [String] 
+    # @return [Vellum::NamedTestCaseChatHistoryVariableValueRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      name = struct.name
-      value = parsed_json["value"].map do |v|
-        v = v.to_json
-        ChatMessageRequest.from_json(json_object: v)
-      end
-      new(name: name, value: value, additional_properties: struct)
+      type = parsed_json["type"]
+      value = parsed_json["value"]&.map do | item |
+  item = item.to_json
+  Vellum::ChatMessageRequest.from_json(json_object: item)
+end
+      name = parsed_json["name"]
+      new(
+        type: type,
+        value: value,
+        name: name,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of NamedTestCaseChatHistoryVariableValueRequest to a JSON object
+# Serialize an instance of NamedTestCaseChatHistoryVariableValueRequest to a JSON
+#  object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "name": @name, "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
 end

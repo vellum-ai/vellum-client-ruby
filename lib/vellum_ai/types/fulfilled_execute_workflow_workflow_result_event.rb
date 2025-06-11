@@ -1,59 +1,86 @@
 # frozen_string_literal: true
-
 require "date"
 require_relative "workflow_output"
+require "ostruct"
 require "json"
 
 module Vellum
-  # The successful response from the Workflow execution containing the produced outputs.
+# The successful response from the Workflow execution containing the produced
+#  outputs.
   class FulfilledExecuteWorkflowWorkflowResultEvent
-    attr_reader :id, :ts, :outputs, :additional_properties
+  # @return [String] 
+    attr_reader :id
+  # @return [String] 
+    attr_reader :state
+  # @return [DateTime] 
+    attr_reader :ts
+  # @return [Array<Vellum::WorkflowOutput>] 
+    attr_reader :outputs
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param id [String]
-    # @param ts [DateTime]
-    # @param outputs [Array<WorkflowOutput>]
+    OMIT = Object.new
+
+    # @param id [String] 
+    # @param state [String] 
+    # @param ts [DateTime] 
+    # @param outputs [Array<Vellum::WorkflowOutput>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [FulfilledExecuteWorkflowWorkflowResultEvent]
-    def initialize(id:, ts:, outputs:, additional_properties: nil)
-      # @type [String]
+    # @return [Vellum::FulfilledExecuteWorkflowWorkflowResultEvent]
+    def initialize(id:, state:, ts:, outputs:, additional_properties: nil)
       @id = id
-      # @type [DateTime]
+      @state = state
       @ts = ts
-      # @type [Array<WorkflowOutput>]
       @outputs = outputs
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "id": id, "state": state, "ts": ts, "outputs": outputs }
     end
-
-    # Deserialize a JSON object to an instance of FulfilledExecuteWorkflowWorkflowResultEvent
+# Deserialize a JSON object to an instance of
+#  FulfilledExecuteWorkflowWorkflowResultEvent
     #
-    # @param json_object [JSON]
-    # @return [FulfilledExecuteWorkflowWorkflowResultEvent]
+    # @param json_object [String] 
+    # @return [Vellum::FulfilledExecuteWorkflowWorkflowResultEvent]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      id = struct.id
-      ts = DateTime.parse(parsed_json["ts"])
-      outputs = parsed_json["outputs"].map do |v|
-        v = v.to_json
-        WorkflowOutput.from_json(json_object: v)
-      end
-      new(id: id, ts: ts, outputs: outputs, additional_properties: struct)
+      id = parsed_json["id"]
+      state = parsed_json["state"]
+      ts = unless parsed_json["ts"].nil?
+  DateTime.parse(parsed_json["ts"])
+else
+  nil
+end
+      outputs = parsed_json["outputs"]&.map do | item |
+  item = item.to_json
+  Vellum::WorkflowOutput.from_json(json_object: item)
+end
+      new(
+        id: id,
+        state: state,
+        ts: ts,
+        outputs: outputs,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of FulfilledExecuteWorkflowWorkflowResultEvent to a JSON object
+# Serialize an instance of FulfilledExecuteWorkflowWorkflowResultEvent to a JSON
+#  object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "id": @id, "ts": @ts, "outputs": @outputs }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.ts.is_a?(DateTime) != false || raise("Passed value for field obj.ts is not the expected type, validation failed.")
       obj.outputs.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
     end

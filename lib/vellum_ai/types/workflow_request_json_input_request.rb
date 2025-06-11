@@ -1,51 +1,69 @@
 # frozen_string_literal: true
-
+require "ostruct"
 require "json"
 
 module Vellum
-  # The input for a JSON variable in a Workflow.
+# The input for a JSON variable in a Workflow.
   class WorkflowRequestJsonInputRequest
-    attr_reader :name, :value, :additional_properties
+  # @return [String] The variable's name, as defined in the Workflow.
+    attr_reader :name
+  # @return [String] 
+    attr_reader :type
+  # @return [Object] 
+    attr_reader :value
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
+
+    OMIT = Object.new
 
     # @param name [String] The variable's name, as defined in the Workflow.
-    # @param value [Hash{String => String}]
+    # @param type [String] 
+    # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [WorkflowRequestJsonInputRequest]
-    def initialize(name:, value:, additional_properties: nil)
-      # @type [String] The variable's name, as defined in the Workflow.
+    # @return [Vellum::WorkflowRequestJsonInputRequest]
+    def initialize(name:, type:, value:, additional_properties: nil)
       @name = name
-      # @type [Hash{String => String}]
+      @type = type
       @value = value
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "name": name, "type": type, "value": value }
     end
-
-    # Deserialize a JSON object to an instance of WorkflowRequestJsonInputRequest
+# Deserialize a JSON object to an instance of WorkflowRequestJsonInputRequest
     #
-    # @param json_object [JSON]
-    # @return [WorkflowRequestJsonInputRequest]
+    # @param json_object [String] 
+    # @return [Vellum::WorkflowRequestJsonInputRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      JSON.parse(json_object)
-      name = struct.name
-      value = struct.value
-      new(name: name, value: value, additional_properties: struct)
+      parsed_json = JSON.parse(json_object)
+      name = parsed_json["name"]
+      type = parsed_json["type"]
+      value = parsed_json["value"]
+      new(
+        name: name,
+        type: type,
+        value: value,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of WorkflowRequestJsonInputRequest to a JSON object
+# Serialize an instance of WorkflowRequestJsonInputRequest to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "name": @name, "value": @value }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.value.is_a?(Hash) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end

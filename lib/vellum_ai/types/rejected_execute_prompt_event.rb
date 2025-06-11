@@ -1,68 +1,90 @@
 # frozen_string_literal: true
-
 require_relative "vellum_error"
 require_relative "rejected_prompt_execution_meta"
+require "ostruct"
 require "json"
 
 module Vellum
-  # The final data returned indicating an error occurred during the stream.
+# The final data returned indicating an error occurred during the stream.
   class RejectedExecutePromptEvent
-    attr_reader :error, :execution_id, :meta, :additional_properties
+  # @return [String] 
+    attr_reader :state
+  # @return [Vellum::VellumError] 
+    attr_reader :error
+  # @return [String] 
+    attr_reader :execution_id
+  # @return [Vellum::RejectedPromptExecutionMeta] 
+    attr_reader :meta
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param error [VellumError]
-    # @param execution_id [String]
-    # @param meta [RejectedPromptExecutionMeta]
+    OMIT = Object.new
+
+    # @param state [String] 
+    # @param error [Vellum::VellumError] 
+    # @param execution_id [String] 
+    # @param meta [Vellum::RejectedPromptExecutionMeta] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [RejectedExecutePromptEvent]
-    def initialize(error:, execution_id:, meta: nil, additional_properties: nil)
-      # @type [VellumError]
+    # @return [Vellum::RejectedExecutePromptEvent]
+    def initialize(state:, error:, execution_id:, meta: OMIT, additional_properties: nil)
+      @state = state
       @error = error
-      # @type [String]
       @execution_id = execution_id
-      # @type [RejectedPromptExecutionMeta]
-      @meta = meta
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
+      @meta = meta if meta != OMIT
       @additional_properties = additional_properties
+      @_field_set = { "state": state, "error": error, "execution_id": execution_id, "meta": meta }.reject do | _k, v |
+  v == OMIT
+end
     end
-
-    # Deserialize a JSON object to an instance of RejectedExecutePromptEvent
+# Deserialize a JSON object to an instance of RejectedExecutePromptEvent
     #
-    # @param json_object [JSON]
-    # @return [RejectedExecutePromptEvent]
+    # @param json_object [String] 
+    # @return [Vellum::RejectedExecutePromptEvent]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      if parsed_json["error"].nil?
-        error = nil
-      else
+      state = parsed_json["state"]
+      unless parsed_json["error"].nil?
         error = parsed_json["error"].to_json
-        error = VellumError.from_json(json_object: error)
-      end
-      execution_id = struct.execution_id
-      if parsed_json["meta"].nil?
-        meta = nil
+        error = Vellum::VellumError.from_json(json_object: error)
       else
-        meta = parsed_json["meta"].to_json
-        meta = RejectedPromptExecutionMeta.from_json(json_object: meta)
+        error = nil
       end
-      new(error: error, execution_id: execution_id, meta: meta, additional_properties: struct)
+      execution_id = parsed_json["execution_id"]
+      unless parsed_json["meta"].nil?
+        meta = parsed_json["meta"].to_json
+        meta = Vellum::RejectedPromptExecutionMeta.from_json(json_object: meta)
+      else
+        meta = nil
+      end
+      new(
+        state: state,
+        error: error,
+        execution_id: execution_id,
+        meta: meta,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of RejectedExecutePromptEvent to a JSON object
+# Serialize an instance of RejectedExecutePromptEvent to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "error": @error, "execution_id": @execution_id, "meta": @meta }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      VellumError.validate_raw(obj: obj.error)
+      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
+      Vellum::VellumError.validate_raw(obj: obj.error)
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
-      obj.meta.nil? || RejectedPromptExecutionMeta.validate_raw(obj: obj.meta)
+      obj.meta.nil? || Vellum::RejectedPromptExecutionMeta.validate_raw(obj: obj.meta)
     end
   end
 end

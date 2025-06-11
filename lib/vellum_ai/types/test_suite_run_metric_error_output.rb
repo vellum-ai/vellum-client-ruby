@@ -1,56 +1,74 @@
 # frozen_string_literal: true
-
 require_relative "vellum_error"
+require "ostruct"
 require "json"
 
 module Vellum
-  # Output for a test suite run metric that is of type ERROR
+# Output for a test suite run metric that is of type ERROR
   class TestSuiteRunMetricErrorOutput
-    attr_reader :value, :name, :additional_properties
+  # @return [Vellum::VellumError] 
+    attr_reader :value
+  # @return [String] 
+    attr_reader :type
+  # @return [String] 
+    attr_reader :name
+  # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+  # @return [Object] 
+    attr_reader :_field_set
+    protected :_field_set
 
-    # @param value [VellumError]
-    # @param name [String]
+    OMIT = Object.new
+
+    # @param value [Vellum::VellumError] 
+    # @param type [String] 
+    # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [TestSuiteRunMetricErrorOutput]
-    def initialize(value:, name:, additional_properties: nil)
-      # @type [VellumError]
+    # @return [Vellum::TestSuiteRunMetricErrorOutput]
+    def initialize(value:, type:, name:, additional_properties: nil)
       @value = value
-      # @type [String]
+      @type = type
       @name = name
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = { "value": value, "type": type, "name": name }
     end
-
-    # Deserialize a JSON object to an instance of TestSuiteRunMetricErrorOutput
+# Deserialize a JSON object to an instance of TestSuiteRunMetricErrorOutput
     #
-    # @param json_object [JSON]
-    # @return [TestSuiteRunMetricErrorOutput]
+    # @param json_object [String] 
+    # @return [Vellum::TestSuiteRunMetricErrorOutput]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      if parsed_json["value"].nil?
-        value = nil
-      else
+      unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
-        value = VellumError.from_json(json_object: value)
+        value = Vellum::VellumError.from_json(json_object: value)
+      else
+        value = nil
       end
-      name = struct.name
-      new(value: value, name: name, additional_properties: struct)
+      type = parsed_json["type"]
+      name = parsed_json["name"]
+      new(
+        value: value,
+        type: type,
+        name: name,
+        additional_properties: struct
+      )
     end
-
-    # Serialize an instance of TestSuiteRunMetricErrorOutput to a JSON object
+# Serialize an instance of TestSuiteRunMetricErrorOutput to a JSON object
     #
-    # @return [JSON]
-    def to_json(*_args)
-      { "value": @value, "name": @name }.to_json
+    # @return [String]
+    def to_json
+      @_field_set&.to_json
     end
-
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+# Leveraged for Union-type generation, validate_raw attempts to parse the given
+#  hash and check each fields type against the current object's property
+#  definitions.
     #
-    # @param obj [Object]
+    # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      VellumError.validate_raw(obj: obj.value)
+      Vellum::VellumError.validate_raw(obj: obj.value)
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
