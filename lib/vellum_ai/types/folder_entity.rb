@@ -5,6 +5,7 @@ require_relative "folder_entity_prompt_sandbox"
 require_relative "folder_entity_workflow_sandbox"
 require_relative "folder_entity_document_index"
 require_relative "folder_entity_test_suite"
+require_relative "folder_entity_dataset"
 
 module Vellum
   class FolderEntity
@@ -66,6 +67,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::FolderEntityDataset.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::FolderEntityDataset.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -97,6 +108,11 @@ end
       end
       begin
         return Vellum::FolderEntityTestSuite.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::FolderEntityDataset.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
