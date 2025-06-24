@@ -33,17 +33,15 @@ module Vellum
     # @param output_variables [Array<Vellum::VellumVariable>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::MetricDefinitionHistoryItem]
-    def initialize(id:, label:, name:, description:, input_variables: OMIT, output_variables: OMIT, additional_properties: nil)
+    def initialize(id:, label:, name:, description:, input_variables:, output_variables:, additional_properties: nil)
       @id = id
       @label = label
       @name = name
       @description = description
-      @input_variables = input_variables if input_variables != OMIT
-      @output_variables = output_variables if output_variables != OMIT
+      @input_variables = input_variables
+      @output_variables = output_variables
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "label": label, "name": name, "description": description, "input_variables": input_variables, "output_variables": output_variables }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "label": label, "name": name, "description": description, "input_variables": input_variables, "output_variables": output_variables }
     end
 # Deserialize a JSON object to an instance of MetricDefinitionHistoryItem
     #
@@ -91,8 +89,8 @@ end
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
-      obj.input_variables&.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
-      obj.output_variables&.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
+      obj.input_variables.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
+      obj.output_variables.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
     end
   end
 end

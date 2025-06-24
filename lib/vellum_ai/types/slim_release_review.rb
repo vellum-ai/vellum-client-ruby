@@ -29,15 +29,13 @@ module Vellum
     # @param state [Vellum::ReleaseReviewState] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimReleaseReview]
-    def initialize(id: OMIT, created: OMIT, reviewer:, state:, additional_properties: nil)
-      @id = id if id != OMIT
-      @created = created if created != OMIT
+    def initialize(id:, created:, reviewer:, state:, additional_properties: nil)
+      @id = id
+      @created = created
       @reviewer = reviewer
       @state = state
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "created": created, "reviewer": reviewer, "state": state }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "created": created, "reviewer": reviewer, "state": state }
     end
 # Deserialize a JSON object to an instance of SlimReleaseReview
     #
@@ -80,8 +78,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       Vellum::ReleaseReviewReviewer.validate_raw(obj: obj.reviewer)
       obj.state.is_a?(Vellum::ReleaseReviewState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
     end

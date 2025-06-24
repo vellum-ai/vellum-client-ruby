@@ -26,9 +26,9 @@ module Vellum
     # @param icon_name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowSandboxExample]
-    def initialize(id:, label: OMIT, description: OMIT, icon_name: OMIT, additional_properties: nil)
+    def initialize(id:, label:, description: OMIT, icon_name: OMIT, additional_properties: nil)
       @id = id
-      @label = label if label != OMIT
+      @label = label
       @description = description if description != OMIT
       @icon_name = icon_name if icon_name != OMIT
       @additional_properties = additional_properties
@@ -69,7 +69,7 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
+      obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.icon_name&.is_a?(String) != false || raise("Passed value for field obj.icon_name is not the expected type, validation failed.")
     end

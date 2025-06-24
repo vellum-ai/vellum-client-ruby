@@ -45,10 +45,10 @@ module Vellum
 #  * `FAILED` - Failed
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimDocumentDocumentToDocumentIndex]
-    def initialize(id: OMIT, environment_document_index_id: OMIT, document_index_id: OMIT, indexing_state: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
-      @environment_document_index_id = environment_document_index_id if environment_document_index_id != OMIT
-      @document_index_id = document_index_id if document_index_id != OMIT
+    def initialize(id:, environment_document_index_id:, document_index_id:, indexing_state: OMIT, additional_properties: nil)
+      @id = id
+      @environment_document_index_id = environment_document_index_id
+      @document_index_id = document_index_id
       @indexing_state = indexing_state if indexing_state != OMIT
       @additional_properties = additional_properties
       @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state }.reject do | _k, v |
@@ -87,9 +87,9 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.environment_document_index_id&.is_a?(String) != false || raise("Passed value for field obj.environment_document_index_id is not the expected type, validation failed.")
-      obj.document_index_id&.is_a?(String) != false || raise("Passed value for field obj.document_index_id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.environment_document_index_id.is_a?(String) != false || raise("Passed value for field obj.environment_document_index_id is not the expected type, validation failed.")
+      obj.document_index_id.is_a?(String) != false || raise("Passed value for field obj.document_index_id is not the expected type, validation failed.")
       obj.indexing_state&.is_a?(Vellum::IndexingStateEnum) != false || raise("Passed value for field obj.indexing_state is not the expected type, validation failed.")
     end
   end

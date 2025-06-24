@@ -27,8 +27,8 @@ module Vellum
     # @param new_member_join_behavior [Vellum::NewMemberJoinBehaviorEnum] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::OrganizationRead]
-    def initialize(id: OMIT, name:, allow_staff_access: OMIT, new_member_join_behavior:, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, name:, allow_staff_access: OMIT, new_member_join_behavior:, additional_properties: nil)
+      @id = id
       @name = name
       @allow_staff_access = allow_staff_access if allow_staff_access != OMIT
       @new_member_join_behavior = new_member_join_behavior
@@ -69,7 +69,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.allow_staff_access&.is_a?(Boolean) != false || raise("Passed value for field obj.allow_staff_access is not the expected type, validation failed.")
       obj.new_member_join_behavior.is_a?(Vellum::NewMemberJoinBehaviorEnum) != false || raise("Passed value for field obj.new_member_join_behavior is not the expected type, validation failed.")

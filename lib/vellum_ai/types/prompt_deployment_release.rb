@@ -48,9 +48,9 @@ module Vellum
     # @param reviews [Array<Vellum::SlimReleaseReview>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PromptDeploymentRelease]
-    def initialize(id: OMIT, created: OMIT, environment:, created_by: OMIT, prompt_version:, deployment:, description: OMIT, release_tags:, reviews:, additional_properties: nil)
-      @id = id if id != OMIT
-      @created = created if created != OMIT
+    def initialize(id:, created:, environment:, created_by: OMIT, prompt_version:, deployment:, description: OMIT, release_tags:, reviews:, additional_properties: nil)
+      @id = id
+      @created = created
       @environment = environment
       @created_by = created_by if created_by != OMIT
       @prompt_version = prompt_version
@@ -135,8 +135,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       Vellum::ReleaseEnvironment.validate_raw(obj: obj.environment)
       obj.created_by.nil? || Vellum::ReleaseCreatedBy.validate_raw(obj: obj.created_by)
       Vellum::PromptDeploymentReleasePromptVersion.validate_raw(obj: obj.prompt_version)

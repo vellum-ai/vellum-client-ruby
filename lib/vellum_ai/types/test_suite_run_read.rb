@@ -47,9 +47,9 @@ module Vellum
     # @param progress [Vellum::TestSuiteRunProgress] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TestSuiteRunRead]
-    def initialize(id: OMIT, created: OMIT, test_suite:, state:, exec_config: OMIT, progress: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
-      @created = created if created != OMIT
+    def initialize(id:, created:, test_suite:, state:, exec_config: OMIT, progress: OMIT, additional_properties: nil)
+      @id = id
+      @created = created
       @test_suite = test_suite
       @state = state
       @exec_config = exec_config if exec_config != OMIT
@@ -114,8 +114,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       Vellum::TestSuiteRunTestSuite.validate_raw(obj: obj.test_suite)
       obj.state.is_a?(Vellum::TestSuiteRunState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.exec_config.nil? || Vellum::TestSuiteRunExecConfig.validate_raw(obj: obj.exec_config)
