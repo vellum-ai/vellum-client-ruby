@@ -27,9 +27,9 @@ module Vellum
     # @param value [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TestCaseStringVariableValue]
-    def initialize(variable_id:, name: OMIT, type:, value: OMIT, additional_properties: nil)
+    def initialize(variable_id:, name:, type:, value: OMIT, additional_properties: nil)
       @variable_id = variable_id
-      @name = name if name != OMIT
+      @name = name
       @type = type
       @value = value if value != OMIT
       @additional_properties = additional_properties
@@ -70,7 +70,7 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.variable_id.is_a?(String) != false || raise("Passed value for field obj.variable_id is not the expected type, validation failed.")
-      obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end

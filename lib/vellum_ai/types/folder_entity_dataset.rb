@@ -1,15 +1,17 @@
 # frozen_string_literal: true
+require_relative "folder_entity_dataset_data"
 require "ostruct"
 require "json"
 
 module Vellum
-  class ReleaseCreatedBy
+# A slim representation of a Dataset, as it exists within a Folder.
+  class FolderEntityDataset
   # @return [String] 
     attr_reader :id
   # @return [String] 
-    attr_reader :full_name
-  # @return [String] 
-    attr_reader :email
+    attr_reader :type
+  # @return [Vellum::FolderEntityDatasetData] 
+    attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -19,37 +21,40 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param full_name [String] 
-    # @param email [String] 
+    # @param type [String] 
+    # @param data [Vellum::FolderEntityDatasetData] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::ReleaseCreatedBy]
-    def initialize(id:, full_name: OMIT, email:, additional_properties: nil)
+    # @return [Vellum::FolderEntityDataset]
+    def initialize(id:, type:, data:, additional_properties: nil)
       @id = id
-      @full_name = full_name if full_name != OMIT
-      @email = email
+      @type = type
+      @data = data
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "full_name": full_name, "email": email }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "type": type, "data": data }
     end
-# Deserialize a JSON object to an instance of ReleaseCreatedBy
+# Deserialize a JSON object to an instance of FolderEntityDataset
     #
     # @param json_object [String] 
-    # @return [Vellum::ReleaseCreatedBy]
+    # @return [Vellum::FolderEntityDataset]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      full_name = parsed_json["full_name"]
-      email = parsed_json["email"]
+      type = parsed_json["type"]
+      unless parsed_json["data"].nil?
+        data = parsed_json["data"].to_json
+        data = Vellum::FolderEntityDatasetData.from_json(json_object: data)
+      else
+        data = nil
+      end
       new(
         id: id,
-        full_name: full_name,
-        email: email,
+        type: type,
+        data: data,
         additional_properties: struct
       )
     end
-# Serialize an instance of ReleaseCreatedBy to a JSON object
+# Serialize an instance of FolderEntityDataset to a JSON object
     #
     # @return [String]
     def to_json
@@ -63,8 +68,8 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.full_name&.is_a?(String) != false || raise("Passed value for field obj.full_name is not the expected type, validation failed.")
-      obj.email.is_a?(String) != false || raise("Passed value for field obj.email is not the expected type, validation failed.")
+      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      Vellum::FolderEntityDatasetData.validate_raw(obj: obj.data)
     end
   end
 end

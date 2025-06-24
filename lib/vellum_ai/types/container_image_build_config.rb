@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+require_relative "code_execution_package"
 require "ostruct"
 require "json"
 
 module Vellum
-  class PromptDeploymentReleasePromptDeployment
-  # @return [String] 
-    attr_reader :name
+  class ContainerImageBuildConfig
+  # @return [Array<Vellum::CodeExecutionPackage>] 
+    attr_reader :packages
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -14,27 +15,28 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param name [String] 
+    # @param packages [Array<Vellum::CodeExecutionPackage>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::PromptDeploymentReleasePromptDeployment]
-    def initialize(name:, additional_properties: nil)
-      @name = name
+    # @return [Vellum::ContainerImageBuildConfig]
+    def initialize(packages:, additional_properties: nil)
+      @packages = packages
       @additional_properties = additional_properties
-      @_field_set = { "name": name }
+      @_field_set = { "packages": packages }
     end
-# Deserialize a JSON object to an instance of
-#  PromptDeploymentReleasePromptDeployment
+# Deserialize a JSON object to an instance of ContainerImageBuildConfig
     #
     # @param json_object [String] 
-    # @return [Vellum::PromptDeploymentReleasePromptDeployment]
+    # @return [Vellum::ContainerImageBuildConfig]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      name = parsed_json["name"]
-      new(name: name, additional_properties: struct)
+      packages = parsed_json["packages"]&.map do | item |
+  item = item.to_json
+  Vellum::CodeExecutionPackage.from_json(json_object: item)
+end
+      new(packages: packages, additional_properties: struct)
     end
-# Serialize an instance of PromptDeploymentReleasePromptDeployment to a JSON
-#  object
+# Serialize an instance of ContainerImageBuildConfig to a JSON object
     #
     # @return [String]
     def to_json
@@ -47,7 +49,7 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.packages.is_a?(Array) != false || raise("Passed value for field obj.packages is not the expected type, validation failed.")
     end
   end
 end

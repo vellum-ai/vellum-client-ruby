@@ -22,13 +22,11 @@ module Vellum
     # @param build_config [Vellum::COMPONENTS_SCHEMAS_PROMPT_VERSION_BUILD_CONFIG_SANDBOX] Configuration used to build this prompt version.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PromptDeploymentReleasePromptVersion]
-    def initialize(id: OMIT, build_config: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
-      @build_config = build_config if build_config != OMIT
+    def initialize(id:, build_config:, additional_properties: nil)
+      @id = id
+      @build_config = build_config
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "build_config": build_config }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "build_config": build_config }
     end
 # Deserialize a JSON object to an instance of PromptDeploymentReleasePromptVersion
     #
@@ -63,8 +61,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.build_config.nil? || Vellum::PromptVersionBuildConfigSandbox.validate_raw(obj: obj.build_config)
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      Vellum::PromptVersionBuildConfigSandbox.validate_raw(obj: obj.build_config)
     end
   end
 end

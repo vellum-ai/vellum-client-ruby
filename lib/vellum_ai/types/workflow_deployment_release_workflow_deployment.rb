@@ -17,12 +17,10 @@ module Vellum
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowDeploymentReleaseWorkflowDeployment]
-    def initialize(name: OMIT, additional_properties: nil)
-      @name = name if name != OMIT
+    def initialize(name:, additional_properties: nil)
+      @name = name
       @additional_properties = additional_properties
-      @_field_set = { "name": name }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "name": name }
     end
 # Deserialize a JSON object to an instance of
 #  WorkflowDeploymentReleaseWorkflowDeployment
@@ -49,7 +47,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
 end
