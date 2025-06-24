@@ -61,8 +61,8 @@ module Vellum
     # @param document_to_document_indexes [Array<Vellum::SlimDocumentDocumentToDocumentIndex>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimDocument]
-    def initialize(id: OMIT, external_id: OMIT, last_uploaded_at:, label:, processing_state:, processing_failure_reason: OMIT, status: OMIT, keywords: OMIT, metadata: OMIT, document_to_document_indexes:, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, external_id: OMIT, last_uploaded_at:, label:, processing_state:, processing_failure_reason: OMIT, status: OMIT, keywords: OMIT, metadata: OMIT, document_to_document_indexes:, additional_properties: nil)
+      @id = id
       @external_id = external_id if external_id != OMIT
       @last_uploaded_at = last_uploaded_at
       @label = label
@@ -128,7 +128,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.external_id&.is_a?(String) != false || raise("Passed value for field obj.external_id is not the expected type, validation failed.")
       obj.last_uploaded_at.is_a?(DateTime) != false || raise("Passed value for field obj.last_uploaded_at is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")

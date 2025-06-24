@@ -24,14 +24,12 @@ module Vellum
     # @param output_variables [Array<Vellum::VellumVariable>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowDeploymentReleaseWorkflowVersion]
-    def initialize(id: OMIT, input_variables: OMIT, output_variables: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
-      @input_variables = input_variables if input_variables != OMIT
-      @output_variables = output_variables if output_variables != OMIT
+    def initialize(id:, input_variables:, output_variables:, additional_properties: nil)
+      @id = id
+      @input_variables = input_variables
+      @output_variables = output_variables
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "input_variables": input_variables, "output_variables": output_variables }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "input_variables": input_variables, "output_variables": output_variables }
     end
 # Deserialize a JSON object to an instance of
 #  WorkflowDeploymentReleaseWorkflowVersion
@@ -71,9 +69,9 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.input_variables&.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
-      obj.output_variables&.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.input_variables.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
+      obj.output_variables.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
     end
   end
 end

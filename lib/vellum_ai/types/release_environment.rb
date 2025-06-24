@@ -23,14 +23,12 @@ module Vellum
     # @param label [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ReleaseEnvironment]
-    def initialize(id: OMIT, name:, label:, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, name:, label:, additional_properties: nil)
+      @id = id
       @name = name
       @label = label
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "label": label }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "name": name, "label": label }
     end
 # Deserialize a JSON object to an instance of ReleaseEnvironment
     #
@@ -62,7 +60,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
     end

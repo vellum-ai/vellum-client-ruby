@@ -20,8 +20,8 @@ module Vellum
     # @param full_name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ReleaseReviewReviewer]
-    def initialize(id: OMIT, full_name: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, full_name: OMIT, additional_properties: nil)
+      @id = id
       @full_name = full_name if full_name != OMIT
       @additional_properties = additional_properties
       @_field_set = { "id": id, "full_name": full_name }.reject do | _k, v |
@@ -56,7 +56,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.full_name&.is_a?(String) != false || raise("Passed value for field obj.full_name is not the expected type, validation failed.")
     end
   end

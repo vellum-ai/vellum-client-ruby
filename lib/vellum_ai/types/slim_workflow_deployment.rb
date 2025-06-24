@@ -61,13 +61,13 @@ module Vellum
     # @param description [String] A human-readable description of the workflow deployment
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimWorkflowDeployment]
-    def initialize(id: OMIT, name:, label:, status: OMIT, environment: OMIT, created: OMIT, last_deployed_on:, input_variables:, output_variables:, description: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, name:, label:, status: OMIT, environment: OMIT, created:, last_deployed_on:, input_variables:, output_variables:, description: OMIT, additional_properties: nil)
+      @id = id
       @name = name
       @label = label
       @status = status if status != OMIT
       @environment = environment if environment != OMIT
-      @created = created if created != OMIT
+      @created = created
       @last_deployed_on = last_deployed_on
       @input_variables = input_variables
       @output_variables = output_variables
@@ -135,12 +135,12 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.status&.is_a?(Vellum::EntityStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       obj.environment&.is_a?(Vellum::EnvironmentEnum) != false || raise("Passed value for field obj.environment is not the expected type, validation failed.")
-      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       obj.last_deployed_on.is_a?(DateTime) != false || raise("Passed value for field obj.last_deployed_on is not the expected type, validation failed.")
       obj.input_variables.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
       obj.output_variables.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
