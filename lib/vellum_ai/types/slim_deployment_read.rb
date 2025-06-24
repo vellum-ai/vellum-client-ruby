@@ -56,9 +56,9 @@ module Vellum
     # @param description [String] A human-readable description of the deployment
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimDeploymentRead]
-    def initialize(id: OMIT, created: OMIT, label:, name:, status: OMIT, environment: OMIT, last_deployed_on:, input_variables:, description: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
-      @created = created if created != OMIT
+    def initialize(id:, created:, label:, name:, status: OMIT, environment: OMIT, last_deployed_on:, input_variables:, description: OMIT, additional_properties: nil)
+      @id = id
+      @created = created
       @label = label
       @name = name
       @status = status if status != OMIT
@@ -124,8 +124,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.status&.is_a?(Vellum::EntityStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
