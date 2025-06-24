@@ -27,13 +27,15 @@ module Vellum
     # @param headers [Hash{String => String}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ExecuteApiResponse]
-    def initialize(status_code:, text:, json:, headers:, additional_properties: nil)
+    def initialize(status_code:, text:, json: OMIT, headers:, additional_properties: nil)
       @status_code = status_code
       @text = text
-      @json = json
+      @json = json if json != OMIT
       @headers = headers
       @additional_properties = additional_properties
-      @_field_set = { "status_code": status_code, "text": text, "json": json, "headers": headers }
+      @_field_set = { "status_code": status_code, "text": text, "json": json, "headers": headers }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of ExecuteApiResponse
     #
@@ -74,7 +76,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.status_code.is_a?(Integer) != false || raise("Passed value for field obj.status_code is not the expected type, validation failed.")
       obj.text.is_a?(String) != false || raise("Passed value for field obj.text is not the expected type, validation failed.")
-      Vellum::ExecuteApiResponseJson.validate_raw(obj: obj.json)
+      obj.json.nil? || Vellum::ExecuteApiResponseJson.validate_raw(obj: obj.json)
       obj.headers.is_a?(Hash) != false || raise("Passed value for field obj.headers is not the expected type, validation failed.")
     end
   end
