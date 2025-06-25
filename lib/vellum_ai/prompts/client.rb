@@ -50,6 +50,10 @@ end
     end
 # Used to push updates to a Prompt in Vellum.
     #
+    # @param prompt_variant_id [String] If specified, an existing Prompt Variant by the provided ID will be updated.
+#  Otherwise, a new Prompt Variant will be created and an ID generated.
+    # @param prompt_variant_label [String] If provided, then the created/updated Prompt Variant will have this label.
+    # @param prompt_sandbox_id [String] 
     # @param exec_config [Hash] Request of type Vellum::PromptExecConfig, as a Hash
     #   * :ml_model (String) 
     #   * :input_variables (Array<Vellum::VellumVariable>) 
@@ -68,8 +72,6 @@ end
     #     * :stream_enabled (Boolean) 
     #   * :blocks (Array<Vellum::PromptBlock>) 
     #   * :functions (Array<Vellum::FunctionDefinition>) 
-    # @param prompt_variant_id [String] 
-    # @param prompt_sandbox_id [String] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PromptPushResponse]
     # @example
@@ -79,7 +81,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.prompts.push(exec_config: { ml_model: "ml_model", input_variables: [{ id: "id", key: "key", type: STRING }], parameters: {  }, blocks: [{ block_type: "JINJA", template: "template" }] })
-    def push(exec_config:, prompt_variant_id: nil, prompt_sandbox_id: nil, request_options: nil)
+    def push(prompt_variant_id: nil, prompt_variant_label: nil, prompt_sandbox_id: nil, exec_config:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -91,7 +93,7 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), exec_config: exec_config, prompt_variant_id: prompt_variant_id, prompt_sandbox_id: prompt_sandbox_id }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), prompt_variant_id: prompt_variant_id, prompt_variant_label: prompt_variant_label, prompt_sandbox_id: prompt_sandbox_id, exec_config: exec_config }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/prompts/push"
 end
       Vellum::PromptPushResponse.from_json(json_object: response.body)
@@ -142,6 +144,10 @@ end
     end
 # Used to push updates to a Prompt in Vellum.
     #
+    # @param prompt_variant_id [String] If specified, an existing Prompt Variant by the provided ID will be updated.
+#  Otherwise, a new Prompt Variant will be created and an ID generated.
+    # @param prompt_variant_label [String] If provided, then the created/updated Prompt Variant will have this label.
+    # @param prompt_sandbox_id [String] 
     # @param exec_config [Hash] Request of type Vellum::PromptExecConfig, as a Hash
     #   * :ml_model (String) 
     #   * :input_variables (Array<Vellum::VellumVariable>) 
@@ -160,8 +166,6 @@ end
     #     * :stream_enabled (Boolean) 
     #   * :blocks (Array<Vellum::PromptBlock>) 
     #   * :functions (Array<Vellum::FunctionDefinition>) 
-    # @param prompt_variant_id [String] 
-    # @param prompt_sandbox_id [String] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PromptPushResponse]
     # @example
@@ -171,7 +175,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.prompts.push(exec_config: { ml_model: "ml_model", input_variables: [{ id: "id", key: "key", type: STRING }], parameters: {  }, blocks: [{ block_type: "JINJA", template: "template" }] })
-    def push(exec_config:, prompt_variant_id: nil, prompt_sandbox_id: nil, request_options: nil)
+    def push(prompt_variant_id: nil, prompt_variant_label: nil, prompt_sandbox_id: nil, exec_config:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -184,7 +188,7 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), exec_config: exec_config, prompt_variant_id: prompt_variant_id, prompt_sandbox_id: prompt_sandbox_id }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), prompt_variant_id: prompt_variant_id, prompt_variant_label: prompt_variant_label, prompt_sandbox_id: prompt_sandbox_id, exec_config: exec_config }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/prompts/push"
 end
         Vellum::PromptPushResponse.from_json(json_object: response.body)
