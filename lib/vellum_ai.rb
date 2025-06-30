@@ -159,6 +159,7 @@ end
     # @param packages [Array<Hash>] Request of type Array<Vellum::CodeExecutionPackage>, as a Hash
     #   * :version (String) 
     #   * :name (String) 
+    #   * :repository (String) 
     # @param output_type [Vellum::VellumVariableType] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::CodeExecutorResponse]
@@ -569,6 +570,7 @@ end
     # @param packages [Array<Hash>] Request of type Array<Vellum::CodeExecutionPackage>, as a Hash
     #   * :version (String) 
     #   * :name (String) 
+    #   * :repository (String) 
     # @param output_type [Vellum::VellumVariableType] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::CodeExecutorResponse]

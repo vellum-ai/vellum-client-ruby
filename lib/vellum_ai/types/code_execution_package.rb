@@ -8,6 +8,8 @@ module Vellum
     attr_reader :version
   # @return [String] 
     attr_reader :name
+  # @return [String] 
+    attr_reader :repository
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -18,13 +20,17 @@ module Vellum
 
     # @param version [String] 
     # @param name [String] 
+    # @param repository [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::CodeExecutionPackage]
-    def initialize(version:, name:, additional_properties: nil)
+    def initialize(version:, name:, repository: OMIT, additional_properties: nil)
       @version = version
       @name = name
+      @repository = repository if repository != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "version": version, "name": name }
+      @_field_set = { "version": version, "name": name, "repository": repository }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of CodeExecutionPackage
     #
@@ -35,9 +41,11 @@ module Vellum
       parsed_json = JSON.parse(json_object)
       version = parsed_json["version"]
       name = parsed_json["name"]
+      repository = parsed_json["repository"]
       new(
         version: version,
         name: name,
+        repository: repository,
         additional_properties: struct
       )
     end
@@ -56,6 +64,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.version.is_a?(String) != false || raise("Passed value for field obj.version is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.repository&.is_a?(String) != false || raise("Passed value for field obj.repository is not the expected type, validation failed.")
     end
   end
 end
