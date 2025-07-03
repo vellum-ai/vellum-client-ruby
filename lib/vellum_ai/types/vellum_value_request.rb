@@ -11,6 +11,7 @@ require_relative "error_vellum_value_request"
 require_relative "array_vellum_value_request"
 require_relative "chat_history_vellum_value_request"
 require_relative "search_results_vellum_value_request"
+require_relative "thinking_vellum_value_request"
 
 module Vellum
   class VellumValueRequest
@@ -132,6 +133,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::ThinkingVellumValueRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ThinkingVellumValueRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -193,6 +204,11 @@ end
       end
       begin
         return Vellum::SearchResultsVellumValueRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ThinkingVellumValueRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

@@ -4,6 +4,7 @@ require_relative "string_vellum_value"
 require_relative "json_vellum_value"
 require_relative "error_vellum_value"
 require_relative "function_call_vellum_value"
+require_relative "thinking_vellum_value"
 
 module Vellum
   class PromptOutput
@@ -55,6 +56,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::ThinkingVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ThinkingVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -81,6 +92,11 @@ end
       end
       begin
         return Vellum::FunctionCallVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ThinkingVellumValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
