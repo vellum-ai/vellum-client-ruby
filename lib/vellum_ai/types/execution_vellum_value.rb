@@ -8,6 +8,7 @@ require_relative "execution_search_results_vellum_value"
 require_relative "execution_error_vellum_value"
 require_relative "execution_array_vellum_value"
 require_relative "execution_function_call_vellum_value"
+require_relative "execution_thinking_vellum_value"
 
 module Vellum
   class ExecutionVellumValue
@@ -99,6 +100,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::ExecutionThinkingVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ExecutionThinkingVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -145,6 +156,11 @@ end
       end
       begin
         return Vellum::ExecutionFunctionCallVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ExecutionThinkingVellumValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
