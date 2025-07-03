@@ -13,6 +13,7 @@ module Vellum
 #  * `AUDIO` - AUDIO
 #  * `DOCUMENT` - DOCUMENT
 #  * `NULL` - NULL
+#  * `THINKING` - THINKING
   class VellumVariableType
 
     STRING = "STRING"
@@ -27,6 +28,7 @@ module Vellum
     AUDIO = "AUDIO"
     DOCUMENT = "DOCUMENT"
     NULL = "NULL"
+    THINKING = "THINKING"
 
   end
 end
