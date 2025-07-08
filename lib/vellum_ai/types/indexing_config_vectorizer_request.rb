@@ -9,6 +9,7 @@ require_relative "basic_vectorizer_sentence_transformers_multi_qa_mpnet_base_dot
 require_relative "hkunlp_instructor_xl_vectorizer_request"
 require_relative "google_vertex_ai_vectorizer_text_embedding_004_request"
 require_relative "google_vertex_ai_vectorizer_text_multilingual_embedding_002_request"
+require_relative "google_vertex_ai_vectorizer_gemini_embedding_001_request"
 require_relative "fast_embed_vectorizer_baai_bge_small_en_v_15_request"
 
 module Vellum
@@ -112,6 +113,16 @@ end
         # noop
       end
       begin
+        Vellum::GoogleVertexAiVectorizerGeminiEmbedding001Request.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::GoogleVertexAiVectorizerGeminiEmbedding001Request.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
         Vellum::FastEmbedVectorizerBaaiBgeSmallEnV15Request.validate_raw(obj: struct)
         unless struct.nil?
   return Vellum::FastEmbedVectorizerBaaiBgeSmallEnV15Request.from_json(json_object: struct)
@@ -172,6 +183,11 @@ end
       end
       begin
         return Vellum::GoogleVertexAiVectorizerTextMultilingualEmbedding002Request.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::GoogleVertexAiVectorizerGeminiEmbedding001Request.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

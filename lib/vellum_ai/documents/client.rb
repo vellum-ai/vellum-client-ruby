@@ -129,6 +129,8 @@ end
 #  file's file name.
     # @param status [Vellum::DOCUMENT_STATUS] The current status of the document
 #  * `ACTIVE` - Active
+    # @param keywords [Array<String>] A list of keywords that'll be associated with the document. Used as part of
+#  keyword search.
     # @param metadata [Hash{String => Object}] A JSON object containing any metadata associated with the document that you'd
 #  like to filter upon later.
     # @param request_options [Vellum::RequestOptions] 
@@ -140,7 +142,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.documents.partial_update(id: "id")
-    def partial_update(id:, label: nil, status: nil, metadata: nil, request_options: nil)
+    def partial_update(id:, label: nil, status: nil, keywords: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.patch do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -152,7 +154,7 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), label: label, status: status, metadata: metadata }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), label: label, status: status, keywords: keywords, metadata: metadata }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/documents/#{id}"
 end
       Vellum::DocumentRead.from_json(json_object: response.body)
@@ -320,6 +322,8 @@ end
 #  file's file name.
     # @param status [Vellum::DOCUMENT_STATUS] The current status of the document
 #  * `ACTIVE` - Active
+    # @param keywords [Array<String>] A list of keywords that'll be associated with the document. Used as part of
+#  keyword search.
     # @param metadata [Hash{String => Object}] A JSON object containing any metadata associated with the document that you'd
 #  like to filter upon later.
     # @param request_options [Vellum::RequestOptions] 
@@ -331,7 +335,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.documents.partial_update(id: "id")
-    def partial_update(id:, label: nil, status: nil, metadata: nil, request_options: nil)
+    def partial_update(id:, label: nil, status: nil, keywords: nil, metadata: nil, request_options: nil)
       Async do
         response = @request_client.conn.patch do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -344,7 +348,7 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), label: label, status: status, metadata: metadata }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), label: label, status: status, keywords: keywords, metadata: metadata }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/documents/#{id}"
 end
         Vellum::DocumentRead.from_json(json_object: response.body)
