@@ -12,6 +12,10 @@ module Vellum
     attr_reader :description
   # @return [String] 
     attr_reader :icon_name
+  # @return [String] 
+    attr_reader :ui_image_url
+  # @return [String] 
+    attr_reader :code_image_url
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -24,15 +28,19 @@ module Vellum
     # @param label [String] 
     # @param description [String] 
     # @param icon_name [String] 
+    # @param ui_image_url [String] 
+    # @param code_image_url [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowSandboxExample]
-    def initialize(id:, label:, description: OMIT, icon_name: OMIT, additional_properties: nil)
+    def initialize(id:, label:, description: OMIT, icon_name: OMIT, ui_image_url: OMIT, code_image_url: OMIT, additional_properties: nil)
       @id = id
       @label = label
       @description = description if description != OMIT
       @icon_name = icon_name if icon_name != OMIT
+      @ui_image_url = ui_image_url if ui_image_url != OMIT
+      @code_image_url = code_image_url if code_image_url != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "label": label, "description": description, "icon_name": icon_name }.reject do | _k, v |
+      @_field_set = { "id": id, "label": label, "description": description, "icon_name": icon_name, "ui_image_url": ui_image_url, "code_image_url": code_image_url }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -47,11 +55,15 @@ end
       label = parsed_json["label"]
       description = parsed_json["description"]
       icon_name = parsed_json["icon_name"]
+      ui_image_url = parsed_json["ui_image_url"]
+      code_image_url = parsed_json["code_image_url"]
       new(
         id: id,
         label: label,
         description: description,
         icon_name: icon_name,
+        ui_image_url: ui_image_url,
+        code_image_url: code_image_url,
         additional_properties: struct
       )
     end
@@ -72,6 +84,8 @@ end
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.icon_name&.is_a?(String) != false || raise("Passed value for field obj.icon_name is not the expected type, validation failed.")
+      obj.ui_image_url&.is_a?(String) != false || raise("Passed value for field obj.ui_image_url is not the expected type, validation failed.")
+      obj.code_image_url&.is_a?(String) != false || raise("Passed value for field obj.code_image_url is not the expected type, validation failed.")
     end
   end
 end
