@@ -12,7 +12,7 @@ module Vellum
     attr_reader :name
   # @return [String] 
     attr_reader :type
-  # @return [Array<Vellum::StringVellumValue>] 
+  # @return [Vellum::StringVellumValue] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -25,7 +25,7 @@ module Vellum
     # @param id [String] The variable's uniquely identifying internal id.
     # @param name [String] 
     # @param type [String] 
-    # @param value [Array<Vellum::StringVellumValue>] 
+    # @param value [Vellum::StringVellumValue] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ExecutionThinkingVellumValue]
     def initialize(id:, name:, type:, value:, additional_properties: nil)
@@ -46,10 +46,12 @@ module Vellum
       id = parsed_json["id"]
       name = parsed_json["name"]
       type = parsed_json["type"]
-      value = parsed_json["value"]&.map do | item |
-  item = item.to_json
-  Vellum::StringVellumValue.from_json(json_object: item)
-end
+      unless parsed_json["value"].nil?
+        value = parsed_json["value"].to_json
+        value = Vellum::StringVellumValue.from_json(json_object: value)
+      else
+        value = nil
+      end
       new(
         id: id,
         name: name,
@@ -74,7 +76,7 @@ end
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      Vellum::StringVellumValue.validate_raw(obj: obj.value)
     end
   end
 end
