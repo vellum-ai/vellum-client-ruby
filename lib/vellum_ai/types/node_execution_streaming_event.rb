@@ -21,7 +21,7 @@ module Vellum
     attr_reader :id
   # @return [DateTime] 
     attr_reader :timestamp
-  # @return [Vellum::API_VERSION_ENUM] 
+  # @return [Vellum::ApiVersionEnum] 
     attr_reader :api_version
   # @return [String] 
     attr_reader :trace_id
@@ -41,7 +41,7 @@ module Vellum
     # @param body [Vellum::NodeExecutionStreamingBody] 
     # @param id [String] 
     # @param timestamp [DateTime] 
-    # @param api_version [Vellum::API_VERSION_ENUM] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @param trace_id [String] 
     # @param span_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
@@ -126,7 +126,7 @@ end
       Vellum::NodeExecutionStreamingBody.validate_raw(obj: obj.body)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.timestamp.is_a?(DateTime) != false || raise("Passed value for field obj.timestamp is not the expected type, validation failed.")
-      obj.api_version&.is_a?(String) != false || raise("Passed value for field obj.api_version is not the expected type, validation failed.")
+      obj.api_version&.is_a?(Vellum::ApiVersionEnum) != false || raise("Passed value for field obj.api_version is not the expected type, validation failed.")
       obj.trace_id.is_a?(String) != false || raise("Passed value for field obj.trace_id is not the expected type, validation failed.")
       obj.span_id.is_a?(String) != false || raise("Passed value for field obj.span_id is not the expected type, validation failed.")
     end
