@@ -35,6 +35,8 @@ module Vellum
     attr_reader :usage_results
   # @return [Array<Vellum::VellumSpan>] 
     attr_reader :spans
+  # @return [Hash{String => Object}] 
+    attr_reader :state
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -54,9 +56,10 @@ module Vellum
     # @param metric_results [Array<Vellum::WorkflowExecutionViewOnlineEvalMetricResult>] 
     # @param usage_results [Array<Vellum::WorkflowExecutionUsageResult>] 
     # @param spans [Array<Vellum::VellumSpan>] 
+    # @param state [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowEventExecutionRead]
-    def initialize(span_id:, parent_context: OMIT, start:, end_: OMIT, inputs:, outputs:, error: OMIT, latest_actual: OMIT, metric_results:, usage_results: OMIT, spans:, additional_properties: nil)
+    def initialize(span_id:, parent_context: OMIT, start:, end_: OMIT, inputs:, outputs:, error: OMIT, latest_actual: OMIT, metric_results:, usage_results: OMIT, spans:, state: OMIT, additional_properties: nil)
       @span_id = span_id
       @parent_context = parent_context if parent_context != OMIT
       @start = start
@@ -68,8 +71,9 @@ module Vellum
       @metric_results = metric_results
       @usage_results = usage_results if usage_results != OMIT
       @spans = spans
+      @state = state if state != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "span_id": span_id, "parent_context": parent_context, "start": start, "end": end_, "inputs": inputs, "outputs": outputs, "error": error, "latest_actual": latest_actual, "metric_results": metric_results, "usage_results": usage_results, "spans": spans }.reject do | _k, v |
+      @_field_set = { "span_id": span_id, "parent_context": parent_context, "start": start, "end": end_, "inputs": inputs, "outputs": outputs, "error": error, "latest_actual": latest_actual, "metric_results": metric_results, "usage_results": usage_results, "spans": spans, "state": state }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -129,6 +133,7 @@ end
   item = item.to_json
   Vellum::VellumSpan.from_json(json_object: item)
 end
+      state = parsed_json["state"]
       new(
         span_id: span_id,
         parent_context: parent_context,
@@ -141,6 +146,7 @@ end
         metric_results: metric_results,
         usage_results: usage_results,
         spans: spans,
+        state: state,
         additional_properties: struct
       )
     end
@@ -168,6 +174,7 @@ end
       obj.metric_results.is_a?(Array) != false || raise("Passed value for field obj.metric_results is not the expected type, validation failed.")
       obj.usage_results&.is_a?(Array) != false || raise("Passed value for field obj.usage_results is not the expected type, validation failed.")
       obj.spans.is_a?(Array) != false || raise("Passed value for field obj.spans is not the expected type, validation failed.")
+      obj.state&.is_a?(Hash) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
     end
   end
 end
