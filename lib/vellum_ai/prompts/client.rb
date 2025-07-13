@@ -39,6 +39,9 @@ module Vellum
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}), "Accept": "application/json" }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "prompt_variant_id": prompt_variant_id }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -80,7 +83,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.prompts.push(exec_config: { ml_model: "ml_model", input_variables: [{ id: "id", key: "key", type: STRING }], parameters: {  }, blocks: [{ block_type: "JINJA", template: "template" }] })
+#  api.prompts.push(exec_config: { ml_model: "ml_model", input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }], parameters: {  }, blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }] })
     def push(prompt_variant_id: nil, prompt_variant_label: nil, prompt_sandbox_id: nil, exec_config:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -88,6 +91,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -132,6 +138,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}), "Accept": "application/json" }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "prompt_variant_id": prompt_variant_id }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -174,7 +183,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.prompts.push(exec_config: { ml_model: "ml_model", input_variables: [{ id: "id", key: "key", type: STRING }], parameters: {  }, blocks: [{ block_type: "JINJA", template: "template" }] })
+#  api.prompts.push(exec_config: { ml_model: "ml_model", input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }], parameters: {  }, blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }] })
     def push(prompt_variant_id: nil, prompt_variant_label: nil, prompt_sandbox_id: nil, exec_config:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -183,6 +192,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
