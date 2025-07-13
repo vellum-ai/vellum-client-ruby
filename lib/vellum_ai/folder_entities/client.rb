@@ -41,7 +41,8 @@ module Vellum
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.folder_entities.list(parent_folder_id: "parent_folder_id")
     def list(entity_status: nil, limit: nil, offset: nil, ordering: nil, parent_folder_id:, request_options: nil)
@@ -51,6 +52,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "entity_status": entity_status, "limit": limit, "offset": offset, "ordering": ordering, "parent_folder_id": parent_folder_id }.compact
@@ -79,7 +83,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.folder_entities.add_entity_to_folder(folder_id: "folder_id", entity_id: "entity_id")
     def add_entity_to_folder(folder_id:, entity_id:, request_options: nil)
@@ -89,6 +94,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -133,7 +141,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.folder_entities.list(parent_folder_id: "parent_folder_id")
     def list(entity_status: nil, limit: nil, offset: nil, ordering: nil, parent_folder_id:, request_options: nil)
@@ -144,6 +153,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "entity_status": entity_status, "limit": limit, "offset": offset, "ordering": ordering, "parent_folder_id": parent_folder_id }.compact
@@ -173,7 +185,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.folder_entities.add_entity_to_folder(folder_id: "folder_id", entity_id: "entity_id")
     def add_entity_to_folder(folder_id:, entity_id:, request_options: nil)
@@ -184,6 +197,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

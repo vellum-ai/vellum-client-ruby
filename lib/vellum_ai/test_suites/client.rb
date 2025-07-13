@@ -30,7 +30,8 @@ module Vellum
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.test_suites.list_test_suite_test_cases(id: "id")
     def list_test_suite_test_cases(id:, limit: nil, offset: nil, request_options: nil)
@@ -40,6 +41,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset }.compact
@@ -72,7 +76,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.test_suites.upsert_test_suite_test_case(id: "id", request: { label: "Test Case 1", input_values: [{ type: "STRING", value: "What are your favorite colors?", name: "var_1" }], evaluation_values: [{ type: "ARRAY", value: [{ type: "STRING", value: "Red" }, { type: "STRING", value: "Green" }, { type: "STRING", value: "Blue" }], name: "var_2" }] })
     def upsert_test_suite_test_case(id:, request:, request_options: nil)
@@ -82,6 +87,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -102,7 +110,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.test_suites.delete_test_suite_test_case(id: "id", test_case_id: "test_case_id")
     def delete_test_suite_test_case(id:, test_case_id:, request_options: nil)
@@ -112,6 +121,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -145,7 +157,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.test_suites.list_test_suite_test_cases(id: "id")
     def list_test_suite_test_cases(id:, limit: nil, offset: nil, request_options: nil)
@@ -156,6 +169,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset }.compact
@@ -189,7 +205,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.test_suites.upsert_test_suite_test_case(id: "id", request: { label: "Test Case 1", input_values: [{ type: "STRING", value: "What are your favorite colors?", name: "var_1" }], evaluation_values: [{ type: "ARRAY", value: [{ type: "STRING", value: "Red" }, { type: "STRING", value: "Green" }, { type: "STRING", value: "Blue" }], name: "var_2" }] })
     def upsert_test_suite_test_case(id:, request:, request_options: nil)
@@ -200,6 +217,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -221,7 +241,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.test_suites.delete_test_suite_test_case(id: "id", test_case_id: "test_case_id")
     def delete_test_suite_test_case(id:, test_case_id:, request_options: nil)
@@ -232,6 +253,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

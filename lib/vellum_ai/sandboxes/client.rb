@@ -39,7 +39,8 @@ module Vellum
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.sandboxes.deploy_prompt(id: "id", prompt_variant_id: "prompt_variant_id")
     def deploy_prompt(id:, prompt_variant_id:, prompt_deployment_id: nil, prompt_deployment_name: nil, label: nil, release_tags: nil, release_description: nil, request_options: nil)
@@ -49,6 +50,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -79,7 +83,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.sandboxes.upsert_sandbox_scenario(
 #    id: "id",
@@ -93,6 +98,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -114,7 +122,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.sandboxes.delete_sandbox_scenario(id: "id", scenario_id: "scenario_id")
     def delete_sandbox_scenario(id:, scenario_id:, request_options: nil)
@@ -124,6 +133,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -166,7 +178,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.sandboxes.deploy_prompt(id: "id", prompt_variant_id: "prompt_variant_id")
     def deploy_prompt(id:, prompt_variant_id:, prompt_deployment_id: nil, prompt_deployment_name: nil, label: nil, release_tags: nil, release_description: nil, request_options: nil)
@@ -177,6 +190,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -208,7 +224,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.sandboxes.upsert_sandbox_scenario(
 #    id: "id",
@@ -223,6 +240,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -245,7 +265,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.sandboxes.delete_sandbox_scenario(id: "id", scenario_id: "scenario_id")
     def delete_sandbox_scenario(id:, scenario_id:, request_options: nil)
@@ -256,6 +277,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

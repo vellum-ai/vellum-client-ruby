@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require_relative "environment"
+require_relative "vellum_ai/types/api_version_enum"
 require "faraday"
 require "faraday/multipart"
 require "faraday/retry"
@@ -26,11 +27,16 @@ module Vellum
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @return [Vellum::RequestClient]
-    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:)
+    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version:)
       @default_environment = environment
       @api_key = api_key
-      @conn = Faraday.new do | faraday |
+      @headers = {  }
+      unless api_version.nil?
+        @headers["X-API-Version"] = api_version
+      end
+      @conn = Faraday.new(headers: @headers) do | faraday |
   faraday.request :multipart
   faraday.request :json
   faraday.response :raise_error, include_request: true
@@ -50,7 +56,7 @@ end
     end
     # @return [Hash{String => String}]
     def get_headers
-      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.14.88' }
+      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.3.3' }
       headers["X-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
  headers
     end
@@ -71,11 +77,16 @@ end
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @return [Vellum::AsyncRequestClient]
-    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:)
+    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version:)
       @default_environment = environment
       @api_key = api_key
-      @conn = Faraday.new do | faraday |
+      @headers = {  }
+      unless api_version.nil?
+        @headers["X-API-Version"] = api_version
+      end
+      @conn = Faraday.new(headers: @headers) do | faraday |
   faraday.request :multipart
   faraday.request :json
   faraday.response :raise_error, include_request: true
@@ -96,7 +107,7 @@ end
     end
     # @return [Hash{String => String}]
     def get_headers
-      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.14.88' }
+      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.3.3' }
       headers["X-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
  headers
     end
@@ -108,6 +119,8 @@ end
     attr_reader :base_url
   # @return [String] 
     attr_reader :api_key
+  # @return [Vellum::ApiVersionEnum] 
+    attr_reader :api_version
   # @return [Hash{String => Object}] 
     attr_reader :additional_headers
   # @return [Hash{String => Object}] 
@@ -120,14 +133,16 @@ end
 
     # @param base_url [String] 
     # @param api_key [String] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @param additional_headers [Hash{String => Object}] 
     # @param additional_query_parameters [Hash{String => Object}] 
     # @param additional_body_parameters [Hash{String => Object}] 
     # @param timeout_in_seconds [Long] 
     # @return [Vellum::RequestOptions]
-    def initialize(base_url: nil, api_key: nil, additional_headers: nil, additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, api_key: nil, api_version: nil, additional_headers: nil, additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @api_key = api_key
+      @api_version = api_version
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters
@@ -141,6 +156,8 @@ end
     attr_reader :base_url
   # @return [String] 
     attr_reader :api_key
+  # @return [Vellum::ApiVersionEnum] 
+    attr_reader :api_version
   # @return [Hash{String => Object}] 
     attr_reader :additional_headers
   # @return [Hash{String => Object}] 
@@ -153,14 +170,16 @@ end
 
     # @param base_url [String] 
     # @param api_key [String] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @param additional_headers [Hash{String => Object}] 
     # @param additional_query_parameters [Hash{String => Object}] 
     # @param additional_body_parameters [Hash{String => Object}] 
     # @param timeout_in_seconds [Long] 
     # @return [Vellum::IdempotencyRequestOptions]
-    def initialize(base_url: nil, api_key: nil, additional_headers: nil, additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, api_key: nil, api_version: nil, additional_headers: nil, additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @api_key = api_key
+      @api_version = api_version
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters

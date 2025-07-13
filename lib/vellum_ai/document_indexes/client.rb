@@ -42,7 +42,8 @@ module Vellum
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.list
     def list(limit: nil, offset: nil, ordering: nil, search: nil, status: nil, request_options: nil)
@@ -52,6 +53,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "search": search, "status": status }.compact
@@ -80,7 +84,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.create(
 #    label: "My Document Index",
@@ -94,6 +99,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -113,7 +121,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.retrieve(id: "id")
     def retrieve(id:, request_options: nil)
@@ -123,6 +132,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -148,7 +160,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.update(id: "id", label: "label")
     def update(id:, label:, status: nil, request_options: nil)
@@ -158,6 +171,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -177,7 +193,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.destroy(id: "id")
     def destroy(id:, request_options: nil)
@@ -187,6 +204,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -211,7 +231,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.partial_update(id: "id")
     def partial_update(id:, label: nil, status: nil, request_options: nil)
@@ -221,6 +242,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -243,7 +267,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.add_document(document_id: "document_id", id: "id")
     def add_document(document_id:, id:, request_options: nil)
@@ -253,6 +278,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -276,7 +304,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.remove_document(document_id: "document_id", id: "id")
     def remove_document(document_id:, id:, request_options: nil)
@@ -286,6 +315,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -324,7 +356,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.list
     def list(limit: nil, offset: nil, ordering: nil, search: nil, status: nil, request_options: nil)
@@ -335,6 +368,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "search": search, "status": status }.compact
@@ -364,7 +400,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.create(
 #    label: "My Document Index",
@@ -379,6 +416,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -399,7 +439,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.retrieve(id: "id")
     def retrieve(id:, request_options: nil)
@@ -410,6 +451,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -436,7 +480,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.update(id: "id", label: "label")
     def update(id:, label:, status: nil, request_options: nil)
@@ -447,6 +492,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -467,7 +515,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.destroy(id: "id")
     def destroy(id:, request_options: nil)
@@ -478,6 +527,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -503,7 +555,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.partial_update(id: "id")
     def partial_update(id:, label: nil, status: nil, request_options: nil)
@@ -514,6 +567,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -537,7 +593,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.add_document(document_id: "document_id", id: "id")
     def add_document(document_id:, id:, request_options: nil)
@@ -548,6 +605,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -572,7 +632,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.document_indexes.remove_document(document_id: "document_id", id: "id")
     def remove_document(document_id:, id:, request_options: nil)
@@ -583,6 +644,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

@@ -27,7 +27,8 @@ module Vellum
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.metric_definitions.execute_metric_definition(id: "id", inputs: [{ name: "name", type: "STRING", value: "value" }])
     def execute_metric_definition(id:, inputs:, release_tag: nil, request_options: nil)
@@ -37,6 +38,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -57,7 +61,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.metric_definitions.metric_definition_history_item_retrieve(history_id_or_release_tag: "history_id_or_release_tag", id: "id")
     def metric_definition_history_item_retrieve(history_id_or_release_tag:, id:, request_options: nil)
@@ -67,6 +72,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -99,7 +107,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.metric_definitions.execute_metric_definition(id: "id", inputs: [{ name: "name", type: "STRING", value: "value" }])
     def execute_metric_definition(id:, inputs:, release_tag: nil, request_options: nil)
@@ -110,6 +119,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -131,7 +143,8 @@ end
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
+#    api_key: "YOUR_API_KEY",
+#    api_version: "ApiVersion"
 #  )
 #  api.metric_definitions.metric_definition_history_item_retrieve(history_id_or_release_tag: "history_id_or_release_tag", id: "id")
     def metric_definition_history_item_retrieve(history_id_or_release_tag:, id:, request_options: nil)
@@ -142,6 +155,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
