@@ -69,11 +69,11 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.ad_hoc.adhoc_execute_prompt(
-#    ml_model: "ml_model",
-#    input_values: [{ key: "key", type: "STRING", value: "value" }],
-#    input_variables: [{ id: "id", key: "key", type: STRING }],
+#    ml_model: "x",
+#    input_values: [{ key: "x", type: "STRING", value: "value" }, { key: "x", type: "STRING", value: "value" }],
+#    input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }],
 #    parameters: {  },
-#    blocks: [{ block_type: "JINJA", template: "template" }]
+#    blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }]
 #  )
     def adhoc_execute_prompt(ml_model:, input_values:, input_variables:, parameters:, settings: nil, blocks:, functions: nil, expand_meta: nil, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -82,6 +82,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -150,11 +153,11 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.ad_hoc.adhoc_execute_prompt(
-#    ml_model: "ml_model",
-#    input_values: [{ key: "key", type: "STRING", value: "value" }],
-#    input_variables: [{ id: "id", key: "key", type: STRING }],
+#    ml_model: "x",
+#    input_values: [{ key: "x", type: "STRING", value: "value" }, { key: "x", type: "STRING", value: "value" }],
+#    input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }],
 #    parameters: {  },
-#    blocks: [{ block_type: "JINJA", template: "template" }]
+#    blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }]
 #  )
     def adhoc_execute_prompt(ml_model:, input_values:, input_variables:, parameters:, settings: nil, blocks:, functions: nil, expand_meta: nil, request_options: nil)
       Async do
@@ -164,6 +167,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

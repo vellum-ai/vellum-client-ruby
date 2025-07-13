@@ -41,6 +41,9 @@ module Vellum
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -74,7 +77,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { label: "Test Case 1", input_values: [{ type: "STRING", value: "What are your favorite colors?", name: "var_1" }], evaluation_values: [{ type: "ARRAY", value: [{ type: "STRING", value: "Red" }, { type: "STRING", value: "Green" }, { type: "STRING", value: "Blue" }], name: "var_2" }] })
+#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { input_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }], evaluation_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }] })
     def upsert_test_suite_test_case(id:, request:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -82,6 +85,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -112,6 +118,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -157,6 +166,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -191,7 +203,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { label: "Test Case 1", input_values: [{ type: "STRING", value: "What are your favorite colors?", name: "var_1" }], evaluation_values: [{ type: "ARRAY", value: [{ type: "STRING", value: "Red" }, { type: "STRING", value: "Green" }, { type: "STRING", value: "Blue" }], name: "var_2" }] })
+#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { input_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }], evaluation_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }] })
     def upsert_test_suite_test_case(id:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -200,6 +212,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -232,6 +247,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
