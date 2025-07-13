@@ -49,6 +49,9 @@ module Vellum
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "document_index_id": document_index_id, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -78,6 +81,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -110,6 +116,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -150,6 +159,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -175,13 +187,6 @@ end
 #  that you'd like to filter upon later.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::UploadDocumentResponse]
-    # @example
-#  api = Vellum::Client.new(
-#    base_url: "https://api.example.com",
-#    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
-#  )
-#  api.documents.upload(contents: my_file.txt)
     def upload(add_to_index_names: nil, external_id: nil, label:, contents:, keywords: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -189,6 +194,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -237,6 +245,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "document_index_id": document_index_id, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -268,6 +279,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -302,6 +316,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -344,6 +361,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -370,13 +390,6 @@ end
 #  that you'd like to filter upon later.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::UploadDocumentResponse]
-    # @example
-#  api = Vellum::Client.new(
-#    base_url: "https://api.example.com",
-#    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
-#  )
-#  api.documents.upload(contents: my_file.txt)
     def upload(add_to_index_names: nil, external_id: nil, label:, contents:, keywords: nil, metadata: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -385,6 +398,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
