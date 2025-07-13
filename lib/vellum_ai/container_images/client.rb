@@ -42,6 +42,9 @@ module Vellum
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -71,6 +74,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -99,6 +105,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -122,9 +131,9 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.container_images.push_container_image(
-#    name: "name",
-#    sha: "sha",
-#    tags: ["tags"]
+#    name: "x",
+#    sha: "x",
+#    tags: ["tags", "tags"]
 #  )
     def push_container_image(name:, sha:, tags:, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -133,6 +142,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -177,6 +189,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -208,6 +223,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -238,6 +256,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -262,9 +283,9 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.container_images.push_container_image(
-#    name: "name",
-#    sha: "sha",
-#    tags: ["tags"]
+#    name: "x",
+#    sha: "x",
+#    tags: ["tags", "tags"]
 #  )
     def push_container_image(name:, sha:, tags:, request_options: nil)
       Async do
@@ -274,6 +295,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

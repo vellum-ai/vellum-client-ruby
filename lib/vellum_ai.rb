@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative "environment"
 require_relative "types_export"
+require_relative "vellum_ai/types/api_version_enum"
 require_relative "requests"
 require_relative "vellum_ai/ad_hoc/client"
 require_relative "vellum_ai/container_images/client"
@@ -93,14 +94,16 @@ module Vellum
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @return [Vellum::Client]
-    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:)
+    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version: nil)
       @request_client = Vellum::RequestClient.new(
   base_url: base_url,
   environment: environment,
   max_retries: max_retries,
   timeout_in_seconds: timeout_in_seconds,
-  api_key: api_key
+  api_key: api_key,
+  api_version: api_version
 )
       @ad_hoc = Vellum::AdHocClient.new(request_client: @request_client)
       @container_images = Vellum::ContainerImagesClient.new(request_client: @request_client)
@@ -135,7 +138,7 @@ module Vellum
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_api(url: "url")
+#  api.execute_api(url: "x")
     def execute_api(url:, method: nil, body: nil, headers: nil, bearer_token: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -143,6 +146,9 @@ module Vellum
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -170,10 +176,10 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.execute_code(
-#    code: "code",
+#    code: "x",
 #    runtime: PYTHON_3_11_6,
-#    input_values: [{ name: "name", type: "STRING", value: "value" }],
-#    packages: [{ version: "version", name: "name" }],
+#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
+#    packages: [{ version: "version", name: "name" }, { version: "version", name: "name" }],
 #    output_type: STRING
 #  )
     def execute_code(code:, runtime:, input_values:, packages:, output_type:, request_options: nil)
@@ -183,6 +189,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -234,7 +243,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_prompt(inputs: [{ name: "name", type: "STRING", value: "value" }])
+#  api.execute_prompt(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
     def execute_prompt(inputs:, prompt_deployment_id: nil, prompt_deployment_name: nil, release_tag: nil, external_id: nil, expand_meta: nil, raw_overrides: nil, expand_raw: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -242,6 +251,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -282,7 +294,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_workflow(inputs: [{ name: "name", type: "STRING", value: "value" }])
+#  api.execute_workflow(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
     def execute_workflow(inputs:, expand_meta: nil, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -290,6 +302,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -322,7 +337,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.generate(requests: [{ input_values: { "key": "value" } }])
+#  api.generate(requests: [{ input_values: { "input_values": {"key":"value"} } }, { input_values: { "input_values": {"key":"value"} } }])
     def generate(deployment_id: nil, deployment_name: nil, requests:, options: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -330,6 +345,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -367,7 +385,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.search(query: "query")
+#  api.search(query: "x")
     def search(index_id: nil, index_name: nil, query:, options: nil, document_index: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -375,6 +393,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -405,7 +426,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.submit_completion_actuals(actuals: [{  }])
+#  api.submit_completion_actuals(actuals: [{  }, {  }])
     def submit_completion_actuals(deployment_id: nil, deployment_name: nil, actuals:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -413,6 +434,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -440,7 +464,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.submit_workflow_execution_actuals(actuals: [{ output_type: "STRING" }])
+#  api.submit_workflow_execution_actuals(actuals: [{ output_type: "STRING" }, { output_type: "STRING" }])
     def submit_workflow_execution_actuals(actuals:, execution_id: nil, external_id: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -448,6 +472,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -504,14 +531,16 @@ end
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
+    # @param api_version [Vellum::ApiVersionEnum] 
     # @return [Vellum::AsyncClient]
-    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:)
+    def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version: nil)
       @async_request_client = Vellum::AsyncRequestClient.new(
   base_url: base_url,
   environment: environment,
   max_retries: max_retries,
   timeout_in_seconds: timeout_in_seconds,
-  api_key: api_key
+  api_key: api_key,
+  api_version: api_version
 )
       @ad_hoc = Vellum::AsyncAdHocClient.new(request_client: @async_request_client)
       @container_images = Vellum::AsyncContainerImagesClient.new(request_client: @async_request_client)
@@ -546,7 +575,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_api(url: "url")
+#  api.execute_api(url: "x")
     def execute_api(url:, method: nil, body: nil, headers: nil, bearer_token: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -554,6 +583,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -581,10 +613,10 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.execute_code(
-#    code: "code",
+#    code: "x",
 #    runtime: PYTHON_3_11_6,
-#    input_values: [{ name: "name", type: "STRING", value: "value" }],
-#    packages: [{ version: "version", name: "name" }],
+#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
+#    packages: [{ version: "version", name: "name" }, { version: "version", name: "name" }],
 #    output_type: STRING
 #  )
     def execute_code(code:, runtime:, input_values:, packages:, output_type:, request_options: nil)
@@ -594,6 +626,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -645,7 +680,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_prompt(inputs: [{ name: "name", type: "STRING", value: "value" }])
+#  api.execute_prompt(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
     def execute_prompt(inputs:, prompt_deployment_id: nil, prompt_deployment_name: nil, release_tag: nil, external_id: nil, expand_meta: nil, raw_overrides: nil, expand_raw: nil, metadata: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -653,6 +688,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -693,7 +731,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_workflow(inputs: [{ name: "name", type: "STRING", value: "value" }])
+#  api.execute_workflow(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
     def execute_workflow(inputs:, expand_meta: nil, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, metadata: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -701,6 +739,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -733,7 +774,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.generate(requests: [{ input_values: { "key": "value" } }])
+#  api.generate(requests: [{ input_values: { "input_values": {"key":"value"} } }, { input_values: { "input_values": {"key":"value"} } }])
     def generate(deployment_id: nil, deployment_name: nil, requests:, options: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -741,6 +782,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -778,7 +822,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.search(query: "query")
+#  api.search(query: "x")
     def search(index_id: nil, index_name: nil, query:, options: nil, document_index: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -786,6 +830,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -816,7 +863,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.submit_completion_actuals(actuals: [{  }])
+#  api.submit_completion_actuals(actuals: [{  }, {  }])
     def submit_completion_actuals(deployment_id: nil, deployment_name: nil, actuals:, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -824,6 +871,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -851,7 +901,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.submit_workflow_execution_actuals(actuals: [{ output_type: "STRING" }])
+#  api.submit_workflow_execution_actuals(actuals: [{ output_type: "STRING" }, { output_type: "STRING" }])
     def submit_workflow_execution_actuals(actuals:, execution_id: nil, external_id: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -859,6 +909,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

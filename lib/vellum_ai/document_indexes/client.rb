@@ -53,6 +53,9 @@ module Vellum
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "search": search, "status": status }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -83,9 +86,9 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.document_indexes.create(
-#    label: "My Document Index",
-#    name: "my-document-index",
-#    indexing_config: { vectorizer: { model_name: "hkunlp/instructor-xl", config: { instruction_domain: "", instruction_query_text_type: "plain_text", instruction_document_text_type: "plain_text" } }, chunking: { chunker_name: "sentence-chunker", chunker_config: { character_limit: 1000, min_overlap_ratio: 0.5 } } }
+#    label: "x",
+#    name: "x",
+#    indexing_config: { vectorizer: { config: {  }, model_name: "text-embedding-3-small" } }
 #  )
     def create(label:, name:, status: nil, indexing_config:, copy_documents_from_index_id: nil, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -94,6 +97,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -124,6 +130,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -150,7 +159,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.document_indexes.update(id: "id", label: "label")
+#  api.document_indexes.update(id: "id", label: "x")
     def update(id:, label:, status: nil, request_options: nil)
       response = @request_client.conn.put do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -158,6 +167,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -187,6 +199,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -222,6 +237,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -253,6 +271,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -286,6 +307,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -336,6 +360,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "search": search, "status": status }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
@@ -367,9 +394,9 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.document_indexes.create(
-#    label: "My Document Index",
-#    name: "my-document-index",
-#    indexing_config: { vectorizer: { model_name: "hkunlp/instructor-xl", config: { instruction_domain: "", instruction_query_text_type: "plain_text", instruction_document_text_type: "plain_text" } }, chunking: { chunker_name: "sentence-chunker", chunker_config: { character_limit: 1000, min_overlap_ratio: 0.5 } } }
+#    label: "x",
+#    name: "x",
+#    indexing_config: { vectorizer: { config: {  }, model_name: "text-embedding-3-small" } }
 #  )
     def create(label:, name:, status: nil, indexing_config:, copy_documents_from_index_id: nil, request_options: nil)
       Async do
@@ -379,6 +406,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -411,6 +441,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -438,7 +471,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.document_indexes.update(id: "id", label: "label")
+#  api.document_indexes.update(id: "id", label: "x")
     def update(id:, label:, status: nil, request_options: nil)
       Async do
         response = @request_client.conn.put do | req |
@@ -447,6 +480,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -478,6 +514,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -515,6 +554,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
@@ -548,6 +590,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -583,6 +628,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

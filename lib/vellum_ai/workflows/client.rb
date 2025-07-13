@@ -37,6 +37,9 @@ module Vellum
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
   req.params = { **(request_options&.additional_query_parameters || {}), "exclude_code": exclude_code, "include_json": include_json, "include_sandbox": include_sandbox, "strict": strict }.compact
@@ -58,13 +61,6 @@ end
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowPushResponse]
-    # @example
-#  api = Vellum::Client.new(
-#    base_url: "https://api.example.com",
-#    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
-#  )
-#  api.workflows.push(artifact: my_file.txt)
     def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dry_run: nil, strict: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -72,6 +68,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -115,6 +114,9 @@ end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
   end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
   req.params = { **(request_options&.additional_query_parameters || {}), "exclude_code": exclude_code, "include_json": include_json, "include_sandbox": include_sandbox, "strict": strict }.compact
@@ -137,13 +139,6 @@ end
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowPushResponse]
-    # @example
-#  api = Vellum::Client.new(
-#    base_url: "https://api.example.com",
-#    environment: Vellum::Environment::PRODUCTION,
-#    api_key: "YOUR_API_KEY"
-#  )
-#  api.workflows.push(artifact: my_file.txt)
     def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dry_run: nil, strict: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -152,6 +147,9 @@ end
   end
   unless request_options&.api_key.nil?
     req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
