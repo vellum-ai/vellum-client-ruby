@@ -28,10 +28,10 @@ module Vellum
     # @param metadata [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionActual]
-    def initialize(output:, timestamp:, quality:, metadata: OMIT, additional_properties: nil)
+    def initialize(output:, timestamp:, quality: OMIT, metadata: OMIT, additional_properties: nil)
       @output = output
       @timestamp = timestamp
-      @quality = quality
+      @quality = quality if quality != OMIT
       @metadata = metadata if metadata != OMIT
       @additional_properties = additional_properties
       @_field_set = { "output": output, "timestamp": timestamp, "quality": quality, "metadata": metadata }.reject do | _k, v |
@@ -81,7 +81,7 @@ end
     def self.validate_raw(obj:)
       Vellum::ExecutionVellumValue.validate_raw(obj: obj.output)
       obj.timestamp.is_a?(DateTime) != false || raise("Passed value for field obj.timestamp is not the expected type, validation failed.")
-      obj.quality.is_a?(Float) != false || raise("Passed value for field obj.quality is not the expected type, validation failed.")
+      obj.quality&.is_a?(Float) != false || raise("Passed value for field obj.quality is not the expected type, validation failed.")
       obj.metadata&.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
     end
   end
