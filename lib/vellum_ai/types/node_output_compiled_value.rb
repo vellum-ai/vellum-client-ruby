@@ -8,6 +8,7 @@ require_relative "node_output_compiled_search_results_value"
 require_relative "node_output_compiled_error_value"
 require_relative "node_output_compiled_array_value"
 require_relative "node_output_compiled_function_call_value"
+require_relative "node_output_compiled_thinking_value"
 
 module Vellum
   class NodeOutputCompiledValue
@@ -99,6 +100,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::NodeOutputCompiledThinkingValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::NodeOutputCompiledThinkingValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -145,6 +156,11 @@ end
       end
       begin
         return Vellum::NodeOutputCompiledFunctionCallValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::NodeOutputCompiledThinkingValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
