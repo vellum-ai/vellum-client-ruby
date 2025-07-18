@@ -1,37 +1,31 @@
 # frozen_string_literal: true
 require_relative "../../requests"
-require_relative "../types/workflow_deployment_release"
+require_relative "../types/workflow_execution_detail"
 require "async"
 require_relative "../../requests"
 
 module Vellum
-  class ReleaseReviewsClient
+  class WorkflowExecutionsClient
   # @return [Vellum::RequestClient] 
     attr_reader :request_client
 
 
     # @param request_client [Vellum::RequestClient] 
-    # @return [Vellum::ReleaseReviewsClient]
+    # @return [Vellum::WorkflowExecutionsClient]
     def initialize(request_client:)
       @request_client = request_client
     end
-# Retrieve a specific Workflow Deployment Release by either its UUID or the name
-#  of a Release Tag that points to it.
-    #
-    # @param id [String] Either the Workflow Deployment's ID or its unique name
-    # @param release_id_or_release_tag [String] Either the UUID of Workflow Deployment Release you'd like to retrieve, or the
-#  name of a Release Tag that's pointing to the Workflow Deployment Release you'd
-#  like to retrieve.
+    # @param execution_id [String] 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::WorkflowDeploymentRelease]
+    # @return [Vellum::WorkflowExecutionDetail]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.release_reviews.retrieve_workflow_deployment_release(id: "id", release_id_or_release_tag: "release_id_or_release_tag")
-    def retrieve_workflow_deployment_release(id:, release_id_or_release_tag:, request_options: nil)
+#  api.workflow_executions.retrieve_workflow_execution_detail(execution_id: "execution_id")
+    def retrieve_workflow_execution_detail(execution_id:, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -49,38 +43,32 @@ module Vellum
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-deployments/#{id}/releases/#{release_id_or_release_tag}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-executions/#{execution_id}/detail"
 end
-      Vellum::WorkflowDeploymentRelease.from_json(json_object: response.body)
+      Vellum::WorkflowExecutionDetail.from_json(json_object: response.body)
     end
   end
-  class AsyncReleaseReviewsClient
+  class AsyncWorkflowExecutionsClient
   # @return [Vellum::AsyncRequestClient] 
     attr_reader :request_client
 
 
     # @param request_client [Vellum::RequestClient] 
-    # @return [Vellum::AsyncReleaseReviewsClient]
+    # @return [Vellum::AsyncWorkflowExecutionsClient]
     def initialize(request_client:)
       @request_client = request_client
     end
-# Retrieve a specific Workflow Deployment Release by either its UUID or the name
-#  of a Release Tag that points to it.
-    #
-    # @param id [String] Either the Workflow Deployment's ID or its unique name
-    # @param release_id_or_release_tag [String] Either the UUID of Workflow Deployment Release you'd like to retrieve, or the
-#  name of a Release Tag that's pointing to the Workflow Deployment Release you'd
-#  like to retrieve.
+    # @param execution_id [String] 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::WorkflowDeploymentRelease]
+    # @return [Vellum::WorkflowExecutionDetail]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.release_reviews.retrieve_workflow_deployment_release(id: "id", release_id_or_release_tag: "release_id_or_release_tag")
-    def retrieve_workflow_deployment_release(id:, release_id_or_release_tag:, request_options: nil)
+#  api.workflow_executions.retrieve_workflow_execution_detail(execution_id: "execution_id")
+    def retrieve_workflow_execution_detail(execution_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -99,9 +87,9 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-deployments/#{id}/releases/#{release_id_or_release_tag}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-executions/#{execution_id}/detail"
 end
-        Vellum::WorkflowDeploymentRelease.from_json(json_object: response.body)
+        Vellum::WorkflowExecutionDetail.from_json(json_object: response.body)
       end
     end
   end
