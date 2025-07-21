@@ -14,6 +14,8 @@ module Vellum
     attr_reader :workflow_executions_quota
   # @return [Vellum::Quota] 
     attr_reader :workflow_runtime_seconds_quota
+  # @return [Integer] 
+    attr_reader :max_workflow_runtime_seconds
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -26,15 +28,17 @@ module Vellum
     # @param prompt_executions_quota [Vellum::Quota] 
     # @param workflow_executions_quota [Vellum::Quota] 
     # @param workflow_runtime_seconds_quota [Vellum::Quota] 
+    # @param max_workflow_runtime_seconds [Integer] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::OrganizationLimitConfig]
-    def initialize(vembda_service_tier: OMIT, prompt_executions_quota: OMIT, workflow_executions_quota: OMIT, workflow_runtime_seconds_quota: OMIT, additional_properties: nil)
+    def initialize(vembda_service_tier: OMIT, prompt_executions_quota: OMIT, workflow_executions_quota: OMIT, workflow_runtime_seconds_quota: OMIT, max_workflow_runtime_seconds: OMIT, additional_properties: nil)
       @vembda_service_tier = vembda_service_tier if vembda_service_tier != OMIT
       @prompt_executions_quota = prompt_executions_quota if prompt_executions_quota != OMIT
       @workflow_executions_quota = workflow_executions_quota if workflow_executions_quota != OMIT
       @workflow_runtime_seconds_quota = workflow_runtime_seconds_quota if workflow_runtime_seconds_quota != OMIT
+      @max_workflow_runtime_seconds = max_workflow_runtime_seconds if max_workflow_runtime_seconds != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "vembda_service_tier": vembda_service_tier, "prompt_executions_quota": prompt_executions_quota, "workflow_executions_quota": workflow_executions_quota, "workflow_runtime_seconds_quota": workflow_runtime_seconds_quota }.reject do | _k, v |
+      @_field_set = { "vembda_service_tier": vembda_service_tier, "prompt_executions_quota": prompt_executions_quota, "workflow_executions_quota": workflow_executions_quota, "workflow_runtime_seconds_quota": workflow_runtime_seconds_quota, "max_workflow_runtime_seconds": max_workflow_runtime_seconds }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -64,11 +68,13 @@ end
       else
         workflow_runtime_seconds_quota = nil
       end
+      max_workflow_runtime_seconds = parsed_json["max_workflow_runtime_seconds"]
       new(
         vembda_service_tier: vembda_service_tier,
         prompt_executions_quota: prompt_executions_quota,
         workflow_executions_quota: workflow_executions_quota,
         workflow_runtime_seconds_quota: workflow_runtime_seconds_quota,
+        max_workflow_runtime_seconds: max_workflow_runtime_seconds,
         additional_properties: struct
       )
     end
@@ -89,6 +95,7 @@ end
       obj.prompt_executions_quota.nil? || Vellum::Quota.validate_raw(obj: obj.prompt_executions_quota)
       obj.workflow_executions_quota.nil? || Vellum::Quota.validate_raw(obj: obj.workflow_executions_quota)
       obj.workflow_runtime_seconds_quota.nil? || Vellum::Quota.validate_raw(obj: obj.workflow_runtime_seconds_quota)
+      obj.max_workflow_runtime_seconds&.is_a?(Integer) != false || raise("Passed value for field obj.max_workflow_runtime_seconds is not the expected type, validation failed.")
     end
   end
 end
