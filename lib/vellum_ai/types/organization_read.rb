@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require_relative "new_member_join_behavior_enum"
-require_relative "organization_limit_config"
 require "ostruct"
 require "json"
 
@@ -14,7 +13,7 @@ module Vellum
     attr_reader :allow_staff_access
   # @return [Vellum::NewMemberJoinBehaviorEnum] 
     attr_reader :new_member_join_behavior
-  # @return [Vellum::OrganizationLimitConfig] 
+  # @return [Hash{String => Object}] 
     attr_reader :limit_config
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -28,15 +27,15 @@ module Vellum
     # @param name [String] 
     # @param allow_staff_access [Boolean] 
     # @param new_member_join_behavior [Vellum::NewMemberJoinBehaviorEnum] 
-    # @param limit_config [Vellum::OrganizationLimitConfig] 
+    # @param limit_config [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::OrganizationRead]
-    def initialize(id:, name:, allow_staff_access: OMIT, new_member_join_behavior:, limit_config:, additional_properties: nil)
+    def initialize(id:, name:, allow_staff_access: OMIT, new_member_join_behavior:, limit_config: OMIT, additional_properties: nil)
       @id = id
       @name = name
       @allow_staff_access = allow_staff_access if allow_staff_access != OMIT
       @new_member_join_behavior = new_member_join_behavior
-      @limit_config = limit_config
+      @limit_config = limit_config if limit_config != OMIT
       @additional_properties = additional_properties
       @_field_set = { "id": id, "name": name, "allow_staff_access": allow_staff_access, "new_member_join_behavior": new_member_join_behavior, "limit_config": limit_config }.reject do | _k, v |
   v == OMIT
@@ -53,12 +52,7 @@ end
       name = parsed_json["name"]
       allow_staff_access = parsed_json["allow_staff_access"]
       new_member_join_behavior = parsed_json["new_member_join_behavior"]
-      unless parsed_json["limit_config"].nil?
-        limit_config = parsed_json["limit_config"].to_json
-        limit_config = Vellum::OrganizationLimitConfig.from_json(json_object: limit_config)
-      else
-        limit_config = nil
-      end
+      limit_config = parsed_json["limit_config"]
       new(
         id: id,
         name: name,
@@ -85,7 +79,7 @@ end
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.allow_staff_access&.is_a?(Boolean) != false || raise("Passed value for field obj.allow_staff_access is not the expected type, validation failed.")
       obj.new_member_join_behavior.is_a?(Vellum::NewMemberJoinBehaviorEnum) != false || raise("Passed value for field obj.new_member_join_behavior is not the expected type, validation failed.")
-      Vellum::OrganizationLimitConfig.validate_raw(obj: obj.limit_config)
+      obj.limit_config&.is_a?(Hash) != false || raise("Passed value for field obj.limit_config is not the expected type, validation failed.")
     end
   end
 end
