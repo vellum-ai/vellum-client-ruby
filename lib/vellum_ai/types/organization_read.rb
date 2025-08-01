@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "date"
 require_relative "new_member_join_behavior_enum"
 require "ostruct"
 require "json"
@@ -9,6 +10,8 @@ module Vellum
     attr_reader :id
   # @return [String] 
     attr_reader :name
+  # @return [DateTime] 
+    attr_reader :created
   # @return [Boolean] 
     attr_reader :allow_staff_access
   # @return [Vellum::NewMemberJoinBehaviorEnum] 
@@ -25,19 +28,21 @@ module Vellum
 
     # @param id [String] 
     # @param name [String] 
+    # @param created [DateTime] 
     # @param allow_staff_access [Boolean] 
     # @param new_member_join_behavior [Vellum::NewMemberJoinBehaviorEnum] 
     # @param limit_config [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::OrganizationRead]
-    def initialize(id:, name:, allow_staff_access: OMIT, new_member_join_behavior:, limit_config: OMIT, additional_properties: nil)
+    def initialize(id:, name:, created: OMIT, allow_staff_access: OMIT, new_member_join_behavior:, limit_config: OMIT, additional_properties: nil)
       @id = id
       @name = name
+      @created = created if created != OMIT
       @allow_staff_access = allow_staff_access if allow_staff_access != OMIT
       @new_member_join_behavior = new_member_join_behavior
       @limit_config = limit_config if limit_config != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "allow_staff_access": allow_staff_access, "new_member_join_behavior": new_member_join_behavior, "limit_config": limit_config }.reject do | _k, v |
+      @_field_set = { "id": id, "name": name, "created": created, "allow_staff_access": allow_staff_access, "new_member_join_behavior": new_member_join_behavior, "limit_config": limit_config }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -50,12 +55,18 @@ end
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
       name = parsed_json["name"]
+      created = unless parsed_json["created"].nil?
+  DateTime.parse(parsed_json["created"])
+else
+  nil
+end
       allow_staff_access = parsed_json["allow_staff_access"]
       new_member_join_behavior = parsed_json["new_member_join_behavior"]
       limit_config = parsed_json["limit_config"]
       new(
         id: id,
         name: name,
+        created: created,
         allow_staff_access: allow_staff_access,
         new_member_join_behavior: new_member_join_behavior,
         limit_config: limit_config,
@@ -77,6 +88,7 @@ end
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.created&.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
       obj.allow_staff_access&.is_a?(Boolean) != false || raise("Passed value for field obj.allow_staff_access is not the expected type, validation failed.")
       obj.new_member_join_behavior.is_a?(Vellum::NewMemberJoinBehaviorEnum) != false || raise("Passed value for field obj.new_member_join_behavior is not the expected type, validation failed.")
       obj.limit_config&.is_a?(Hash) != false || raise("Passed value for field obj.limit_config is not the expected type, validation failed.")
