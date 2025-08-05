@@ -6,6 +6,8 @@ module Vellum
   class WorkflowExecutionSpanAttributes
   # @return [String] 
     attr_reader :label
+  # @return [String] 
+    attr_reader :workflow_id
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -15,12 +17,14 @@ module Vellum
     OMIT = Object.new
 
     # @param label [String] 
+    # @param workflow_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionSpanAttributes]
-    def initialize(label:, additional_properties: nil)
+    def initialize(label:, workflow_id:, additional_properties: nil)
       @label = label
+      @workflow_id = workflow_id
       @additional_properties = additional_properties
-      @_field_set = { "label": label }
+      @_field_set = { "label": label, "workflow_id": workflow_id }
     end
 # Deserialize a JSON object to an instance of WorkflowExecutionSpanAttributes
     #
@@ -30,7 +34,12 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       label = parsed_json["label"]
-      new(label: label, additional_properties: struct)
+      workflow_id = parsed_json["workflow_id"]
+      new(
+        label: label,
+        workflow_id: workflow_id,
+        additional_properties: struct
+      )
     end
 # Serialize an instance of WorkflowExecutionSpanAttributes to a JSON object
     #
@@ -46,6 +55,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
+      obj.workflow_id.is_a?(String) != false || raise("Passed value for field obj.workflow_id is not the expected type, validation failed.")
     end
   end
 end
