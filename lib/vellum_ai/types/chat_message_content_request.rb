@@ -3,8 +3,9 @@ require "json"
 require_relative "string_chat_message_content_request"
 require_relative "function_call_chat_message_content_request"
 require_relative "array_chat_message_content_request"
-require_relative "image_chat_message_content_request"
 require_relative "audio_chat_message_content_request"
+require_relative "video_chat_message_content_request"
+require_relative "image_chat_message_content_request"
 require_relative "document_chat_message_content_request"
 
 module Vellum
@@ -48,9 +49,9 @@ end
         # noop
       end
       begin
-        Vellum::ImageChatMessageContentRequest.validate_raw(obj: struct)
+        Vellum::AudioChatMessageContentRequest.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::ImageChatMessageContentRequest.from_json(json_object: struct)
+  return Vellum::AudioChatMessageContentRequest.from_json(json_object: struct)
 else
   return nil
 end
@@ -58,9 +59,19 @@ end
         # noop
       end
       begin
-        Vellum::AudioChatMessageContentRequest.validate_raw(obj: struct)
+        Vellum::VideoChatMessageContentRequest.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::AudioChatMessageContentRequest.from_json(json_object: struct)
+  return Vellum::VideoChatMessageContentRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ImageChatMessageContentRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ImageChatMessageContentRequest.from_json(json_object: struct)
 else
   return nil
 end
@@ -102,12 +113,17 @@ end
         # noop
       end
       begin
-        return Vellum::ImageChatMessageContentRequest.validate_raw(obj: obj)
+        return Vellum::AudioChatMessageContentRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
       begin
-        return Vellum::AudioChatMessageContentRequest.validate_raw(obj: obj)
+        return Vellum::VideoChatMessageContentRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ImageChatMessageContentRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
