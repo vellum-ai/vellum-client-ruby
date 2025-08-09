@@ -3,8 +3,9 @@ require "json"
 require_relative "string_vellum_value"
 require_relative "number_vellum_value"
 require_relative "json_vellum_value"
-require_relative "image_vellum_value"
 require_relative "audio_vellum_value"
+require_relative "video_vellum_value"
+require_relative "image_vellum_value"
 require_relative "document_vellum_value"
 require_relative "function_call_vellum_value"
 require_relative "error_vellum_value"
@@ -54,9 +55,9 @@ end
         # noop
       end
       begin
-        Vellum::ImageVellumValue.validate_raw(obj: struct)
+        Vellum::AudioVellumValue.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::ImageVellumValue.from_json(json_object: struct)
+  return Vellum::AudioVellumValue.from_json(json_object: struct)
 else
   return nil
 end
@@ -64,9 +65,19 @@ end
         # noop
       end
       begin
-        Vellum::AudioVellumValue.validate_raw(obj: struct)
+        Vellum::VideoVellumValue.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::AudioVellumValue.from_json(json_object: struct)
+  return Vellum::VideoVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ImageVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ImageVellumValue.from_json(json_object: struct)
 else
   return nil
 end
@@ -168,12 +179,17 @@ end
         # noop
       end
       begin
-        return Vellum::ImageVellumValue.validate_raw(obj: obj)
+        return Vellum::AudioVellumValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
       begin
-        return Vellum::AudioVellumValue.validate_raw(obj: obj)
+        return Vellum::VideoVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ImageVellumValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

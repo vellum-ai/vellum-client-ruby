@@ -2,8 +2,9 @@
 require "json"
 require_relative "string_chat_message_content"
 require_relative "function_call_chat_message_content"
-require_relative "image_chat_message_content"
 require_relative "audio_chat_message_content"
+require_relative "video_chat_message_content"
+require_relative "image_chat_message_content"
 require_relative "document_chat_message_content"
 
 module Vellum
@@ -37,9 +38,9 @@ end
         # noop
       end
       begin
-        Vellum::ImageChatMessageContent.validate_raw(obj: struct)
+        Vellum::AudioChatMessageContent.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::ImageChatMessageContent.from_json(json_object: struct)
+  return Vellum::AudioChatMessageContent.from_json(json_object: struct)
 else
   return nil
 end
@@ -47,9 +48,19 @@ end
         # noop
       end
       begin
-        Vellum::AudioChatMessageContent.validate_raw(obj: struct)
+        Vellum::VideoChatMessageContent.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::AudioChatMessageContent.from_json(json_object: struct)
+  return Vellum::VideoChatMessageContent.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ImageChatMessageContent.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ImageChatMessageContent.from_json(json_object: struct)
 else
   return nil
 end
@@ -86,12 +97,17 @@ end
         # noop
       end
       begin
-        return Vellum::ImageChatMessageContent.validate_raw(obj: obj)
+        return Vellum::AudioChatMessageContent.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
       begin
-        return Vellum::AudioChatMessageContent.validate_raw(obj: obj)
+        return Vellum::VideoChatMessageContent.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ImageChatMessageContent.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

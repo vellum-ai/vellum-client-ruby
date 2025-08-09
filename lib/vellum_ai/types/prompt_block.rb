@@ -4,8 +4,9 @@ require_relative "jinja_prompt_block"
 require_relative "chat_message_prompt_block"
 require_relative "variable_prompt_block"
 require_relative "rich_text_prompt_block"
-require_relative "audio_prompt_block"
 require_relative "function_call_prompt_block"
+require_relative "audio_prompt_block"
+require_relative "video_prompt_block"
 require_relative "image_prompt_block"
 require_relative "document_prompt_block"
 
@@ -60,6 +61,16 @@ end
         # noop
       end
       begin
+        Vellum::FunctionCallPromptBlock.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::FunctionCallPromptBlock.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
         Vellum::AudioPromptBlock.validate_raw(obj: struct)
         unless struct.nil?
   return Vellum::AudioPromptBlock.from_json(json_object: struct)
@@ -70,9 +81,9 @@ end
         # noop
       end
       begin
-        Vellum::FunctionCallPromptBlock.validate_raw(obj: struct)
+        Vellum::VideoPromptBlock.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::FunctionCallPromptBlock.from_json(json_object: struct)
+  return Vellum::VideoPromptBlock.from_json(json_object: struct)
 else
   return nil
 end
@@ -129,12 +140,17 @@ end
         # noop
       end
       begin
+        return Vellum::FunctionCallPromptBlock.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
         return Vellum::AudioPromptBlock.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
       begin
-        return Vellum::FunctionCallPromptBlock.validate_raw(obj: obj)
+        return Vellum::VideoPromptBlock.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
