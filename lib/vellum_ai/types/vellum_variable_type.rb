@@ -9,8 +9,9 @@ module Vellum
 #  * `ERROR` - ERROR
 #  * `ARRAY` - ARRAY
 #  * `FUNCTION_CALL` - FUNCTION_CALL
-#  * `IMAGE` - IMAGE
 #  * `AUDIO` - AUDIO
+#  * `VIDEO` - VIDEO
+#  * `IMAGE` - IMAGE
 #  * `DOCUMENT` - DOCUMENT
 #  * `NULL` - NULL
 #  * `THINKING` - THINKING
@@ -24,8 +25,9 @@ module Vellum
     ERROR = "ERROR"
     ARRAY = "ARRAY"
     FUNCTION_CALL = "FUNCTION_CALL"
-    IMAGE = "IMAGE"
     AUDIO = "AUDIO"
+    VIDEO = "VIDEO"
+    IMAGE = "IMAGE"
     DOCUMENT = "DOCUMENT"
     NULL = "NULL"
     THINKING = "THINKING"

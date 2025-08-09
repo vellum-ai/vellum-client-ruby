@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative "vellum_workflow_execution_event"
 require_relative "workflow_execution_span_attributes"
+require_relative "workflow_execution_usage_calculation_fulfilled_body"
 require "date"
 require "date"
 require "ostruct"
@@ -14,6 +15,8 @@ module Vellum
     attr_reader :events
   # @return [Vellum::WorkflowExecutionSpanAttributes] 
     attr_reader :attributes
+  # @return [Vellum::WorkflowExecutionUsageCalculationFulfilledBody] 
+    attr_reader :usage_result
   # @return [String] 
     attr_reader :span_id
   # @return [DateTime] 
@@ -33,22 +36,24 @@ module Vellum
     # @param name [String] 
     # @param events [Array<Vellum::VellumWorkflowExecutionEvent>] 
     # @param attributes [Vellum::WorkflowExecutionSpanAttributes] 
+    # @param usage_result [Vellum::WorkflowExecutionUsageCalculationFulfilledBody] 
     # @param span_id [String] 
     # @param start_ts [DateTime] 
     # @param end_ts [DateTime] 
     # @param parent_span_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionSpan]
-    def initialize(name:, events:, attributes:, span_id:, start_ts:, end_ts:, parent_span_id: OMIT, additional_properties: nil)
+    def initialize(name:, events:, attributes:, usage_result: OMIT, span_id:, start_ts:, end_ts:, parent_span_id: OMIT, additional_properties: nil)
       @name = name
       @events = events
       @attributes = attributes
+      @usage_result = usage_result if usage_result != OMIT
       @span_id = span_id
       @start_ts = start_ts
       @end_ts = end_ts
       @parent_span_id = parent_span_id if parent_span_id != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "events": events, "attributes": attributes, "span_id": span_id, "start_ts": start_ts, "end_ts": end_ts, "parent_span_id": parent_span_id }.reject do | _k, v |
+      @_field_set = { "name": name, "events": events, "attributes": attributes, "usage_result": usage_result, "span_id": span_id, "start_ts": start_ts, "end_ts": end_ts, "parent_span_id": parent_span_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -70,6 +75,12 @@ end
       else
         attributes = nil
       end
+      unless parsed_json["usage_result"].nil?
+        usage_result = parsed_json["usage_result"].to_json
+        usage_result = Vellum::WorkflowExecutionUsageCalculationFulfilledBody.from_json(json_object: usage_result)
+      else
+        usage_result = nil
+      end
       span_id = parsed_json["span_id"]
       start_ts = unless parsed_json["start_ts"].nil?
   DateTime.parse(parsed_json["start_ts"])
@@ -86,6 +97,7 @@ end
         name: name,
         events: events,
         attributes: attributes,
+        usage_result: usage_result,
         span_id: span_id,
         start_ts: start_ts,
         end_ts: end_ts,
@@ -109,6 +121,7 @@ end
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.events.is_a?(Array) != false || raise("Passed value for field obj.events is not the expected type, validation failed.")
       Vellum::WorkflowExecutionSpanAttributes.validate_raw(obj: obj.attributes)
+      obj.usage_result.nil? || Vellum::WorkflowExecutionUsageCalculationFulfilledBody.validate_raw(obj: obj.usage_result)
       obj.span_id.is_a?(String) != false || raise("Passed value for field obj.span_id is not the expected type, validation failed.")
       obj.start_ts.is_a?(DateTime) != false || raise("Passed value for field obj.start_ts is not the expected type, validation failed.")
       obj.end_ts.is_a?(DateTime) != false || raise("Passed value for field obj.end_ts is not the expected type, validation failed.")

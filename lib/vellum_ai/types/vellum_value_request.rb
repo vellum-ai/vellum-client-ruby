@@ -3,8 +3,9 @@ require "json"
 require_relative "string_vellum_value_request"
 require_relative "number_vellum_value_request"
 require_relative "json_vellum_value_request"
-require_relative "image_vellum_value_request"
 require_relative "audio_vellum_value_request"
+require_relative "video_vellum_value_request"
+require_relative "image_vellum_value_request"
 require_relative "document_vellum_value_request"
 require_relative "function_call_vellum_value_request"
 require_relative "error_vellum_value_request"
@@ -54,9 +55,9 @@ end
         # noop
       end
       begin
-        Vellum::ImageVellumValueRequest.validate_raw(obj: struct)
+        Vellum::AudioVellumValueRequest.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::ImageVellumValueRequest.from_json(json_object: struct)
+  return Vellum::AudioVellumValueRequest.from_json(json_object: struct)
 else
   return nil
 end
@@ -64,9 +65,19 @@ end
         # noop
       end
       begin
-        Vellum::AudioVellumValueRequest.validate_raw(obj: struct)
+        Vellum::VideoVellumValueRequest.validate_raw(obj: struct)
         unless struct.nil?
-  return Vellum::AudioVellumValueRequest.from_json(json_object: struct)
+  return Vellum::VideoVellumValueRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ImageVellumValueRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ImageVellumValueRequest.from_json(json_object: struct)
 else
   return nil
 end
@@ -168,12 +179,17 @@ end
         # noop
       end
       begin
-        return Vellum::ImageVellumValueRequest.validate_raw(obj: obj)
+        return Vellum::AudioVellumValueRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
       begin
-        return Vellum::AudioVellumValueRequest.validate_raw(obj: obj)
+        return Vellum::VideoVellumValueRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ImageVellumValueRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
