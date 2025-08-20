@@ -16,6 +16,8 @@ module Vellum
       @request_client = request_client
     end
     # @param execution_id [String] 
+    # @param prev_span_id [String] Optional keyset cursor span_id to continue from (exclusive)
+    # @param span_limit [Integer] Maximum number of spans to return (for lazy loading)
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowExecutionDetail]
     # @example
@@ -25,7 +27,7 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflow_executions.retrieve_workflow_execution_detail(execution_id: "execution_id")
-    def retrieve_workflow_execution_detail(execution_id:, request_options: nil)
+    def retrieve_workflow_execution_detail(execution_id:, prev_span_id: nil, span_limit: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -39,9 +41,7 @@ module Vellum
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  unless request_options.nil? || request_options&.additional_query_parameters.nil?
-    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
-  end
+  req.params = { **(request_options&.additional_query_parameters || {}), "prev_span_id": prev_span_id, "span_limit": span_limit }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -61,6 +61,8 @@ end
       @request_client = request_client
     end
     # @param execution_id [String] 
+    # @param prev_span_id [String] Optional keyset cursor span_id to continue from (exclusive)
+    # @param span_limit [Integer] Maximum number of spans to return (for lazy loading)
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowExecutionDetail]
     # @example
@@ -70,7 +72,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflow_executions.retrieve_workflow_execution_detail(execution_id: "execution_id")
-    def retrieve_workflow_execution_detail(execution_id:, request_options: nil)
+    def retrieve_workflow_execution_detail(execution_id:, prev_span_id: nil, span_limit: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -85,9 +87,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  unless request_options.nil? || request_options&.additional_query_parameters.nil?
-    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
-  end
+  req.params = { **(request_options&.additional_query_parameters || {}), "prev_span_id": prev_span_id, "span_limit": span_limit }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
