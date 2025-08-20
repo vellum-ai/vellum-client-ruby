@@ -3,6 +3,10 @@ require "json"
 require_relative "string_input_request"
 require_relative "json_input_request"
 require_relative "chat_history_input_request"
+require_relative "audio_input_request"
+require_relative "video_input_request"
+require_relative "image_input_request"
+require_relative "document_input_request"
 
 module Vellum
   class PromptDeploymentInputRequest
@@ -44,6 +48,46 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::AudioInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::AudioInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::VideoInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::VideoInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ImageInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ImageInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::DocumentInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::DocumentInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -65,6 +109,26 @@ end
       end
       begin
         return Vellum::ChatHistoryInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::AudioInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::VideoInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ImageInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::DocumentInputRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

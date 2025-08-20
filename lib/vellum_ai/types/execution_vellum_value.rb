@@ -9,6 +9,10 @@ require_relative "execution_error_vellum_value"
 require_relative "execution_array_vellum_value"
 require_relative "execution_function_call_vellum_value"
 require_relative "execution_thinking_vellum_value"
+require_relative "execution_audio_vellum_value"
+require_relative "execution_video_vellum_value"
+require_relative "execution_image_vellum_value"
+require_relative "execution_document_vellum_value"
 
 module Vellum
   class ExecutionVellumValue
@@ -110,6 +114,46 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::ExecutionAudioVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ExecutionAudioVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ExecutionVideoVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ExecutionVideoVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ExecutionImageVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ExecutionImageVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ExecutionDocumentVellumValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ExecutionDocumentVellumValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -161,6 +205,26 @@ end
       end
       begin
         return Vellum::ExecutionThinkingVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ExecutionAudioVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ExecutionVideoVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ExecutionImageVellumValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ExecutionDocumentVellumValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

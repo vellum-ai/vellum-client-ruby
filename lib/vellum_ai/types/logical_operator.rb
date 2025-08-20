@@ -27,6 +27,7 @@ module Vellum
 #  * `and` - AND
 #  * `or` - OR
 #  * `isError` - IS_ERROR
+#  * `length` - LENGTH
   class LogicalOperator
 
     EQUALS = "="
@@ -55,6 +56,7 @@ module Vellum
     AND = "and"
     OR = "or"
     IS_ERROR = "isError"
+    LENGTH = "length"
 
   end
 end
