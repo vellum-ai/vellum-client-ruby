@@ -3,6 +3,7 @@ require "json"
 require_relative "reducto_chunking_request"
 require_relative "sentence_chunking_request"
 require_relative "token_overlapping_window_chunking_request"
+require_relative "delimiter_chunking_request"
 
 module Vellum
   class DocumentIndexChunkingRequest
@@ -44,6 +45,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::DelimiterChunkingRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::DelimiterChunkingRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -65,6 +76,11 @@ end
       end
       begin
         return Vellum::TokenOverlappingWindowChunkingRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::DelimiterChunkingRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
