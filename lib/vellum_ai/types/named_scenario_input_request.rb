@@ -3,6 +3,10 @@ require "json"
 require_relative "named_scenario_input_string_variable_value_request"
 require_relative "named_scenario_input_json_variable_value_request"
 require_relative "named_scenario_input_chat_history_variable_value_request"
+require_relative "named_scenario_input_audio_variable_value_request"
+require_relative "named_scenario_input_video_variable_value_request"
+require_relative "named_scenario_input_image_variable_value_request"
+require_relative "named_scenario_input_document_variable_value_request"
 
 module Vellum
   class NamedScenarioInputRequest
@@ -44,6 +48,46 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::NamedScenarioInputAudioVariableValueRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::NamedScenarioInputAudioVariableValueRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::NamedScenarioInputVideoVariableValueRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::NamedScenarioInputVideoVariableValueRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::NamedScenarioInputImageVariableValueRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::NamedScenarioInputImageVariableValueRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::NamedScenarioInputDocumentVariableValueRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::NamedScenarioInputDocumentVariableValueRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -65,6 +109,26 @@ end
       end
       begin
         return Vellum::NamedScenarioInputChatHistoryVariableValueRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::NamedScenarioInputAudioVariableValueRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::NamedScenarioInputVideoVariableValueRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::NamedScenarioInputImageVariableValueRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::NamedScenarioInputDocumentVariableValueRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
