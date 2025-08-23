@@ -23,14 +23,17 @@ module Vellum
     # @param exclude_display [Boolean] 
     # @param include_json [Boolean] 
     # @param include_sandbox [Boolean] 
+    # @param release_tag [String] Release tag to use when pulling from deployment (implies deployment-only lookup)
     # @param strict [Boolean] 
+    # @param version [String] Semantic version range to validate against the Workflow SDK version (e.g.,
+#  '>=1.0.0,<1.2.3')
     # @param request_options [Vellum::RequestOptions] 
     # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which
 #  will receive tuples of strings, the sum of characters received so far, and the
 #  response environment. The latter will allow access to the response status,
 #  headers and reason, as well as the request info.
     # @return [Void]
-    def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, strict: nil, request_options: nil, &on_data)
+    def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, release_tag: nil, strict: nil, version: nil, request_options: nil, &on_data)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -45,7 +48,7 @@ module Vellum
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
-  req.params = { **(request_options&.additional_query_parameters || {}), "exclude_code": exclude_code, "exclude_display": exclude_display, "include_json": include_json, "include_sandbox": include_sandbox, "strict": strict }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "exclude_code": exclude_code, "exclude_display": exclude_display, "include_json": include_json, "include_sandbox": include_sandbox, "release_tag": release_tag, "strict": strict, "version": version }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -59,6 +62,7 @@ end
     #   * :name (String) 
     #   * :description (String) 
     #   * :release_tags (Array<String>) 
+    #   * :release_description (String) 
     # @param artifact [String, IO] 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
@@ -104,14 +108,17 @@ end
     # @param exclude_display [Boolean] 
     # @param include_json [Boolean] 
     # @param include_sandbox [Boolean] 
+    # @param release_tag [String] Release tag to use when pulling from deployment (implies deployment-only lookup)
     # @param strict [Boolean] 
+    # @param version [String] Semantic version range to validate against the Workflow SDK version (e.g.,
+#  '>=1.0.0,<1.2.3')
     # @param request_options [Vellum::RequestOptions] 
     # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which
 #  will receive tuples of strings, the sum of characters received so far, and the
 #  response environment. The latter will allow access to the response status,
 #  headers and reason, as well as the request info.
     # @return [Void]
-    def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, strict: nil, request_options: nil, &on_data)
+    def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, release_tag: nil, strict: nil, version: nil, request_options: nil, &on_data)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -127,7 +134,7 @@ end
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
-  req.params = { **(request_options&.additional_query_parameters || {}), "exclude_code": exclude_code, "exclude_display": exclude_display, "include_json": include_json, "include_sandbox": include_sandbox, "strict": strict }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "exclude_code": exclude_code, "exclude_display": exclude_display, "include_json": include_json, "include_sandbox": include_sandbox, "release_tag": release_tag, "strict": strict, "version": version }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -142,6 +149,7 @@ end
     #   * :name (String) 
     #   * :description (String) 
     #   * :release_tags (Array<String>) 
+    #   * :release_description (String) 
     # @param artifact [String, IO] 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 

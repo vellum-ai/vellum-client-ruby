@@ -8,6 +8,10 @@ require_relative "search_results_input"
 require_relative "error_input"
 require_relative "array_input"
 require_relative "function_call_input"
+require_relative "audio_input"
+require_relative "video_input"
+require_relative "image_input"
+require_relative "document_input"
 require_relative "code_executor_secret_input"
 
 module Vellum
@@ -101,6 +105,46 @@ end
         # noop
       end
       begin
+        Vellum::AudioInput.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::AudioInput.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::VideoInput.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::VideoInput.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::ImageInput.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ImageInput.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::DocumentInput.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::DocumentInput.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
         Vellum::CodeExecutorSecretInput.validate_raw(obj: struct)
         unless struct.nil?
   return Vellum::CodeExecutorSecretInput.from_json(json_object: struct)
@@ -156,6 +200,26 @@ end
       end
       begin
         return Vellum::FunctionCallInput.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::AudioInput.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::VideoInput.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ImageInput.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::DocumentInput.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
