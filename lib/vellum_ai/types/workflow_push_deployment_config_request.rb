@@ -12,6 +12,8 @@ module Vellum
     attr_reader :description
   # @return [Array<String>] 
     attr_reader :release_tags
+  # @return [String] 
+    attr_reader :release_description
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -24,15 +26,17 @@ module Vellum
     # @param name [String] 
     # @param description [String] 
     # @param release_tags [Array<String>] 
+    # @param release_description [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowPushDeploymentConfigRequest]
-    def initialize(label: OMIT, name: OMIT, description: OMIT, release_tags: OMIT, additional_properties: nil)
+    def initialize(label: OMIT, name: OMIT, description: OMIT, release_tags: OMIT, release_description: OMIT, additional_properties: nil)
       @label = label if label != OMIT
       @name = name if name != OMIT
       @description = description if description != OMIT
       @release_tags = release_tags if release_tags != OMIT
+      @release_description = release_description if release_description != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "label": label, "name": name, "description": description, "release_tags": release_tags }.reject do | _k, v |
+      @_field_set = { "label": label, "name": name, "description": description, "release_tags": release_tags, "release_description": release_description }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -47,11 +51,13 @@ end
       name = parsed_json["name"]
       description = parsed_json["description"]
       release_tags = parsed_json["release_tags"]
+      release_description = parsed_json["release_description"]
       new(
         label: label,
         name: name,
         description: description,
         release_tags: release_tags,
+        release_description: release_description,
         additional_properties: struct
       )
     end
@@ -72,6 +78,7 @@ end
       obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.release_tags&.is_a?(Array) != false || raise("Passed value for field obj.release_tags is not the expected type, validation failed.")
+      obj.release_description&.is_a?(String) != false || raise("Passed value for field obj.release_description is not the expected type, validation failed.")
     end
   end
 end

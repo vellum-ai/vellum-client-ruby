@@ -8,6 +8,10 @@ require_relative "test_case_search_results_variable_value"
 require_relative "test_case_error_variable_value"
 require_relative "test_case_function_call_variable_value"
 require_relative "test_case_array_variable_value"
+require_relative "test_case_audio_variable_value"
+require_relative "test_case_image_variable_value"
+require_relative "test_case_video_variable_value"
+require_relative "test_case_document_variable_value"
 
 module Vellum
   class TestCaseVariableValue
@@ -99,6 +103,46 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::TestCaseAudioVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::TestCaseAudioVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::TestCaseImageVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::TestCaseImageVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::TestCaseVideoVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::TestCaseVideoVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::TestCaseDocumentVariableValue.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::TestCaseDocumentVariableValue.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -145,6 +189,26 @@ end
       end
       begin
         return Vellum::TestCaseArrayVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::TestCaseAudioVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::TestCaseImageVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::TestCaseVideoVariableValue.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::TestCaseDocumentVariableValue.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

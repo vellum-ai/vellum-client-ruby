@@ -7,6 +7,8 @@ module Vellum
   # @return [String] 
     attr_reader :label
   # @return [String] 
+    attr_reader :filepath
+  # @return [String] 
     attr_reader :node_id
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -17,14 +19,18 @@ module Vellum
     OMIT = Object.new
 
     # @param label [String] 
+    # @param filepath [String] 
     # @param node_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NodeExecutionSpanAttributes]
-    def initialize(label:, node_id:, additional_properties: nil)
+    def initialize(label:, filepath: OMIT, node_id:, additional_properties: nil)
       @label = label
+      @filepath = filepath if filepath != OMIT
       @node_id = node_id
       @additional_properties = additional_properties
-      @_field_set = { "label": label, "node_id": node_id }
+      @_field_set = { "label": label, "filepath": filepath, "node_id": node_id }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of NodeExecutionSpanAttributes
     #
@@ -34,9 +40,11 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       label = parsed_json["label"]
+      filepath = parsed_json["filepath"]
       node_id = parsed_json["node_id"]
       new(
         label: label,
+        filepath: filepath,
         node_id: node_id,
         additional_properties: struct
       )
@@ -55,6 +63,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
+      obj.filepath&.is_a?(String) != false || raise("Passed value for field obj.filepath is not the expected type, validation failed.")
       obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
     end
   end
