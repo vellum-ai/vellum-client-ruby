@@ -8,7 +8,7 @@ module Vellum
   class SpanLink
   # @return [String] 
     attr_reader :trace_id
-  # @return [Vellum::SPAN_LINK_TYPE_ENUM] 
+  # @return [Vellum::SpanLinkTypeEnum] 
     attr_reader :type
   # @return [Vellum::ParentContext] 
     attr_reader :span_context
@@ -21,7 +21,7 @@ module Vellum
     OMIT = Object.new
 
     # @param trace_id [String] 
-    # @param type [Vellum::SPAN_LINK_TYPE_ENUM] 
+    # @param type [Vellum::SpanLinkTypeEnum] 
     # @param span_context [Vellum::ParentContext] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SpanLink]
@@ -68,7 +68,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.trace_id.is_a?(String) != false || raise("Passed value for field obj.trace_id is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.type.is_a?(Vellum::SpanLinkTypeEnum) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::ParentContext.validate_raw(obj: obj.span_context)
     end
   end
