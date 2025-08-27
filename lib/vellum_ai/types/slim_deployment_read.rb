@@ -8,6 +8,7 @@ require "ostruct"
 require "json"
 
 module Vellum
+# A subset of a Prompt Deployment's full details.
   class SlimDeploymentRead
   # @return [String] 
     attr_reader :id
@@ -21,10 +22,7 @@ module Vellum
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
     attr_reader :status
-  # @return [Vellum::EnvironmentEnum] The environment this deployment is used in
-#  * `DEVELOPMENT` - Development
-#  * `STAGING` - Staging
-#  * `PRODUCTION` - Production
+  # @return [Vellum::EnvironmentEnum] Deprecated. The value returned will always be 'PRODUCTION'.
     attr_reader :environment
   # @return [DateTime] 
     attr_reader :last_deployed_on
@@ -47,10 +45,7 @@ module Vellum
     # @param status [Vellum::EntityStatus] The current status of the deployment
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
-    # @param environment [Vellum::EnvironmentEnum] The environment this deployment is used in
-#  * `DEVELOPMENT` - Development
-#  * `STAGING` - Staging
-#  * `PRODUCTION` - Production
+    # @param environment [Vellum::EnvironmentEnum] Deprecated. The value returned will always be 'PRODUCTION'.
     # @param last_deployed_on [DateTime] 
     # @param input_variables [Array<Vellum::VellumVariable>] 
     # @param description [String] A human-readable description of the deployment

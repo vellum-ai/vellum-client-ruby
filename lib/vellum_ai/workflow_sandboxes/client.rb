@@ -19,7 +19,6 @@ module Vellum
       @request_client = request_client
     end
     # @param id [String] A UUID string identifying this workflow sandbox.
-    # @param workflow_id [String] An ID identifying the Workflow you'd like to deploy.
     # @param workflow_deployment_id [String] The Vellum-generated ID of the Workflow Deployment you'd like to update. Cannot
 #  specify both this and workflow_deployment_name. Leave null to create a new
 #  Workflow Deployment.
@@ -40,8 +39,8 @@ module Vellum
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.workflow_sandboxes.deploy_workflow(id: "id", workflow_id: "workflow_id")
-    def deploy_workflow(id:, workflow_id:, workflow_deployment_id: nil, workflow_deployment_name: nil, label: nil, release_tags: nil, release_description: nil, request_options: nil)
+#  api.workflow_sandboxes.deploy_workflow(id: "id")
+    def deploy_workflow(id:, workflow_deployment_id: nil, workflow_deployment_name: nil, label: nil, release_tags: nil, release_description: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -59,7 +58,7 @@ module Vellum
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request_options&.additional_body_parameters || {}), workflow_deployment_id: workflow_deployment_id, workflow_deployment_name: workflow_deployment_name, label: label, release_tags: release_tags, release_description: release_description }.compact
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-sandboxes/#{id}/workflows/#{workflow_id}/deploy"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-sandboxes/#{id}/deploy"
 end
       Vellum::WorkflowDeploymentRead.from_json(json_object: response.body)
     end
@@ -113,7 +112,6 @@ end
       @request_client = request_client
     end
     # @param id [String] A UUID string identifying this workflow sandbox.
-    # @param workflow_id [String] An ID identifying the Workflow you'd like to deploy.
     # @param workflow_deployment_id [String] The Vellum-generated ID of the Workflow Deployment you'd like to update. Cannot
 #  specify both this and workflow_deployment_name. Leave null to create a new
 #  Workflow Deployment.
@@ -134,8 +132,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.workflow_sandboxes.deploy_workflow(id: "id", workflow_id: "workflow_id")
-    def deploy_workflow(id:, workflow_id:, workflow_deployment_id: nil, workflow_deployment_name: nil, label: nil, release_tags: nil, release_description: nil, request_options: nil)
+#  api.workflow_sandboxes.deploy_workflow(id: "id")
+    def deploy_workflow(id:, workflow_deployment_id: nil, workflow_deployment_name: nil, label: nil, release_tags: nil, release_description: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -154,7 +152,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request_options&.additional_body_parameters || {}), workflow_deployment_id: workflow_deployment_id, workflow_deployment_name: workflow_deployment_name, label: label, release_tags: release_tags, release_description: release_description }.compact
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-sandboxes/#{id}/workflows/#{workflow_id}/deploy"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-sandboxes/#{id}/deploy"
 end
         Vellum::WorkflowDeploymentRead.from_json(json_object: response.body)
       end
