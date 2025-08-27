@@ -4,6 +4,10 @@ require_relative "workflow_request_string_input_request"
 require_relative "workflow_request_json_input_request"
 require_relative "workflow_request_chat_history_input_request"
 require_relative "workflow_request_number_input_request"
+require_relative "workflow_request_audio_input_request"
+require_relative "workflow_request_video_input_request"
+require_relative "workflow_request_image_input_request"
+require_relative "workflow_request_document_input_request"
 
 module Vellum
   class WorkflowRequestInputRequest
@@ -55,6 +59,46 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::WorkflowRequestAudioInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestAudioInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowRequestVideoInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestVideoInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowRequestImageInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestImageInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowRequestDocumentInputRequest.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowRequestDocumentInputRequest.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -81,6 +125,26 @@ end
       end
       begin
         return Vellum::WorkflowRequestNumberInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowRequestAudioInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowRequestVideoInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowRequestImageInputRequest.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowRequestDocumentInputRequest.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end

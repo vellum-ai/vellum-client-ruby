@@ -8,6 +8,7 @@ require "ostruct"
 require "json"
 
 module Vellum
+# A subset of a Workflow Deployment's full details.
   class SlimWorkflowDeployment
   # @return [String] 
     attr_reader :id
@@ -19,10 +20,7 @@ module Vellum
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
     attr_reader :status
-  # @return [Vellum::EnvironmentEnum] The environment this workflow deployment is used in
-#  * `DEVELOPMENT` - Development
-#  * `STAGING` - Staging
-#  * `PRODUCTION` - Production
+  # @return [Vellum::EnvironmentEnum] Deprecated. The value returned will always be 'PRODUCTION'.
     attr_reader :environment
   # @return [DateTime] 
     attr_reader :created
@@ -49,10 +47,7 @@ module Vellum
     # @param status [Vellum::EntityStatus] The current status of the workflow deployment
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
-    # @param environment [Vellum::EnvironmentEnum] The environment this workflow deployment is used in
-#  * `DEVELOPMENT` - Development
-#  * `STAGING` - Staging
-#  * `PRODUCTION` - Production
+    # @param environment [Vellum::EnvironmentEnum] Deprecated. The value returned will always be 'PRODUCTION'.
     # @param created [DateTime] 
     # @param last_deployed_on [DateTime] 
     # @param input_variables [Array<Vellum::VellumVariable>] The input variables this Workflow Deployment expects to receive values for when
