@@ -7,6 +7,8 @@ module Vellum
   class EventCreateResponse
   # @return [Boolean] Indicates whether the event was published successfully.
     attr_reader :success
+  # @return [Integer] Number of events processed
+    attr_reader :count
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -16,12 +18,14 @@ module Vellum
     OMIT = Object.new
 
     # @param success [Boolean] Indicates whether the event was published successfully.
+    # @param count [Integer] Number of events processed
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::EventCreateResponse]
-    def initialize(success: OMIT, additional_properties: nil)
+    def initialize(success: OMIT, count:, additional_properties: nil)
       @success = success if success != OMIT
+      @count = count
       @additional_properties = additional_properties
-      @_field_set = { "success": success }.reject do | _k, v |
+      @_field_set = { "success": success, "count": count }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -33,7 +37,12 @@ end
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       success = parsed_json["success"]
-      new(success: success, additional_properties: struct)
+      count = parsed_json["count"]
+      new(
+        success: success,
+        count: count,
+        additional_properties: struct
+      )
     end
 # Serialize an instance of EventCreateResponse to a JSON object
     #
@@ -49,6 +58,7 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.success&.is_a?(Boolean) != false || raise("Passed value for field obj.success is not the expected type, validation failed.")
+      obj.count.is_a?(Integer) != false || raise("Passed value for field obj.count is not the expected type, validation failed.")
     end
   end
 end

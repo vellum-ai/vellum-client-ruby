@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require_relative "../../requests"
-require_relative "../types/prompt_request_input"
+require_relative "../types/deprecated_prompt_request_input"
 require_relative "../types/vellum_variable"
 require_relative "../types/prompt_parameters"
 require_relative "../types/prompt_settings"
@@ -23,7 +23,7 @@ module Vellum
       @request_client = request_client
     end
     # @param ml_model [String] 
-    # @param input_values [Array<Hash>] Request of type Array<Vellum::PromptRequestInput>, as a Hash
+    # @param input_values [Array<Hash>] Request of type Array<Vellum::DeprecatedPromptRequestInput>, as a Hash
     # @param input_variables [Array<Hash>] Request of type Array<Vellum::VellumVariable>, as a Hash
     #   * :id (String) 
     #   * :key (String) 
@@ -70,7 +70,7 @@ module Vellum
 #  )
 #  api.ad_hoc.adhoc_execute_prompt(
 #    ml_model: "x",
-#    input_values: [{ key: "x", type: "STRING", value: "value" }, { key: "x", type: "STRING", value: "value" }],
+#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
 #    input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }],
 #    parameters: {  },
 #    blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }]
@@ -109,7 +109,7 @@ end
       @request_client = request_client
     end
     # @param ml_model [String] 
-    # @param input_values [Array<Hash>] Request of type Array<Vellum::PromptRequestInput>, as a Hash
+    # @param input_values [Array<Hash>] Request of type Array<Vellum::DeprecatedPromptRequestInput>, as a Hash
     # @param input_variables [Array<Hash>] Request of type Array<Vellum::VellumVariable>, as a Hash
     #   * :id (String) 
     #   * :key (String) 
@@ -156,7 +156,7 @@ end
 #  )
 #  api.ad_hoc.adhoc_execute_prompt(
 #    ml_model: "x",
-#    input_values: [{ key: "x", type: "STRING", value: "value" }, { key: "x", type: "STRING", value: "value" }],
+#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
 #    input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }],
 #    parameters: {  },
 #    blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }]
