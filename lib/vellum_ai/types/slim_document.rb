@@ -23,6 +23,7 @@ module Vellum
 #  unless processing_state is FAILED.
 #  * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit
 #  * `INVALID_FILE` - Invalid File
+#  * `INVALID_CREDENTIALS` - Invalid Credentials
     attr_reader :processing_failure_reason
   # @return [Vellum::DOCUMENT_STATUS] The document's current status.
 #  * `ACTIVE` - Active
@@ -52,6 +53,7 @@ module Vellum
 #  unless processing_state is FAILED.
 #  * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit
 #  * `INVALID_FILE` - Invalid File
+#  * `INVALID_CREDENTIALS` - Invalid Credentials
     # @param status [Vellum::DOCUMENT_STATUS] The document's current status.
 #  * `ACTIVE` - Active
     # @param keywords [Array<String>] A list of keywords associated with this document. Originally provided when
