@@ -53,6 +53,7 @@ module Vellum
     #   * :name (String) 
     #   * :description (String) 
     #   * :parameters (Hash{String => Object}) 
+    #   * :inputs (Hash{String => Object}) 
     #   * :forced (Boolean) 
     #   * :strict (Boolean) 
     # @param expand_meta [Hash] Request of type Vellum::AdHocExpandMeta, as a Hash
@@ -85,8 +86,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -139,6 +138,7 @@ end
     #   * :name (String) 
     #   * :description (String) 
     #   * :parameters (Hash{String => Object}) 
+    #   * :inputs (Hash{String => Object}) 
     #   * :forced (Boolean) 
     #   * :strict (Boolean) 
     # @param expand_meta [Hash] Request of type Vellum::AdHocExpandMeta, as a Hash
@@ -172,8 +172,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
