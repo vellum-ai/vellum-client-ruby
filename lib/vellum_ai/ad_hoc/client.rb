@@ -53,6 +53,7 @@ module Vellum
     #   * :name (String) 
     #   * :description (String) 
     #   * :parameters (Hash{String => Object}) 
+    #   * :inputs (Hash{String => Object}) 
     #   * :forced (Boolean) 
     #   * :strict (Boolean) 
     # @param expand_meta [Hash] Request of type Vellum::AdHocExpandMeta, as a Hash
@@ -139,6 +140,7 @@ end
     #   * :name (String) 
     #   * :description (String) 
     #   * :parameters (Hash{String => Object}) 
+    #   * :inputs (Hash{String => Object}) 
     #   * :forced (Boolean) 
     #   * :strict (Boolean) 
     # @param expand_meta [Hash] Request of type Vellum::AdHocExpandMeta, as a Hash
