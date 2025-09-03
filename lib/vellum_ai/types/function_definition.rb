@@ -18,6 +18,8 @@ module Vellum
     attr_reader :description
   # @return [Hash{String => Object}] An OpenAPI specification of parameters that are supported by this function.
     attr_reader :parameters
+  # @return [Hash{String => Object}] Optional user defined input mappings for this function.
+    attr_reader :inputs
   # @return [Boolean] Set this option to true to force the model to return a function call of this
 #  function.
     attr_reader :forced
@@ -36,21 +38,23 @@ module Vellum
     # @param name [String] The name identifying the function.
     # @param description [String] A description to help guide the model when to invoke this function.
     # @param parameters [Hash{String => Object}] An OpenAPI specification of parameters that are supported by this function.
+    # @param inputs [Hash{String => Object}] Optional user defined input mappings for this function.
     # @param forced [Boolean] Set this option to true to force the model to return a function call of this
 #  function.
     # @param strict [Boolean] Set this option to use strict schema decoding when available.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::FunctionDefinition]
-    def initialize(state: OMIT, cache_config: OMIT, name: OMIT, description: OMIT, parameters: OMIT, forced: OMIT, strict: OMIT, additional_properties: nil)
+    def initialize(state: OMIT, cache_config: OMIT, name: OMIT, description: OMIT, parameters: OMIT, inputs: OMIT, forced: OMIT, strict: OMIT, additional_properties: nil)
       @state = state if state != OMIT
       @cache_config = cache_config if cache_config != OMIT
       @name = name if name != OMIT
       @description = description if description != OMIT
       @parameters = parameters if parameters != OMIT
+      @inputs = inputs if inputs != OMIT
       @forced = forced if forced != OMIT
       @strict = strict if strict != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "state": state, "cache_config": cache_config, "name": name, "description": description, "parameters": parameters, "forced": forced, "strict": strict }.reject do | _k, v |
+      @_field_set = { "state": state, "cache_config": cache_config, "name": name, "description": description, "parameters": parameters, "inputs": inputs, "forced": forced, "strict": strict }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -71,6 +75,7 @@ end
       name = parsed_json["name"]
       description = parsed_json["description"]
       parameters = parsed_json["parameters"]
+      inputs = parsed_json["inputs"]
       forced = parsed_json["forced"]
       strict = parsed_json["strict"]
       new(
@@ -79,6 +84,7 @@ end
         name: name,
         description: description,
         parameters: parameters,
+        inputs: inputs,
         forced: forced,
         strict: strict,
         additional_properties: struct
@@ -102,6 +108,7 @@ end
       obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.parameters&.is_a?(Hash) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
+      obj.inputs&.is_a?(Hash) != false || raise("Passed value for field obj.inputs is not the expected type, validation failed.")
       obj.forced&.is_a?(Boolean) != false || raise("Passed value for field obj.forced is not the expected type, validation failed.")
       obj.strict&.is_a?(Boolean) != false || raise("Passed value for field obj.strict is not the expected type, validation failed.")
     end
