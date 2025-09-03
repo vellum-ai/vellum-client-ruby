@@ -24,12 +24,14 @@ module Vellum
     # @param input_variable_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ScenarioInputImageVariableValue]
-    def initialize(type:, value:, input_variable_id:, additional_properties: nil)
+    def initialize(type:, value: OMIT, input_variable_id:, additional_properties: nil)
       @type = type
-      @value = value
+      @value = value if value != OMIT
       @input_variable_id = input_variable_id
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value, "input_variable_id": input_variable_id }
+      @_field_set = { "type": type, "value": value, "input_variable_id": input_variable_id }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of ScenarioInputImageVariableValue
     #
@@ -67,7 +69,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      Vellum::VellumImage.validate_raw(obj: obj.value)
+      obj.value.nil? || Vellum::VellumImage.validate_raw(obj: obj.value)
       obj.input_variable_id.is_a?(String) != false || raise("Passed value for field obj.input_variable_id is not the expected type, validation failed.")
     end
   end
