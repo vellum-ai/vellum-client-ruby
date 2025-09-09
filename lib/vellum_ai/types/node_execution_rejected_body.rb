@@ -10,6 +10,8 @@ module Vellum
     attr_reader :node_definition
   # @return [Vellum::VellumSdkError] 
     attr_reader :error
+  # @return [String] 
+    attr_reader :stacktrace
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -20,13 +22,17 @@ module Vellum
 
     # @param node_definition [Vellum::VellumCodeResourceDefinition] 
     # @param error [Vellum::VellumSdkError] 
+    # @param stacktrace [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NodeExecutionRejectedBody]
-    def initialize(node_definition:, error:, additional_properties: nil)
+    def initialize(node_definition:, error:, stacktrace: OMIT, additional_properties: nil)
       @node_definition = node_definition
       @error = error
+      @stacktrace = stacktrace if stacktrace != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "node_definition": node_definition, "error": error }
+      @_field_set = { "node_definition": node_definition, "error": error, "stacktrace": stacktrace }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of NodeExecutionRejectedBody
     #
@@ -47,9 +53,11 @@ module Vellum
       else
         error = nil
       end
+      stacktrace = parsed_json["stacktrace"]
       new(
         node_definition: node_definition,
         error: error,
+        stacktrace: stacktrace,
         additional_properties: struct
       )
     end
@@ -68,6 +76,7 @@ module Vellum
     def self.validate_raw(obj:)
       Vellum::VellumCodeResourceDefinition.validate_raw(obj: obj.node_definition)
       Vellum::VellumSdkError.validate_raw(obj: obj.error)
+      obj.stacktrace&.is_a?(String) != false || raise("Passed value for field obj.stacktrace is not the expected type, validation failed.")
     end
   end
 end
