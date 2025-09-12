@@ -3,6 +3,8 @@ require_relative "../../requests"
 require_relative "../types/workflow_push_deployment_config_request"
 require_relative "../types/workflow_push_response"
 require_relative "../../core/file_utilities"
+require "json"
+require "async"
 require "async"
 require "async"
 require_relative "../../requests"
@@ -92,6 +94,41 @@ end, dry_run: dry_run, strict: strict }.compact
 end
       Vellum::WorkflowPushResponse.from_json(json_object: response.body)
     end
+# Serialize files
+    #
+    # @param files [Hash{String => Object}] 
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Hash{String => Object}]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
+    def serialize_workflow_files(files:, request_options: nil)
+      response = @request_client.conn.post do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files }.compact
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
+end
+      parsed_json = JSON.parse(response.body)
+      parsed_json
+    end
   end
   class AsyncWorkflowsClient
   # @return [Vellum::AsyncRequestClient] 
@@ -179,6 +216,43 @@ end, dry_run: dry_run, strict: strict }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/push"
 end
         Vellum::WorkflowPushResponse.from_json(json_object: response.body)
+      end
+    end
+# Serialize files
+    #
+    # @param files [Hash{String => Object}] 
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Hash{String => Object}]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
+    def serialize_workflow_files(files:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files }.compact
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
+end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
   end
