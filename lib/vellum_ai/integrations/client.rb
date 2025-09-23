@@ -1,34 +1,40 @@
 # frozen_string_literal: true
 require_relative "../../requests"
-require_relative "../types/workspace_secret_read"
+require_relative "../types/components_schemas_composio_tool_definition"
+require_relative "../types/components_schemas_composio_execute_tool_request"
+require_relative "../types/components_schemas_composio_execute_tool_response"
 require "async"
 require "async"
 require_relative "../../requests"
 
 module Vellum
-  class WorkspaceSecretsClient
+  class IntegrationsClient
   # @return [Vellum::RequestClient] 
     attr_reader :request_client
 
 
     # @param request_client [Vellum::RequestClient] 
-    # @return [Vellum::WorkspaceSecretsClient]
+    # @return [Vellum::IntegrationsClient]
     def initialize(request_client:)
       @request_client = request_client
     end
-# Used to retrieve a Workspace Secret given its ID or name.
-    #
-    # @param id [String] Either the Workspace Secret's ID or its unique name
+    # @param integration [String] The integration name
+    # @param provider [String] The integration provider name
+    # @param tool_name [String] The tool's unique name, as specified by the integration provider
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::WorkspaceSecretRead]
+    # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_TOOL_DEFINITION]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.workspace_secrets.retrieve(id: "id")
-    def retrieve(id:, request_options: nil)
+#  api.integrations.retrieve_integration_tool_definition(
+#    integration: "integration",
+#    provider: "provider",
+#    tool_name: "tool_name"
+#  )
+    def retrieve_integration_tool_definition(integration:, provider:, tool_name:, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -46,26 +52,32 @@ module Vellum
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workspace-secrets/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/integrations/v1/providers/#{integration}/integrations/#{provider}/tools/#{tool_name}"
 end
-      Vellum::WorkspaceSecretRead.from_json(json_object: response.body)
+      Vellum::ComposioToolDefinition.from_json(json_object: response.body)
     end
-# Used to update a Workspace Secret given its ID or name.
-    #
-    # @param id [String] Either the Workspace Secret's ID or its unique name
-    # @param label [String] 
-    # @param value [String] 
+    # @param integration [String] The integration name
+    # @param provider [String] The integration provider name
+    # @param tool_name [String] The tool's unique name, as specified by the integration provider
+    # @param request [Hash] Request of type Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_REQUEST, as a Hash
+    #   * :provider (String) 
+    #   * :arguments (Hash{String => Object}) 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::WorkspaceSecretRead]
+    # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_RESPONSE]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.workspace_secrets.partial_update(id: "id")
-    def partial_update(id:, label: nil, value: nil, request_options: nil)
-      response = @request_client.conn.patch do | req |
+#  api.integrations.execute_integration_tool(
+#    integration: "integration",
+#    provider: "provider",
+#    tool_name: "tool_name",
+#    request: { provider: "COMPOSIO", arguments: { "arguments": {"key":"value"} } }
+#  )
+    def execute_integration_tool(integration:, provider:, tool_name:, request:, request_options: nil)
+      response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
   end
@@ -79,35 +91,39 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), label: label, value: value }.compact
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workspace-secrets/#{id}"
+  req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/integrations/v1/providers/#{integration}/integrations/#{provider}/tools/#{tool_name}/execute"
 end
-      Vellum::WorkspaceSecretRead.from_json(json_object: response.body)
+      Vellum::ComposioExecuteToolResponse.from_json(json_object: response.body)
     end
   end
-  class AsyncWorkspaceSecretsClient
+  class AsyncIntegrationsClient
   # @return [Vellum::AsyncRequestClient] 
     attr_reader :request_client
 
 
     # @param request_client [Vellum::RequestClient] 
-    # @return [Vellum::AsyncWorkspaceSecretsClient]
+    # @return [Vellum::AsyncIntegrationsClient]
     def initialize(request_client:)
       @request_client = request_client
     end
-# Used to retrieve a Workspace Secret given its ID or name.
-    #
-    # @param id [String] Either the Workspace Secret's ID or its unique name
+    # @param integration [String] The integration name
+    # @param provider [String] The integration provider name
+    # @param tool_name [String] The tool's unique name, as specified by the integration provider
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::WorkspaceSecretRead]
+    # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_TOOL_DEFINITION]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.workspace_secrets.retrieve(id: "id")
-    def retrieve(id:, request_options: nil)
+#  api.integrations.retrieve_integration_tool_definition(
+#    integration: "integration",
+#    provider: "provider",
+#    tool_name: "tool_name"
+#  )
+    def retrieve_integration_tool_definition(integration:, provider:, tool_name:, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -126,28 +142,34 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workspace-secrets/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/integrations/v1/providers/#{integration}/integrations/#{provider}/tools/#{tool_name}"
 end
-        Vellum::WorkspaceSecretRead.from_json(json_object: response.body)
+        Vellum::ComposioToolDefinition.from_json(json_object: response.body)
       end
     end
-# Used to update a Workspace Secret given its ID or name.
-    #
-    # @param id [String] Either the Workspace Secret's ID or its unique name
-    # @param label [String] 
-    # @param value [String] 
+    # @param integration [String] The integration name
+    # @param provider [String] The integration provider name
+    # @param tool_name [String] The tool's unique name, as specified by the integration provider
+    # @param request [Hash] Request of type Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_REQUEST, as a Hash
+    #   * :provider (String) 
+    #   * :arguments (Hash{String => Object}) 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::WorkspaceSecretRead]
+    # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_RESPONSE]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.workspace_secrets.partial_update(id: "id")
-    def partial_update(id:, label: nil, value: nil, request_options: nil)
+#  api.integrations.execute_integration_tool(
+#    integration: "integration",
+#    provider: "provider",
+#    tool_name: "tool_name",
+#    request: { provider: "COMPOSIO", arguments: { "arguments": {"key":"value"} } }
+#  )
+    def execute_integration_tool(integration:, provider:, tool_name:, request:, request_options: nil)
       Async do
-        response = @request_client.conn.patch do | req |
+        response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
   end
@@ -161,10 +183,10 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), label: label, value: value }.compact
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workspace-secrets/#{id}"
+  req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/integrations/v1/providers/#{integration}/integrations/#{provider}/tools/#{tool_name}/execute"
 end
-        Vellum::WorkspaceSecretRead.from_json(json_object: response.body)
+        Vellum::ComposioExecuteToolResponse.from_json(json_object: response.body)
       end
     end
   end
