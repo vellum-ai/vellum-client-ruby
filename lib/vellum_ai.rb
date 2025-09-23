@@ -3,6 +3,7 @@ require_relative "environment"
 require_relative "types_export"
 require_relative "vellum_ai/types/api_version_enum"
 require_relative "requests"
+require_relative "vellum_ai/integrations/client"
 require_relative "vellum_ai/events/client"
 require_relative "vellum_ai/ad_hoc/client"
 require_relative "vellum_ai/container_images/client"
@@ -50,6 +51,8 @@ require_relative "requests"
 
 module Vellum
   class Client
+  # @return [Vellum::IntegrationsClient] 
+    attr_reader :integrations
   # @return [Vellum::EventsClient] 
     attr_reader :events
   # @return [Vellum::AdHocClient] 
@@ -108,6 +111,7 @@ module Vellum
   api_key: api_key,
   api_version: api_version
 )
+      @integrations = Vellum::IntegrationsClient.new(request_client: @request_client)
       @events = Vellum::EventsClient.new(request_client: @request_client)
       @ad_hoc = Vellum::AdHocClient.new(request_client: @request_client)
       @container_images = Vellum::ContainerImagesClient.new(request_client: @request_client)
@@ -507,6 +511,8 @@ end
     end
   end
   class AsyncClient
+  # @return [Vellum::AsyncIntegrationsClient] 
+    attr_reader :integrations
   # @return [Vellum::AsyncEventsClient] 
     attr_reader :events
   # @return [Vellum::AsyncAdHocClient] 
@@ -565,6 +571,7 @@ end
   api_key: api_key,
   api_version: api_version
 )
+      @integrations = Vellum::AsyncIntegrationsClient.new(request_client: @async_request_client)
       @events = Vellum::AsyncEventsClient.new(request_client: @async_request_client)
       @ad_hoc = Vellum::AsyncAdHocClient.new(request_client: @async_request_client)
       @container_images = Vellum::AsyncContainerImagesClient.new(request_client: @async_request_client)
