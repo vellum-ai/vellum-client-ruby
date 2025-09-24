@@ -11,6 +11,7 @@ require_relative "google_vertex_ai_vectorizer_text_embedding_004"
 require_relative "google_vertex_ai_vectorizer_text_multilingual_embedding_002"
 require_relative "google_vertex_ai_vectorizer_gemini_embedding_001"
 require_relative "fast_embed_vectorizer_baai_bge_small_en_v_15"
+require_relative "private_vectorizer"
 
 module Vellum
   class IndexingConfigVectorizer
@@ -132,6 +133,16 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::PrivateVectorizer.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::PrivateVectorizer.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -193,6 +204,11 @@ end
       end
       begin
         return Vellum::FastEmbedVectorizerBaaiBgeSmallEnV15.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::PrivateVectorizer.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
