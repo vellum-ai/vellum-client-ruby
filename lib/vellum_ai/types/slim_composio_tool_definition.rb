@@ -4,8 +4,7 @@ require "ostruct"
 require "json"
 
 module Vellum
-# Serializer for Composio tool definition response.
-  class ComposioToolDefinition
+  class SlimComposioToolDefinition
   # @return [String] 
     attr_reader :provider
   # @return [Vellum::ToolDefinitionIntegration] 
@@ -14,10 +13,6 @@ module Vellum
     attr_reader :name
   # @return [String] 
     attr_reader :description
-  # @return [Hash{String => Object}] 
-    attr_reader :input_parameters
-  # @return [Hash{String => Object}] 
-    attr_reader :output_parameters
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -30,24 +25,20 @@ module Vellum
     # @param integration [Vellum::ToolDefinitionIntegration] 
     # @param name [String] 
     # @param description [String] 
-    # @param input_parameters [Hash{String => Object}] 
-    # @param output_parameters [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::ComposioToolDefinition]
-    def initialize(provider:, integration:, name:, description:, input_parameters:, output_parameters:, additional_properties: nil)
+    # @return [Vellum::SlimComposioToolDefinition]
+    def initialize(provider:, integration:, name:, description:, additional_properties: nil)
       @provider = provider
       @integration = integration
       @name = name
       @description = description
-      @input_parameters = input_parameters
-      @output_parameters = output_parameters
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "integration": integration, "name": name, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters }
+      @_field_set = { "provider": provider, "integration": integration, "name": name, "description": description }
     end
-# Deserialize a JSON object to an instance of ComposioToolDefinition
+# Deserialize a JSON object to an instance of SlimComposioToolDefinition
     #
     # @param json_object [String] 
-    # @return [Vellum::ComposioToolDefinition]
+    # @return [Vellum::SlimComposioToolDefinition]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -60,19 +51,15 @@ module Vellum
       end
       name = parsed_json["name"]
       description = parsed_json["description"]
-      input_parameters = parsed_json["input_parameters"]
-      output_parameters = parsed_json["output_parameters"]
       new(
         provider: provider,
         integration: integration,
         name: name,
         description: description,
-        input_parameters: input_parameters,
-        output_parameters: output_parameters,
         additional_properties: struct
       )
     end
-# Serialize an instance of ComposioToolDefinition to a JSON object
+# Serialize an instance of SlimComposioToolDefinition to a JSON object
     #
     # @return [String]
     def to_json
@@ -89,8 +76,6 @@ module Vellum
       Vellum::ToolDefinitionIntegration.validate_raw(obj: obj.integration)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
-      obj.input_parameters.is_a?(Hash) != false || raise("Passed value for field obj.input_parameters is not the expected type, validation failed.")
-      obj.output_parameters.is_a?(Hash) != false || raise("Passed value for field obj.output_parameters is not the expected type, validation failed.")
     end
   end
 end

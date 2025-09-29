@@ -93,12 +93,11 @@ end
     end
     # @param id [String] A UUID string identifying this test suite run.
     # @param expand [String] The response fields to expand for more information.
-#  - 'results.metric_results.metric_label' expands the metric label for each metric
-#  result.
-#  - 'results.metric_results.metric_definition' expands the metric definition for
+#  - 'metric_results.metric_label' expands the metric label for each metric result.
+#  - 'metric_results.metric_definition' expands the metric definition for each
+#  metric result.
+#  - 'metric_results.metric_definition.name' expands the metric definition name for
 #  each metric result.
-#  - 'results.metric_results.metric_definition.name' expands the metric definition
-#  name for each metric result.
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param request_options [Vellum::RequestOptions] 
@@ -221,12 +220,11 @@ end
     end
     # @param id [String] A UUID string identifying this test suite run.
     # @param expand [String] The response fields to expand for more information.
-#  - 'results.metric_results.metric_label' expands the metric label for each metric
-#  result.
-#  - 'results.metric_results.metric_definition' expands the metric definition for
+#  - 'metric_results.metric_label' expands the metric label for each metric result.
+#  - 'metric_results.metric_definition' expands the metric definition for each
+#  metric result.
+#  - 'metric_results.metric_definition.name' expands the metric definition name for
 #  each metric result.
-#  - 'results.metric_results.metric_definition.name' expands the metric definition
-#  name for each metric result.
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param request_options [Vellum::RequestOptions] 

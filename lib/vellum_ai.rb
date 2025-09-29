@@ -11,6 +11,8 @@ require_relative "vellum_ai/deployments/client"
 require_relative "vellum_ai/document_indexes/client"
 require_relative "vellum_ai/documents/client"
 require_relative "vellum_ai/folder_entities/client"
+require_relative "vellum_ai/integration_auth_configs/client"
+require_relative "vellum_ai/integration_providers/client"
 require_relative "vellum_ai/metric_definitions/client"
 require_relative "vellum_ai/ml_models/client"
 require_relative "vellum_ai/organizations/client"
@@ -67,6 +69,10 @@ module Vellum
     attr_reader :documents
   # @return [Vellum::FolderEntitiesClient] 
     attr_reader :folder_entities
+  # @return [Vellum::IntegrationAuthConfigsClient] 
+    attr_reader :integration_auth_configs
+  # @return [Vellum::IntegrationProvidersClient] 
+    attr_reader :integration_providers
   # @return [Vellum::MetricDefinitionsClient] 
     attr_reader :metric_definitions
   # @return [Vellum::MlModelsClient] 
@@ -119,6 +125,8 @@ module Vellum
       @document_indexes = Vellum::DocumentIndexesClient.new(request_client: @request_client)
       @documents = Vellum::DocumentsClient.new(request_client: @request_client)
       @folder_entities = Vellum::FolderEntitiesClient.new(request_client: @request_client)
+      @integration_auth_configs = Vellum::IntegrationAuthConfigsClient.new(request_client: @request_client)
+      @integration_providers = Vellum::IntegrationProvidersClient.new(request_client: @request_client)
       @metric_definitions = Vellum::MetricDefinitionsClient.new(request_client: @request_client)
       @ml_models = Vellum::MlModelsClient.new(request_client: @request_client)
       @organizations = Vellum::OrganizationsClient.new(request_client: @request_client)
@@ -527,6 +535,10 @@ end
     attr_reader :documents
   # @return [Vellum::AsyncFolderEntitiesClient] 
     attr_reader :folder_entities
+  # @return [Vellum::AsyncIntegrationAuthConfigsClient] 
+    attr_reader :integration_auth_configs
+  # @return [Vellum::AsyncIntegrationProvidersClient] 
+    attr_reader :integration_providers
   # @return [Vellum::AsyncMetricDefinitionsClient] 
     attr_reader :metric_definitions
   # @return [Vellum::AsyncMlModelsClient] 
@@ -579,6 +591,8 @@ end
       @document_indexes = Vellum::AsyncDocumentIndexesClient.new(request_client: @async_request_client)
       @documents = Vellum::AsyncDocumentsClient.new(request_client: @async_request_client)
       @folder_entities = Vellum::AsyncFolderEntitiesClient.new(request_client: @async_request_client)
+      @integration_auth_configs = Vellum::AsyncIntegrationAuthConfigsClient.new(request_client: @async_request_client)
+      @integration_providers = Vellum::AsyncIntegrationProvidersClient.new(request_client: @async_request_client)
       @metric_definitions = Vellum::AsyncMetricDefinitionsClient.new(request_client: @async_request_client)
       @ml_models = Vellum::AsyncMlModelsClient.new(request_client: @async_request_client)
       @organizations = Vellum::AsyncOrganizationsClient.new(request_client: @async_request_client)
