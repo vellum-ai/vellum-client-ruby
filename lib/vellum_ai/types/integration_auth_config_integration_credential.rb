@@ -17,12 +17,10 @@ module Vellum
     # @param id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::IntegrationAuthConfigIntegrationCredential]
-    def initialize(id: OMIT, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, additional_properties: nil)
+      @id = id
       @additional_properties = additional_properties
-      @_field_set = { "id": id }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id }
     end
 # Deserialize a JSON object to an instance of
 #  IntegrationAuthConfigIntegrationCredential
@@ -49,7 +47,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
     end
   end
 end

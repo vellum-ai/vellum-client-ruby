@@ -1,21 +1,17 @@
 # frozen_string_literal: true
-require_relative "integration_name"
 require_relative "integration_provider"
+require_relative "integration_name"
 require "ostruct"
 require "json"
 
 module Vellum
-  class SlimIntegrationRead
+  class IntegrationAuthConfigIntegration
   # @return [String] 
     attr_reader :id
-  # @return [String] 
-    attr_reader :label
-  # @return [String] 
-    attr_reader :icon_url
-  # @return [Vellum::IntegrationName] 
-    attr_reader :name
   # @return [Vellum::INTEGRATION_PROVIDER] 
     attr_reader :provider
+  # @return [Vellum::IntegrationName] 
+    attr_reader :name
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -25,45 +21,35 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param label [String] 
-    # @param icon_url [String] 
-    # @param name [Vellum::IntegrationName] 
     # @param provider [Vellum::INTEGRATION_PROVIDER] 
+    # @param name [Vellum::IntegrationName] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::SlimIntegrationRead]
-    def initialize(id:, label: OMIT, icon_url:, name:, provider:, additional_properties: nil)
+    # @return [Vellum::IntegrationAuthConfigIntegration]
+    def initialize(id:, provider:, name:, additional_properties: nil)
       @id = id
-      @label = label if label != OMIT
-      @icon_url = icon_url
-      @name = name
       @provider = provider
+      @name = name
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "label": label, "icon_url": icon_url, "name": name, "provider": provider }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "provider": provider, "name": name }
     end
-# Deserialize a JSON object to an instance of SlimIntegrationRead
+# Deserialize a JSON object to an instance of IntegrationAuthConfigIntegration
     #
     # @param json_object [String] 
-    # @return [Vellum::SlimIntegrationRead]
+    # @return [Vellum::IntegrationAuthConfigIntegration]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      label = parsed_json["label"]
-      icon_url = parsed_json["icon_url"]
-      name = parsed_json["name"]
       provider = parsed_json["provider"]
+      name = parsed_json["name"]
       new(
         id: id,
-        label: label,
-        icon_url: icon_url,
-        name: name,
         provider: provider,
+        name: name,
         additional_properties: struct
       )
     end
-# Serialize an instance of SlimIntegrationRead to a JSON object
+# Serialize an instance of IntegrationAuthConfigIntegration to a JSON object
     #
     # @return [String]
     def to_json
@@ -77,10 +63,8 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
-      obj.icon_url.is_a?(String) != false || raise("Passed value for field obj.icon_url is not the expected type, validation failed.")
-      obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
+      obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
 end
