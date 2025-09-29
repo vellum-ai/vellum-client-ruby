@@ -43,8 +43,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -77,8 +75,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -93,12 +89,11 @@ end
     end
     # @param id [String] A UUID string identifying this test suite run.
     # @param expand [String] The response fields to expand for more information.
-#  - 'results.metric_results.metric_label' expands the metric label for each metric
-#  result.
-#  - 'results.metric_results.metric_definition' expands the metric definition for
+#  - 'metric_results.metric_label' expands the metric label for each metric result.
+#  - 'metric_results.metric_definition' expands the metric definition for each
+#  metric result.
+#  - 'metric_results.metric_definition.name' expands the metric definition name for
 #  each metric result.
-#  - 'results.metric_results.metric_definition.name' expands the metric definition
-#  name for each metric result.
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param request_options [Vellum::RequestOptions] 
@@ -120,8 +115,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "limit": limit, "offset": offset }.compact
@@ -168,8 +161,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -204,8 +195,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -221,12 +210,11 @@ end
     end
     # @param id [String] A UUID string identifying this test suite run.
     # @param expand [String] The response fields to expand for more information.
-#  - 'results.metric_results.metric_label' expands the metric label for each metric
-#  result.
-#  - 'results.metric_results.metric_definition' expands the metric definition for
+#  - 'metric_results.metric_label' expands the metric label for each metric result.
+#  - 'metric_results.metric_definition' expands the metric definition for each
+#  metric result.
+#  - 'metric_results.metric_definition.name' expands the metric definition name for
 #  each metric result.
-#  - 'results.metric_results.metric_definition.name' expands the metric definition
-#  name for each metric result.
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param request_options [Vellum::RequestOptions] 
@@ -249,8 +237,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "limit": limit, "offset": offset }.compact
