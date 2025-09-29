@@ -5,7 +5,7 @@ require "ostruct"
 require "json"
 
 module Vellum
-  class ToolDefinitionIntegration
+  class IntegrationAuthConfigIntegration
   # @return [String] 
     attr_reader :id
   # @return [Vellum::INTEGRATION_PROVIDER] 
@@ -24,7 +24,7 @@ module Vellum
     # @param provider [Vellum::INTEGRATION_PROVIDER] 
     # @param name [Vellum::IntegrationName] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::ToolDefinitionIntegration]
+    # @return [Vellum::IntegrationAuthConfigIntegration]
     def initialize(id:, provider:, name:, additional_properties: nil)
       @id = id
       @provider = provider
@@ -32,10 +32,10 @@ module Vellum
       @additional_properties = additional_properties
       @_field_set = { "id": id, "provider": provider, "name": name }
     end
-# Deserialize a JSON object to an instance of ToolDefinitionIntegration
+# Deserialize a JSON object to an instance of IntegrationAuthConfigIntegration
     #
     # @param json_object [String] 
-    # @return [Vellum::ToolDefinitionIntegration]
+    # @return [Vellum::IntegrationAuthConfigIntegration]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -49,7 +49,7 @@ module Vellum
         additional_properties: struct
       )
     end
-# Serialize an instance of ToolDefinitionIntegration to a JSON object
+# Serialize an instance of IntegrationAuthConfigIntegration to a JSON object
     #
     # @return [String]
     def to_json
