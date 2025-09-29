@@ -25,14 +25,12 @@ module Vellum
     # @param name [Vellum::IntegrationName] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ToolDefinitionIntegration]
-    def initialize(id: OMIT, provider:, name:, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, provider:, name:, additional_properties: nil)
+      @id = id
       @provider = provider
       @name = name
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "provider": provider, "name": name }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "id": id, "provider": provider, "name": name }
     end
 # Deserialize a JSON object to an instance of ToolDefinitionIntegration
     #
@@ -64,7 +62,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end

@@ -36,8 +36,8 @@ module Vellum
     # @param exec_config [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_INTEGRATION_EXEC_CONFIG] Integration provider specific information needed for filtering tools.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::IntegrationRead]
-    def initialize(id: OMIT, label: OMIT, icon_url:, name:, provider:, exec_config:, additional_properties: nil)
-      @id = id if id != OMIT
+    def initialize(id:, label: OMIT, icon_url:, name:, provider:, exec_config:, additional_properties: nil)
+      @id = id
       @label = label if label != OMIT
       @icon_url = icon_url
       @name = name
@@ -89,7 +89,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.icon_url.is_a?(String) != false || raise("Passed value for field obj.icon_url is not the expected type, validation failed.")
       obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
