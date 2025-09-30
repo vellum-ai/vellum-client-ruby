@@ -24,12 +24,14 @@ module Vellum
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NamedTestCaseDocumentVariableValueRequest]
-    def initialize(type:, value:, name:, additional_properties: nil)
+    def initialize(type:, value: OMIT, name:, additional_properties: nil)
       @type = type
-      @value = value
+      @value = value if value != OMIT
       @name = name
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value, "name": name }
+      @_field_set = { "type": type, "value": value, "name": name }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of
 #  NamedTestCaseDocumentVariableValueRequest
@@ -69,7 +71,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      Vellum::VellumDocumentRequest.validate_raw(obj: obj.value)
+      obj.value.nil? || Vellum::VellumDocumentRequest.validate_raw(obj: obj.value)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
