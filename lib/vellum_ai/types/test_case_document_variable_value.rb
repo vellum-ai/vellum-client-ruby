@@ -28,11 +28,11 @@ module Vellum
     # @param value [Vellum::VellumDocument] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TestCaseDocumentVariableValue]
-    def initialize(variable_id:, name: OMIT, type:, value:, additional_properties: nil)
+    def initialize(variable_id:, name: OMIT, type:, value: OMIT, additional_properties: nil)
       @variable_id = variable_id
       @name = name if name != OMIT
       @type = type
-      @value = value
+      @value = value if value != OMIT
       @additional_properties = additional_properties
       @_field_set = { "variable_id": variable_id, "name": name, "type": type, "value": value }.reject do | _k, v |
   v == OMIT
@@ -78,7 +78,7 @@ end
       obj.variable_id.is_a?(String) != false || raise("Passed value for field obj.variable_id is not the expected type, validation failed.")
       obj.name&.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      Vellum::VellumDocument.validate_raw(obj: obj.value)
+      obj.value.nil? || Vellum::VellumDocument.validate_raw(obj: obj.value)
     end
   end
 end
