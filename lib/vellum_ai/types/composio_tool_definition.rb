@@ -13,6 +13,8 @@ module Vellum
   # @return [String] 
     attr_reader :name
   # @return [String] 
+    attr_reader :label
+  # @return [String] 
     attr_reader :description
   # @return [Hash{String => Object}] 
     attr_reader :input_parameters
@@ -29,20 +31,22 @@ module Vellum
     # @param provider [String] 
     # @param integration [Vellum::ToolDefinitionIntegration] 
     # @param name [String] 
+    # @param label [String] 
     # @param description [String] 
     # @param input_parameters [Hash{String => Object}] 
     # @param output_parameters [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ComposioToolDefinition]
-    def initialize(provider:, integration:, name:, description:, input_parameters:, output_parameters:, additional_properties: nil)
+    def initialize(provider:, integration:, name:, label:, description:, input_parameters:, output_parameters:, additional_properties: nil)
       @provider = provider
       @integration = integration
       @name = name
+      @label = label
       @description = description
       @input_parameters = input_parameters
       @output_parameters = output_parameters
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "integration": integration, "name": name, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters }
+      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters }
     end
 # Deserialize a JSON object to an instance of ComposioToolDefinition
     #
@@ -59,6 +63,7 @@ module Vellum
         integration = nil
       end
       name = parsed_json["name"]
+      label = parsed_json["label"]
       description = parsed_json["description"]
       input_parameters = parsed_json["input_parameters"]
       output_parameters = parsed_json["output_parameters"]
@@ -66,6 +71,7 @@ module Vellum
         provider: provider,
         integration: integration,
         name: name,
+        label: label,
         description: description,
         input_parameters: input_parameters,
         output_parameters: output_parameters,
@@ -88,6 +94,7 @@ module Vellum
       obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       Vellum::ToolDefinitionIntegration.validate_raw(obj: obj.integration)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.input_parameters.is_a?(Hash) != false || raise("Passed value for field obj.input_parameters is not the expected type, validation failed.")
       obj.output_parameters.is_a?(Hash) != false || raise("Passed value for field obj.output_parameters is not the expected type, validation failed.")
