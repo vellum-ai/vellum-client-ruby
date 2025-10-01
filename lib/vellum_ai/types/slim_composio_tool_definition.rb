@@ -12,6 +12,8 @@ module Vellum
   # @return [String] 
     attr_reader :name
   # @return [String] 
+    attr_reader :label
+  # @return [String] 
     attr_reader :description
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -24,16 +26,18 @@ module Vellum
     # @param provider [String] 
     # @param integration [Vellum::ToolDefinitionIntegration] 
     # @param name [String] 
+    # @param label [String] 
     # @param description [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimComposioToolDefinition]
-    def initialize(provider:, integration:, name:, description:, additional_properties: nil)
+    def initialize(provider:, integration:, name:, label:, description:, additional_properties: nil)
       @provider = provider
       @integration = integration
       @name = name
+      @label = label
       @description = description
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "integration": integration, "name": name, "description": description }
+      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description }
     end
 # Deserialize a JSON object to an instance of SlimComposioToolDefinition
     #
@@ -50,11 +54,13 @@ module Vellum
         integration = nil
       end
       name = parsed_json["name"]
+      label = parsed_json["label"]
       description = parsed_json["description"]
       new(
         provider: provider,
         integration: integration,
         name: name,
+        label: label,
         description: description,
         additional_properties: struct
       )
@@ -75,6 +81,7 @@ module Vellum
       obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       Vellum::ToolDefinitionIntegration.validate_raw(obj: obj.integration)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
     end
   end
