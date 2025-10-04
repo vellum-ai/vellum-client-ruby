@@ -44,8 +44,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering }.compact
@@ -78,8 +76,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -111,8 +107,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -128,6 +122,7 @@ end
     # @param name [String] 
     # @param sha [String] 
     # @param tags [Array<String>] 
+    # @param force [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::ContainerImageRead]
     # @example
@@ -141,7 +136,7 @@ end
 #    sha: "x",
 #    tags: ["tags", "tags"]
 #  )
-    def push_container_image(name:, sha:, tags:, request_options: nil)
+    def push_container_image(name:, sha:, tags:, force: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -151,14 +146,12 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), name: name, sha: sha, tags: tags }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), name: name, sha: sha, tags: tags, force: force }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/container-images/push"
 end
       Vellum::ContainerImageRead.from_json(json_object: response.body)
@@ -199,8 +192,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering }.compact
@@ -235,8 +226,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -270,8 +259,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -288,6 +275,7 @@ end
     # @param name [String] 
     # @param sha [String] 
     # @param tags [Array<String>] 
+    # @param force [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::ContainerImageRead]
     # @example
@@ -301,7 +289,7 @@ end
 #    sha: "x",
 #    tags: ["tags", "tags"]
 #  )
-    def push_container_image(name:, sha:, tags:, request_options: nil)
+    def push_container_image(name:, sha:, tags:, force: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -312,14 +300,12 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), name: name, sha: sha, tags: tags }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), name: name, sha: sha, tags: tags, force: force }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/container-images/push"
 end
         Vellum::ContainerImageRead.from_json(json_object: response.body)
