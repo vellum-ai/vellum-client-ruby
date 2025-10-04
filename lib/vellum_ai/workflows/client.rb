@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 require_relative "../../requests"
+require_relative "../types/workflow_resolved_state"
 require_relative "../types/workflow_push_deployment_config_request"
 require_relative "../types/workflow_push_response"
 require_relative "../../core/file_utilities"
 require "json"
+require "async"
 require "async"
 require "async"
 require "async"
@@ -56,6 +58,43 @@ module Vellum
   end
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/#{id}/pull"
 end
+    end
+# Retrieve the current state of a workflow execution.
+#  **Note:** Uses a base url of `https://predict.vellum.ai`.
+    #
+    # @param span_id [String] The span ID of the workflow execution to retrieve state for
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::WorkflowResolvedState]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.retrieve_state(span_id: "span_id")
+    def retrieve_state(span_id:, request_options: nil)
+      response = @request_client.conn.get do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  unless request_options.nil? || request_options&.additional_body_parameters.nil?
+    req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+  end
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/workflows/#{span_id}/state"
+end
+      Vellum::WorkflowResolvedState.from_json(json_object: response.body)
     end
     # @param exec_config [String] The execution configuration of the workflow.
     # @param workflow_sandbox_id [String] 
@@ -177,6 +216,45 @@ end
   end
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/#{id}/pull"
 end
+      end
+    end
+# Retrieve the current state of a workflow execution.
+#  **Note:** Uses a base url of `https://predict.vellum.ai`.
+    #
+    # @param span_id [String] The span ID of the workflow execution to retrieve state for
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::WorkflowResolvedState]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.retrieve_state(span_id: "span_id")
+    def retrieve_state(span_id:, request_options: nil)
+      Async do
+        response = @request_client.conn.get do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  unless request_options.nil? || request_options&.additional_body_parameters.nil?
+    req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+  end
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/workflows/#{span_id}/state"
+end
+        Vellum::WorkflowResolvedState.from_json(json_object: response.body)
       end
     end
     # @param exec_config [String] The execution configuration of the workflow.
