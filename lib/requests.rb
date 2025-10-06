@@ -56,7 +56,7 @@ end
     end
     # @return [Hash{String => String}]
     def get_headers
-      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '1.7.1' }
+      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.3.3' }
       headers["X-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
  headers
     end
@@ -107,7 +107,7 @@ end
     end
     # @return [Hash{String => String}]
     def get_headers
-      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '1.7.1' }
+      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.3.3' }
       headers["X-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
  headers
     end
