@@ -9,7 +9,9 @@ require_relative "../types/workflow_deployment_history_item"
 require_relative "types/list_workflow_release_tags_request_source"
 require_relative "../types/paginated_workflow_release_tag_read_list"
 require_relative "../types/workflow_release_tag_read"
+require_relative "../types/paginated_workflow_deployment_release_list"
 require_relative "../types/workflow_deployment_release"
+require "async"
 require "async"
 require "async"
 require "async"
@@ -331,6 +333,44 @@ end
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-deployments/#{id}/release-tags/#{name}"
 end
       Vellum::WorkflowReleaseTagRead.from_json(json_object: response.body)
+    end
+# List the Releases of the specified Workflow Deployment for the current
+#  Environment.
+    #
+    # @param id [String] Either the Workflow Deployment's ID or its unique name
+    # @param limit [Integer] Number of results to return per page.
+    # @param offset [Integer] The initial index from which to return the results.
+    # @param ordering [String] Which field to use when ordering the results.
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::PaginatedWorkflowDeploymentReleaseList]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflow_deployments.list_workflow_deployment_releases(id: "id")
+    def list_workflow_deployment_releases(id:, limit: nil, offset: nil, ordering: nil, request_options: nil)
+      response = @request_client.conn.get do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering }.compact
+  unless request_options.nil? || request_options&.additional_body_parameters.nil?
+    req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+  end
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-deployments/#{id}/releases"
+end
+      Vellum::PaginatedWorkflowDeploymentReleaseList.from_json(json_object: response.body)
     end
 # Retrieve a specific Workflow Deployment Release by either its UUID or the name
 #  of a Release Tag that points to it.
@@ -697,6 +737,46 @@ end
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-deployments/#{id}/release-tags/#{name}"
 end
         Vellum::WorkflowReleaseTagRead.from_json(json_object: response.body)
+      end
+    end
+# List the Releases of the specified Workflow Deployment for the current
+#  Environment.
+    #
+    # @param id [String] Either the Workflow Deployment's ID or its unique name
+    # @param limit [Integer] Number of results to return per page.
+    # @param offset [Integer] The initial index from which to return the results.
+    # @param ordering [String] Which field to use when ordering the results.
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::PaginatedWorkflowDeploymentReleaseList]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflow_deployments.list_workflow_deployment_releases(id: "id")
+    def list_workflow_deployment_releases(id:, limit: nil, offset: nil, ordering: nil, request_options: nil)
+      Async do
+        response = @request_client.conn.get do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering }.compact
+  unless request_options.nil? || request_options&.additional_body_parameters.nil?
+    req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+  end
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflow-deployments/#{id}/releases"
+end
+        Vellum::PaginatedWorkflowDeploymentReleaseList.from_json(json_object: response.body)
       end
     end
 # Retrieve a specific Workflow Deployment Release by either its UUID or the name
