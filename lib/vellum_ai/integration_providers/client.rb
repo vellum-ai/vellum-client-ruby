@@ -45,8 +45,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -62,6 +60,8 @@ end
 # List all integration tools for a given provider and integration.
     #
     # @param integration_provider [String] The integration provider name
+    # @param important [Boolean] Whether to filter the tools by important
+    # @param include_deprecated [Boolean] Whether to include deprecated tools
     # @param integration_name [String] The Vellum Integration name
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
@@ -75,7 +75,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integration_providers.list_integration_tools(integration_provider: "integration_provider")
-    def list_integration_tools(integration_provider:, integration_name: nil, limit: nil, offset: nil, search: nil, request_options: nil)
+    def list_integration_tools(integration_provider:, important: nil, include_deprecated: nil, integration_name: nil, limit: nil, offset: nil, search: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -85,11 +85,9 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "integration_name": integration_name, "limit": limit, "offset": offset, "search": search }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "important": important, "include_deprecated": include_deprecated, "integration_name": integration_name, "limit": limit, "offset": offset, "search": search }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -137,8 +135,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -155,6 +151,8 @@ end
 # List all integration tools for a given provider and integration.
     #
     # @param integration_provider [String] The integration provider name
+    # @param important [Boolean] Whether to filter the tools by important
+    # @param include_deprecated [Boolean] Whether to include deprecated tools
     # @param integration_name [String] The Vellum Integration name
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
@@ -168,7 +166,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integration_providers.list_integration_tools(integration_provider: "integration_provider")
-    def list_integration_tools(integration_provider:, integration_name: nil, limit: nil, offset: nil, search: nil, request_options: nil)
+    def list_integration_tools(integration_provider:, important: nil, include_deprecated: nil, integration_name: nil, limit: nil, offset: nil, search: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -179,11 +177,9 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "integration_name": integration_name, "limit": limit, "offset": offset, "search": search }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "important": important, "include_deprecated": include_deprecated, "integration_name": integration_name, "limit": limit, "offset": offset, "search": search }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
