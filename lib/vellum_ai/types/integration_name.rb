@@ -12,6 +12,7 @@ module Vellum
 #  * `GOOGLE_CALENDAR` - Google Calendar
 #  * `GOOGLE_DRIVE` - Google Drive
 #  * `GMAIL` - Gmail
+#  * `AIRTABLE` - Airtable
   class IntegrationName
 
     SLACK = "SLACK"
@@ -25,6 +26,7 @@ module Vellum
     GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
     GOOGLE_DRIVE = "GOOGLE_DRIVE"
     GMAIL = "GMAIL"
+    AIRTABLE = "AIRTABLE"
 
   end
 end
