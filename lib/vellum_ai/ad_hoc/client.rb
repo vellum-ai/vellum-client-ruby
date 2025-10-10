@@ -94,7 +94,7 @@ module Vellum
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request_options&.additional_body_parameters || {}), ml_model: ml_model, input_values: input_values, input_variables: input_variables, parameters: parameters, settings: settings, blocks: blocks, functions: functions, expand_meta: expand_meta }.compact
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/ad-hoc/execute-prompt"
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/ad-hoc/execute-prompt"
 end
       Vellum::AdHocExecutePromptEvent.from_json(json_object: response.body)
     end
@@ -182,7 +182,7 @@ end
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
   req.body = { **(request_options&.additional_body_parameters || {}), ml_model: ml_model, input_values: input_values, input_variables: input_variables, parameters: parameters, settings: settings, blocks: blocks, functions: functions, expand_meta: expand_meta }.compact
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/ad-hoc/execute-prompt"
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/ad-hoc/execute-prompt"
 end
         Vellum::AdHocExecutePromptEvent.from_json(json_object: response.body)
       end
