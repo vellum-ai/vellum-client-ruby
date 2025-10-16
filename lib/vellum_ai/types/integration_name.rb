@@ -13,6 +13,10 @@ module Vellum
 #  * `GOOGLE_DRIVE` - Google Drive
 #  * `GMAIL` - Gmail
 #  * `AIRTABLE` - Airtable
+#  * `GAMMA` - Gamma
+#  * `FIRECRAWL` - Firecrawl
+#  * `PERPLEXITY` - Perplexity
+#  * `SERPAPI` - Serp Api
   class IntegrationName
 
     SLACK = "SLACK"
@@ -27,6 +31,10 @@ module Vellum
     GOOGLE_DRIVE = "GOOGLE_DRIVE"
     GMAIL = "GMAIL"
     AIRTABLE = "AIRTABLE"
+    GAMMA = "GAMMA"
+    FIRECRAWL = "FIRECRAWL"
+    PERPLEXITY = "PERPLEXITY"
+    SERPAPI = "SERPAPI"
 
   end
 end
