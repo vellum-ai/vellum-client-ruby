@@ -7,6 +7,8 @@ module Vellum
   class WorkflowExecutionSnapshottedBody
   # @return [Vellum::VellumCodeResourceDefinition] 
     attr_reader :workflow_definition
+  # @return [Vellum::VellumCodeResourceDefinition] 
+    attr_reader :edited_by
   # @return [Hash{String => Object}] 
     attr_reader :state
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -18,14 +20,18 @@ module Vellum
     OMIT = Object.new
 
     # @param workflow_definition [Vellum::VellumCodeResourceDefinition] 
+    # @param edited_by [Vellum::VellumCodeResourceDefinition] 
     # @param state [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionSnapshottedBody]
-    def initialize(workflow_definition:, state:, additional_properties: nil)
+    def initialize(workflow_definition:, edited_by: OMIT, state:, additional_properties: nil)
       @workflow_definition = workflow_definition
+      @edited_by = edited_by if edited_by != OMIT
       @state = state
       @additional_properties = additional_properties
-      @_field_set = { "workflow_definition": workflow_definition, "state": state }
+      @_field_set = { "workflow_definition": workflow_definition, "edited_by": edited_by, "state": state }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of WorkflowExecutionSnapshottedBody
     #
@@ -40,9 +46,16 @@ module Vellum
       else
         workflow_definition = nil
       end
+      unless parsed_json["edited_by"].nil?
+        edited_by = parsed_json["edited_by"].to_json
+        edited_by = Vellum::VellumCodeResourceDefinition.from_json(json_object: edited_by)
+      else
+        edited_by = nil
+      end
       state = parsed_json["state"]
       new(
         workflow_definition: workflow_definition,
+        edited_by: edited_by,
         state: state,
         additional_properties: struct
       )
@@ -61,6 +74,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       Vellum::VellumCodeResourceDefinition.validate_raw(obj: obj.workflow_definition)
+      obj.edited_by.nil? || Vellum::VellumCodeResourceDefinition.validate_raw(obj: obj.edited_by)
       obj.state.is_a?(Hash) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
     end
   end
