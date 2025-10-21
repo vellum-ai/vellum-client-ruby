@@ -3,11 +3,11 @@ require "ostruct"
 require "json"
 
 module Vellum
-  class VellumImageRequest
-  # @return [String] A valid data URL containing the image data.
-    attr_reader :src
+  class DatasetRowPushRequest
+  # @return [String] 
+    attr_reader :label
   # @return [Hash{String => Object}] 
-    attr_reader :metadata
+    attr_reader :inputs
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -16,34 +16,32 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param src [String] A valid data URL containing the image data.
-    # @param metadata [Hash{String => Object}] 
+    # @param label [String] 
+    # @param inputs [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::VellumImageRequest]
-    def initialize(src:, metadata: OMIT, additional_properties: nil)
-      @src = src
-      @metadata = metadata if metadata != OMIT
+    # @return [Vellum::DatasetRowPushRequest]
+    def initialize(label:, inputs:, additional_properties: nil)
+      @label = label
+      @inputs = inputs
       @additional_properties = additional_properties
-      @_field_set = { "src": src, "metadata": metadata }.reject do | _k, v |
-  v == OMIT
-end
+      @_field_set = { "label": label, "inputs": inputs }
     end
-# Deserialize a JSON object to an instance of VellumImageRequest
+# Deserialize a JSON object to an instance of DatasetRowPushRequest
     #
     # @param json_object [String] 
-    # @return [Vellum::VellumImageRequest]
+    # @return [Vellum::DatasetRowPushRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      src = parsed_json["src"]
-      metadata = parsed_json["metadata"]
+      label = parsed_json["label"]
+      inputs = parsed_json["inputs"]
       new(
-        src: src,
-        metadata: metadata,
+        label: label,
+        inputs: inputs,
         additional_properties: struct
       )
     end
-# Serialize an instance of VellumImageRequest to a JSON object
+# Serialize an instance of DatasetRowPushRequest to a JSON object
     #
     # @return [String]
     def to_json
@@ -56,8 +54,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.src.is_a?(String) != false || raise("Passed value for field obj.src is not the expected type, validation failed.")
-      obj.metadata&.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
+      obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
+      obj.inputs.is_a?(Hash) != false || raise("Passed value for field obj.inputs is not the expected type, validation failed.")
     end
   end
 end
