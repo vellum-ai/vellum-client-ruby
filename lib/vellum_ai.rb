@@ -10,6 +10,7 @@ require_relative "vellum_ai/container_images/client"
 require_relative "vellum_ai/deployments/client"
 require_relative "vellum_ai/document_indexes/client"
 require_relative "vellum_ai/documents/client"
+require_relative "vellum_ai/environments/client"
 require_relative "vellum_ai/folder_entities/client"
 require_relative "vellum_ai/integration_auth_configs/client"
 require_relative "vellum_ai/integration_providers/client"
@@ -67,6 +68,8 @@ module Vellum
     attr_reader :document_indexes
   # @return [Vellum::DocumentsClient] 
     attr_reader :documents
+  # @return [Vellum::EnvironmentsClient] 
+    attr_reader :environments
   # @return [Vellum::FolderEntitiesClient] 
     attr_reader :folder_entities
   # @return [Vellum::IntegrationAuthConfigsClient] 
@@ -124,6 +127,7 @@ module Vellum
       @deployments = Vellum::DeploymentsClient.new(request_client: @request_client)
       @document_indexes = Vellum::DocumentIndexesClient.new(request_client: @request_client)
       @documents = Vellum::DocumentsClient.new(request_client: @request_client)
+      @environments = Vellum::EnvironmentsClient.new(request_client: @request_client)
       @folder_entities = Vellum::FolderEntitiesClient.new(request_client: @request_client)
       @integration_auth_configs = Vellum::IntegrationAuthConfigsClient.new(request_client: @request_client)
       @integration_providers = Vellum::IntegrationProvidersClient.new(request_client: @request_client)
@@ -165,8 +169,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -210,8 +212,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -274,8 +274,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -328,8 +326,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -373,8 +369,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -423,8 +417,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -466,8 +458,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -506,8 +496,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -533,6 +521,8 @@ end
     attr_reader :document_indexes
   # @return [Vellum::AsyncDocumentsClient] 
     attr_reader :documents
+  # @return [Vellum::AsyncEnvironmentsClient] 
+    attr_reader :environments
   # @return [Vellum::AsyncFolderEntitiesClient] 
     attr_reader :folder_entities
   # @return [Vellum::AsyncIntegrationAuthConfigsClient] 
@@ -590,6 +580,7 @@ end
       @deployments = Vellum::AsyncDeploymentsClient.new(request_client: @async_request_client)
       @document_indexes = Vellum::AsyncDocumentIndexesClient.new(request_client: @async_request_client)
       @documents = Vellum::AsyncDocumentsClient.new(request_client: @async_request_client)
+      @environments = Vellum::AsyncEnvironmentsClient.new(request_client: @async_request_client)
       @folder_entities = Vellum::AsyncFolderEntitiesClient.new(request_client: @async_request_client)
       @integration_auth_configs = Vellum::AsyncIntegrationAuthConfigsClient.new(request_client: @async_request_client)
       @integration_providers = Vellum::AsyncIntegrationProvidersClient.new(request_client: @async_request_client)
@@ -631,8 +622,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -676,8 +665,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -740,8 +727,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -794,8 +779,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -839,8 +822,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -889,8 +870,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -932,8 +911,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -972,8 +949,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
