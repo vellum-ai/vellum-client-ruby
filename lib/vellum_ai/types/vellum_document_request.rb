@@ -4,7 +4,7 @@ require "json"
 
 module Vellum
   class VellumDocumentRequest
-  # @return [String] 
+  # @return [String] A valid data URL containing the document data.
     attr_reader :src
   # @return [Hash{String => Object}] 
     attr_reader :metadata
@@ -16,7 +16,7 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param src [String] 
+    # @param src [String] A valid data URL containing the document data.
     # @param metadata [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumDocumentRequest]

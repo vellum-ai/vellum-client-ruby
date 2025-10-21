@@ -2,6 +2,7 @@
 require_relative "../../requests"
 require_relative "../types/workflow_resolved_state"
 require_relative "../types/workflow_push_deployment_config_request"
+require_relative "../types/dataset_row_push_request"
 require_relative "../types/workflow_push_response"
 require_relative "../../core/file_utilities"
 require "json"
@@ -105,11 +106,14 @@ end
     #   * :release_tags (Array<String>) 
     #   * :release_description (String) 
     # @param artifact [String, IO] 
+    # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
+    #   * :label (String) 
+    #   * :inputs (Hash{String => Object}) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowPushResponse]
-    def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dry_run: nil, strict: nil, request_options: nil)
+    def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dataset: nil, dry_run: nil, strict: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -128,7 +132,7 @@ end
   end
   req.body = { **(request_options&.additional_body_parameters || {}), exec_config: exec_config, workflow_sandbox_id: workflow_sandbox_id, deployment_config: deployment_config, artifact: unless artifact.nil?
   Vellum::FileUtilities.as_faraday_multipart(file_like: artifact)
-end, dry_run: dry_run, strict: strict }.compact
+end, dataset: dataset, dry_run: dry_run, strict: strict }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/push"
 end
       Vellum::WorkflowPushResponse.from_json(json_object: response.body)
@@ -266,11 +270,14 @@ end
     #   * :release_tags (Array<String>) 
     #   * :release_description (String) 
     # @param artifact [String, IO] 
+    # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
+    #   * :label (String) 
+    #   * :inputs (Hash{String => Object}) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowPushResponse]
-    def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dry_run: nil, strict: nil, request_options: nil)
+    def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dataset: nil, dry_run: nil, strict: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -290,7 +297,7 @@ end
   end
   req.body = { **(request_options&.additional_body_parameters || {}), exec_config: exec_config, workflow_sandbox_id: workflow_sandbox_id, deployment_config: deployment_config, artifact: unless artifact.nil?
   Vellum::FileUtilities.as_faraday_multipart(file_like: artifact)
-end, dry_run: dry_run, strict: strict }.compact
+end, dataset: dataset, dry_run: dry_run, strict: strict }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/push"
 end
         Vellum::WorkflowPushResponse.from_json(json_object: response.body)
