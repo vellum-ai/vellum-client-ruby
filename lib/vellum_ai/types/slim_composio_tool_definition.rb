@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative "tool_definition_integration"
+require_relative "integration"
 require "ostruct"
 require "json"
 
@@ -7,7 +7,7 @@ module Vellum
   class SlimComposioToolDefinition
   # @return [String] 
     attr_reader :provider
-  # @return [Vellum::ToolDefinitionIntegration] 
+  # @return [Vellum::Integration] 
     attr_reader :integration
   # @return [String] 
     attr_reader :name
@@ -24,7 +24,7 @@ module Vellum
     OMIT = Object.new
 
     # @param provider [String] 
-    # @param integration [Vellum::ToolDefinitionIntegration] 
+    # @param integration [Vellum::Integration] 
     # @param name [String] 
     # @param label [String] 
     # @param description [String] 
@@ -49,7 +49,7 @@ module Vellum
       provider = parsed_json["provider"]
       unless parsed_json["integration"].nil?
         integration = parsed_json["integration"].to_json
-        integration = Vellum::ToolDefinitionIntegration.from_json(json_object: integration)
+        integration = Vellum::Integration.from_json(json_object: integration)
       else
         integration = nil
       end
@@ -79,7 +79,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
-      Vellum::ToolDefinitionIntegration.validate_raw(obj: obj.integration)
+      Vellum::Integration.validate_raw(obj: obj.integration)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
