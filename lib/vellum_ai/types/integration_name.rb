@@ -44,10 +44,10 @@ module Vellum
 #  * `REDDIT` - Reddit
 #  * `SEMRUSH` - Semrush
 #  * `SERPAPI` - Serp Api
+#  * `SHARE_POINT` - SharePoint
 #  * `STRIPE` - Stripe
 #  * `SUPABASE` - Supabase
 #  * `TAVILY` - Tavily
-#  * `TRELLO` - Trello
 #  * `WEBFLOW` - Webflow
 #  * `ZENDESK` - Zendesk
 #  * `DROPBOX` - Dropbox
@@ -100,10 +100,10 @@ module Vellum
     REDDIT = "REDDIT"
     SEMRUSH = "SEMRUSH"
     SERPAPI = "SERPAPI"
+    SHARE_POINT = "SHARE_POINT"
     STRIPE = "STRIPE"
     SUPABASE = "SUPABASE"
     TAVILY = "TAVILY"
-    TRELLO = "TRELLO"
     WEBFLOW = "WEBFLOW"
     ZENDESK = "ZENDESK"
     DROPBOX = "DROPBOX"
