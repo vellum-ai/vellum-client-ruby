@@ -4,6 +4,7 @@ require_relative "environment_enum"
 require "date"
 require "date"
 require_relative "vellum_variable"
+require_relative "workflow_deployment_display_data"
 require "ostruct"
 require "json"
 
@@ -37,6 +38,8 @@ module Vellum
     attr_reader :output_variables
   # @return [String] A human-readable description of the workflow deployment
     attr_reader :description
+  # @return [Vellum::WorkflowDeploymentDisplayData] Information used to display this Workflow Deployment.
+    attr_reader :display_data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -61,9 +64,10 @@ module Vellum
     # @param output_variables [Array<Vellum::VellumVariable>] The output variables this Workflow Deployment produces values for when it's
 #  executed.
     # @param description [String] A human-readable description of the workflow deployment
+    # @param display_data [Vellum::WorkflowDeploymentDisplayData] Information used to display this Workflow Deployment.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowDeploymentRead]
-    def initialize(id:, name:, label:, status: OMIT, environment: OMIT, created:, last_deployed_on:, last_deployed_history_item_id:, input_variables:, output_variables:, description: OMIT, additional_properties: nil)
+    def initialize(id:, name:, label:, status: OMIT, environment: OMIT, created:, last_deployed_on:, last_deployed_history_item_id:, input_variables:, output_variables:, description: OMIT, display_data: OMIT, additional_properties: nil)
       @id = id
       @name = name
       @label = label
@@ -75,8 +79,9 @@ module Vellum
       @input_variables = input_variables
       @output_variables = output_variables
       @description = description if description != OMIT
+      @display_data = display_data if display_data != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "label": label, "status": status, "environment": environment, "created": created, "last_deployed_on": last_deployed_on, "last_deployed_history_item_id": last_deployed_history_item_id, "input_variables": input_variables, "output_variables": output_variables, "description": description }.reject do | _k, v |
+      @_field_set = { "id": id, "name": name, "label": label, "status": status, "environment": environment, "created": created, "last_deployed_on": last_deployed_on, "last_deployed_history_item_id": last_deployed_history_item_id, "input_variables": input_variables, "output_variables": output_variables, "description": description, "display_data": display_data }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -112,6 +117,12 @@ end
   Vellum::VellumVariable.from_json(json_object: item)
 end
       description = parsed_json["description"]
+      unless parsed_json["display_data"].nil?
+        display_data = parsed_json["display_data"].to_json
+        display_data = Vellum::WorkflowDeploymentDisplayData.from_json(json_object: display_data)
+      else
+        display_data = nil
+      end
       new(
         id: id,
         name: name,
@@ -124,6 +135,7 @@ end
         input_variables: input_variables,
         output_variables: output_variables,
         description: description,
+        display_data: display_data,
         additional_properties: struct
       )
     end
@@ -151,6 +163,7 @@ end
       obj.input_variables.is_a?(Array) != false || raise("Passed value for field obj.input_variables is not the expected type, validation failed.")
       obj.output_variables.is_a?(Array) != false || raise("Passed value for field obj.output_variables is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
+      obj.display_data.nil? || Vellum::WorkflowDeploymentDisplayData.validate_raw(obj: obj.display_data)
     end
   end
 end
