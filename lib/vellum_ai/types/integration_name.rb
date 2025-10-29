@@ -38,6 +38,7 @@ module Vellum
 #  * `JIRA` - Jira
 #  * `KLAVIYO` - Klaviyo
 #  * `PAGERDUTY` - PagerDuty
+#  * `PARSERA` - Parsera
 #  * `PEOPLEDATALABS` - People Data Labs
 #  * `PERPLEXITY` - Perplexity
 #  * `POSTHOG` - PostHog
@@ -94,6 +95,7 @@ module Vellum
     JIRA = "JIRA"
     KLAVIYO = "KLAVIYO"
     PAGERDUTY = "PAGERDUTY"
+    PARSERA = "PARSERA"
     PEOPLEDATALABS = "PEOPLEDATALABS"
     PERPLEXITY = "PERPLEXITY"
     POSTHOG = "POSTHOG"
