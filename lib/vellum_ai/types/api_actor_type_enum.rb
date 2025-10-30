@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+module Vellum
+# * `WORKSPACE_API_KEY` - WORKSPACE_API_KEY
+#  * `ENVIRONMENT_API_KEY` - ENVIRONMENT_API_KEY
+#  * `JWT` - JWT
+#  * `SERVICE_TOKEN` - SERVICE_TOKEN
+  class ApiActorTypeEnum
+
+    WORKSPACE_API_KEY = "WORKSPACE_API_KEY"
+    ENVIRONMENT_API_KEY = "ENVIRONMENT_API_KEY"
+    JWT = "JWT"
+    SERVICE_TOKEN = "SERVICE_TOKEN"
+
+  end
+end
