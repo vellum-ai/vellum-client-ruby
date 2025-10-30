@@ -7,6 +7,8 @@ require_relative "workflow_sandbox_parent_context"
 require_relative "prompt_deployment_parent_context"
 require_relative "api_request_parent_context"
 require_relative "external_parent_context"
+require_relative "scheduled_trigger_context"
+require_relative "integration_trigger_context"
 
 module Vellum
   class ParentContext
@@ -88,6 +90,26 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::ScheduledTriggerContext.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::ScheduledTriggerContext.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::IntegrationTriggerContext.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::IntegrationTriggerContext.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -129,6 +151,16 @@ end
       end
       begin
         return Vellum::ExternalParentContext.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::ScheduledTriggerContext.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::IntegrationTriggerContext.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
