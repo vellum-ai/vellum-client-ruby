@@ -23,6 +23,7 @@ module Vellum
 #  * `APOLLO` - Apollo
 #  * `ASANA` - Asana
 #  * `ATLASSIAN` - Atlassian
+#  * `BITBUCKET` - Bitbucket
 #  * `BOX` - Box
 #  * `BREVO` - Brevo
 #  * `BROWSERBASE_TOOL` - Browserbase Tool
@@ -80,6 +81,7 @@ module Vellum
     APOLLO = "APOLLO"
     ASANA = "ASANA"
     ATLASSIAN = "ATLASSIAN"
+    BITBUCKET = "BITBUCKET"
     BOX = "BOX"
     BREVO = "BREVO"
     BROWSERBASE_TOOL = "BROWSERBASE_TOOL"
