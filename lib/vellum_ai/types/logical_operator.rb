@@ -20,6 +20,8 @@ module Vellum
 #  * `between` - BETWEEN
 #  * `notBetween` - NOT_BETWEEN
 #  * `concat` - CONCAT
+#  * `+` - ADD
+#  * `-` - MINUS
 #  * `blank` - BLANK
 #  * `notBlank` - NOT_BLANK
 #  * `coalesce` - COALESCE
@@ -50,6 +52,8 @@ module Vellum
     BETWEEN = "between"
     NOT_BETWEEN = "notBetween"
     CONCAT = "concat"
+    ADD = "+"
+    MINUS = "-"
     BLANK = "blank"
     NOT_BLANK = "notBlank"
     COALESCE = "coalesce"
