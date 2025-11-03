@@ -3,6 +3,7 @@ require "date"
 require "date"
 require_relative "entity_status"
 require "date"
+require_relative "workflow_sandbox_display_data"
 require "ostruct"
 require "json"
 
@@ -22,6 +23,8 @@ module Vellum
     attr_reader :description
   # @return [DateTime] 
     attr_reader :last_deployed_on
+  # @return [Vellum::WorkflowSandboxDisplayData] 
+    attr_reader :display_data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -37,9 +40,10 @@ module Vellum
     # @param status [Vellum::EntityStatus] 
     # @param description [String] 
     # @param last_deployed_on [DateTime] 
+    # @param display_data [Vellum::WorkflowSandboxDisplayData] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::FolderEntityWorkflowSandboxData]
-    def initialize(id:, label:, created:, modified:, status:, description: OMIT, last_deployed_on: OMIT, additional_properties: nil)
+    def initialize(id:, label:, created:, modified:, status:, description: OMIT, last_deployed_on: OMIT, display_data: OMIT, additional_properties: nil)
       @id = id
       @label = label
       @created = created
@@ -47,8 +51,9 @@ module Vellum
       @status = status
       @description = description if description != OMIT
       @last_deployed_on = last_deployed_on if last_deployed_on != OMIT
+      @display_data = display_data if display_data != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "label": label, "created": created, "modified": modified, "status": status, "description": description, "last_deployed_on": last_deployed_on }.reject do | _k, v |
+      @_field_set = { "id": id, "label": label, "created": created, "modified": modified, "status": status, "description": description, "last_deployed_on": last_deployed_on, "display_data": display_data }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -78,6 +83,12 @@ end
 else
   nil
 end
+      unless parsed_json["display_data"].nil?
+        display_data = parsed_json["display_data"].to_json
+        display_data = Vellum::WorkflowSandboxDisplayData.from_json(json_object: display_data)
+      else
+        display_data = nil
+      end
       new(
         id: id,
         label: label,
@@ -86,6 +97,7 @@ end
         status: status,
         description: description,
         last_deployed_on: last_deployed_on,
+        display_data: display_data,
         additional_properties: struct
       )
     end
@@ -109,6 +121,7 @@ end
       obj.status.is_a?(Vellum::EntityStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.last_deployed_on&.is_a?(DateTime) != false || raise("Passed value for field obj.last_deployed_on is not the expected type, validation failed.")
+      obj.display_data.nil? || Vellum::WorkflowSandboxDisplayData.validate_raw(obj: obj.display_data)
     end
   end
 end
