@@ -50,6 +50,7 @@ module Vellum
 #  * `STRIPE` - Stripe
 #  * `SUPABASE` - Supabase
 #  * `TAVILY` - Tavily
+#  * `TELEGRAM` - Telegram
 #  * `WEBFLOW` - Webflow
 #  * `ZENDESK` - Zendesk
 #  * `DROPBOX` - Dropbox
@@ -108,6 +109,7 @@ module Vellum
     STRIPE = "STRIPE"
     SUPABASE = "SUPABASE"
     TAVILY = "TAVILY"
+    TELEGRAM = "TELEGRAM"
     WEBFLOW = "WEBFLOW"
     ZENDESK = "ZENDESK"
     DROPBOX = "DROPBOX"
