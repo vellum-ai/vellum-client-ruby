@@ -23,12 +23,14 @@ module Vellum
     # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PromptRequestJsonInput]
-    def initialize(key:, type:, value:, additional_properties: nil)
+    def initialize(key:, type:, value: OMIT, additional_properties: nil)
       @key = key
       @type = type
-      @value = value
+      @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "key": key, "type": type, "value": value }
+      @_field_set = { "key": key, "type": type, "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of PromptRequestJsonInput
     #
@@ -62,7 +64,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.key.is_a?(String) != false || raise("Passed value for field obj.key is not the expected type, validation failed.")
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end
