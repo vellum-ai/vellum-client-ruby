@@ -48,8 +48,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -57,7 +55,7 @@ module Vellum
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/#{id}/pull"
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/workflows/#{id}/pull"
 end
     end
 # Retrieve the current state of a workflow execution.
@@ -83,8 +81,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -123,8 +119,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -140,6 +134,7 @@ end
 # Serialize files
     #
     # @param files [Hash{String => Object}] 
+    # @param module_ [String] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -149,7 +144,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
-    def serialize_workflow_files(files:, request_options: nil)
+    def serialize_workflow_files(files:, module_: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -159,14 +154,12 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), files: files }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_ }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
 end
       parsed_json = JSON.parse(response.body)
@@ -209,8 +202,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -218,7 +209,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/#{id}/pull"
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/workflows/#{id}/pull"
 end
       end
     end
@@ -246,8 +237,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -288,8 +277,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -306,6 +293,7 @@ end
 # Serialize files
     #
     # @param files [Hash{String => Object}] 
+    # @param module_ [String] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -315,7 +303,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
-    def serialize_workflow_files(files:, request_options: nil)
+    def serialize_workflow_files(files:, module_: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -326,14 +314,12 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), files: files }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_ }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
 end
         parsed_json = JSON.parse(response.body)
