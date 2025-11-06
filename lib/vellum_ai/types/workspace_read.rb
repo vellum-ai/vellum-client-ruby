@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require "date"
+require_relative "workspace_display_config"
 require "ostruct"
 require "json"
 
@@ -13,6 +14,8 @@ module Vellum
     attr_reader :label
   # @return [DateTime] 
     attr_reader :created
+  # @return [Vellum::WorkspaceDisplayConfig] 
+    attr_reader :display_config
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -25,15 +28,19 @@ module Vellum
     # @param name [String] The name of the Workspace.
     # @param label [String] 
     # @param created [DateTime] 
+    # @param display_config [Vellum::WorkspaceDisplayConfig] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkspaceRead]
-    def initialize(id:, name:, label:, created:, additional_properties: nil)
+    def initialize(id:, name:, label:, created:, display_config: OMIT, additional_properties: nil)
       @id = id
       @name = name
       @label = label
       @created = created
+      @display_config = display_config if display_config != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "label": label, "created": created }
+      @_field_set = { "id": id, "name": name, "label": label, "created": created, "display_config": display_config }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of WorkspaceRead
     #
@@ -50,11 +57,18 @@ module Vellum
 else
   nil
 end
+      unless parsed_json["display_config"].nil?
+        display_config = parsed_json["display_config"].to_json
+        display_config = Vellum::WorkspaceDisplayConfig.from_json(json_object: display_config)
+      else
+        display_config = nil
+      end
       new(
         id: id,
         name: name,
         label: label,
         created: created,
+        display_config: display_config,
         additional_properties: struct
       )
     end
@@ -75,6 +89,7 @@ end
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.created.is_a?(DateTime) != false || raise("Passed value for field obj.created is not the expected type, validation failed.")
+      obj.display_config.nil? || Vellum::WorkspaceDisplayConfig.validate_raw(obj: obj.display_config)
     end
   end
 end
