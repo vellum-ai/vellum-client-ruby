@@ -111,6 +111,7 @@ end
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
     # @param search [String] A search term.
+    # @param supports_integration_triggers [String] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedSlimIntegrationReadList]
     # @example
@@ -120,7 +121,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integrations.list
-    def list(integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, request_options: nil)
+    def list(integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, supports_integration_triggers: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -134,7 +135,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search, "supports_integration_triggers": supports_integration_triggers }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -282,6 +283,7 @@ end
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
     # @param search [String] A search term.
+    # @param supports_integration_triggers [String] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedSlimIntegrationReadList]
     # @example
@@ -291,7 +293,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integrations.list
-    def list(integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, request_options: nil)
+    def list(integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, supports_integration_triggers: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -306,7 +308,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search, "supports_integration_triggers": supports_integration_triggers }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
