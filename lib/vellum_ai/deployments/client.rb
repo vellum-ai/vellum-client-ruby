@@ -109,10 +109,10 @@ end
 #  Please use the
 #  `retrieve_prompt_deployment_release` xendpoint instead.
     #
+    # @param id [String] Either the Prompt Deployment's ID or its unique name
     # @param history_id_or_release_tag [String] Either the UUID of Deployment History Item you'd like to retrieve, or the name
 #  of a Release Tag that's pointing to the Deployment History Item you'd like to
 #  retrieve.
-    # @param id [String] Either the Prompt Deployment's ID or its unique name
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DeploymentHistoryItem]
     # @example
@@ -121,8 +121,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.deployments.deployment_history_item_retrieve(history_id_or_release_tag: "history_id_or_release_tag", id: "id")
-    def deployment_history_item_retrieve(history_id_or_release_tag:, id:, request_options: nil)
+#  api.deployments.deployment_history_item_retrieve(id: "id", history_id_or_release_tag: "history_id_or_release_tag")
+    def deployment_history_item_retrieve(id:, history_id_or_release_tag:, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -142,7 +142,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/deployments/#{history_id_or_release_tag}/history/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/deployments/#{id}/history/#{history_id_or_release_tag}"
 end
       Vellum::DeploymentHistoryItem.from_json(json_object: response.body)
     end
@@ -449,10 +449,10 @@ end
 #  Please use the
 #  `retrieve_prompt_deployment_release` xendpoint instead.
     #
+    # @param id [String] Either the Prompt Deployment's ID or its unique name
     # @param history_id_or_release_tag [String] Either the UUID of Deployment History Item you'd like to retrieve, or the name
 #  of a Release Tag that's pointing to the Deployment History Item you'd like to
 #  retrieve.
-    # @param id [String] Either the Prompt Deployment's ID or its unique name
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DeploymentHistoryItem]
     # @example
@@ -461,8 +461,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.deployments.deployment_history_item_retrieve(history_id_or_release_tag: "history_id_or_release_tag", id: "id")
-    def deployment_history_item_retrieve(history_id_or_release_tag:, id:, request_options: nil)
+#  api.deployments.deployment_history_item_retrieve(id: "id", history_id_or_release_tag: "history_id_or_release_tag")
+    def deployment_history_item_retrieve(id:, history_id_or_release_tag:, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -483,7 +483,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/deployments/#{history_id_or_release_tag}/history/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/deployments/#{id}/history/#{history_id_or_release_tag}"
 end
         Vellum::DeploymentHistoryItem.from_json(json_object: response.body)
       end
