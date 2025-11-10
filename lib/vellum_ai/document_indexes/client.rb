@@ -262,10 +262,10 @@ end
     end
 # Adds a previously uploaded Document to the specified Document Index.
     #
-    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
-#  uniquely identifies the Document you'd like to add.
     # @param id [String] Either the Vellum-generated ID or the originally specified name that uniquely
 #  identifies the Document Index to which you'd like to add the Document.
+    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
+#  uniquely identifies the Document you'd like to add.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Void]
     # @example
@@ -274,8 +274,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.document_indexes.add_document(document_id: "document_id", id: "id")
-    def add_document(document_id:, id:, request_options: nil)
+#  api.document_indexes.add_document(id: "id", document_id: "document_id")
+    def add_document(id:, document_id:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -295,15 +295,15 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/document-indexes/#{document_id}/documents/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/document-indexes/#{id}/documents/#{document_id}"
 end
     end
 # Removes a Document from a Document Index without deleting the Document itself.
     #
-    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
-#  uniquely identifies the Document you'd like to remove.
     # @param id [String] Either the Vellum-generated ID or the originally specified name that uniquely
 #  identifies the Document Index from which you'd like to remove a Document.
+    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
+#  uniquely identifies the Document you'd like to remove.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Void]
     # @example
@@ -312,8 +312,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.document_indexes.remove_document(document_id: "document_id", id: "id")
-    def remove_document(document_id:, id:, request_options: nil)
+#  api.document_indexes.remove_document(id: "id", document_id: "document_id")
+    def remove_document(id:, document_id:, request_options: nil)
       response = @request_client.conn.delete do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -333,7 +333,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Documents, request_options: request_options)}/v1/document-indexes/#{document_id}/documents/#{id}"
+  req.url "#{@request_client.get_url(environment: Documents, request_options: request_options)}/v1/document-indexes/#{id}/documents/#{document_id}"
 end
     end
   end
@@ -595,10 +595,10 @@ end
     end
 # Adds a previously uploaded Document to the specified Document Index.
     #
-    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
-#  uniquely identifies the Document you'd like to add.
     # @param id [String] Either the Vellum-generated ID or the originally specified name that uniquely
 #  identifies the Document Index to which you'd like to add the Document.
+    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
+#  uniquely identifies the Document you'd like to add.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Void]
     # @example
@@ -607,8 +607,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.document_indexes.add_document(document_id: "document_id", id: "id")
-    def add_document(document_id:, id:, request_options: nil)
+#  api.document_indexes.add_document(id: "id", document_id: "document_id")
+    def add_document(id:, document_id:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -629,16 +629,16 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/document-indexes/#{document_id}/documents/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/document-indexes/#{id}/documents/#{document_id}"
 end
       end
     end
 # Removes a Document from a Document Index without deleting the Document itself.
     #
-    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
-#  uniquely identifies the Document you'd like to remove.
     # @param id [String] Either the Vellum-generated ID or the originally specified name that uniquely
 #  identifies the Document Index from which you'd like to remove a Document.
+    # @param document_id [String] Either the Vellum-generated ID or the originally supplied external_id that
+#  uniquely identifies the Document you'd like to remove.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Void]
     # @example
@@ -647,8 +647,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.document_indexes.remove_document(document_id: "document_id", id: "id")
-    def remove_document(document_id:, id:, request_options: nil)
+#  api.document_indexes.remove_document(id: "id", document_id: "document_id")
+    def remove_document(id:, document_id:, request_options: nil)
       Async do
         response = @request_client.conn.delete do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -669,7 +669,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Documents, request_options: request_options)}/v1/document-indexes/#{document_id}/documents/#{id}"
+  req.url "#{@request_client.get_url(environment: Documents, request_options: request_options)}/v1/document-indexes/#{id}/documents/#{document_id}"
 end
       end
     end

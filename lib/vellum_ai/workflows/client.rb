@@ -38,6 +38,13 @@ module Vellum
 #  response environment. The latter will allow access to the response status,
 #  headers and reason, as well as the request info.
     # @return [Void]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.pull(id: "id")
     def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, release_tag: nil, strict: nil, version: nil, request_options: nil, &on_data)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -199,6 +206,13 @@ end
 #  response environment. The latter will allow access to the response status,
 #  headers and reason, as well as the request info.
     # @return [Void]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.pull(id: "id")
     def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, release_tag: nil, strict: nil, version: nil, request_options: nil, &on_data)
       Async do
         response = @request_client.conn.get do | req |
