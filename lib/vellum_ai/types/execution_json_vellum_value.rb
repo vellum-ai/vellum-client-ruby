@@ -27,13 +27,15 @@ module Vellum
     # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ExecutionJsonVellumValue]
-    def initialize(id:, name:, type:, value:, additional_properties: nil)
+    def initialize(id:, name:, type:, value: OMIT, additional_properties: nil)
       @id = id
       @name = name
       @type = type
-      @value = value
+      @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "type": type, "value": value }
+      @_field_set = { "id": id, "name": name, "type": type, "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of ExecutionJsonVellumValue
     #
@@ -70,7 +72,7 @@ module Vellum
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end
