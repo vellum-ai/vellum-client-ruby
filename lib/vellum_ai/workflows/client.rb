@@ -38,6 +38,13 @@ module Vellum
 #  response environment. The latter will allow access to the response status,
 #  headers and reason, as well as the request info.
     # @return [Void]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.pull(id: "id")
     def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, release_tag: nil, strict: nil, version: nil, request_options: nil, &on_data)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -48,8 +55,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -83,8 +88,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -123,8 +126,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -160,8 +161,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -199,6 +198,13 @@ end
 #  response environment. The latter will allow access to the response status,
 #  headers and reason, as well as the request info.
     # @return [Void]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.pull(id: "id")
     def pull(id:, exclude_code: nil, exclude_display: nil, include_json: nil, include_sandbox: nil, release_tag: nil, strict: nil, version: nil, request_options: nil, &on_data)
       Async do
         response = @request_client.conn.get do | req |
@@ -210,8 +216,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -247,8 +251,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -289,8 +291,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -328,8 +328,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
