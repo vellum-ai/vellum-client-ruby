@@ -28,9 +28,9 @@ module Vellum
     # @param state [Vellum::WorkflowNodeResultEventState] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NodeOutputCompiledJsonValue]
-    def initialize(type:, value:, node_output_id:, state: OMIT, additional_properties: nil)
+    def initialize(type:, value: OMIT, node_output_id:, state: OMIT, additional_properties: nil)
       @type = type
-      @value = value
+      @value = value if value != OMIT
       @node_output_id = node_output_id
       @state = state if state != OMIT
       @additional_properties = additional_properties
@@ -71,7 +71,7 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.node_output_id.is_a?(String) != false || raise("Passed value for field obj.node_output_id is not the expected type, validation failed.")
       obj.state&.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
     end

@@ -19,8 +19,8 @@ module Vellum
     end
 # Retrieve a specific integration tool definition.
     #
-    # @param integration_name [String] The integration name
     # @param integration_provider [String] The integration provider name
+    # @param integration_name [String] The integration name
     # @param tool_name [String] The tool's unique name, as specified by the integration provider
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_TOOL_DEFINITION]
@@ -31,11 +31,11 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integration_providers.retrieve_integration_provider_tool_definition(
-#    integration_name: "integration_name",
 #    integration_provider: "integration_provider",
+#    integration_name: "integration_name",
 #    tool_name: "tool_name"
 #  )
-    def retrieve_integration_provider_tool_definition(integration_name:, integration_provider:, tool_name:, request_options: nil)
+    def retrieve_integration_provider_tool_definition(integration_provider:, integration_name:, tool_name:, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -45,8 +45,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -55,7 +53,7 @@ module Vellum
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/integration-providers/#{integration_name}/integrations/#{integration_provider}/tools/#{tool_name}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/integration-providers/#{integration_provider}/integrations/#{integration_name}/tools/#{tool_name}"
 end
       Vellum::ComposioToolDefinition.from_json(json_object: response.body)
     end
@@ -87,8 +85,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "important": important, "include_deprecated": include_deprecated, "integration_name": integration_name, "limit": limit, "offset": offset, "search": search }.compact
@@ -112,8 +108,8 @@ end
     end
 # Retrieve a specific integration tool definition.
     #
-    # @param integration_name [String] The integration name
     # @param integration_provider [String] The integration provider name
+    # @param integration_name [String] The integration name
     # @param tool_name [String] The tool's unique name, as specified by the integration provider
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_TOOL_DEFINITION]
@@ -124,11 +120,11 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integration_providers.retrieve_integration_provider_tool_definition(
-#    integration_name: "integration_name",
 #    integration_provider: "integration_provider",
+#    integration_name: "integration_name",
 #    tool_name: "tool_name"
 #  )
-    def retrieve_integration_provider_tool_definition(integration_name:, integration_provider:, tool_name:, request_options: nil)
+    def retrieve_integration_provider_tool_definition(integration_provider:, integration_name:, tool_name:, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -139,8 +135,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -149,7 +143,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/integration-providers/#{integration_name}/integrations/#{integration_provider}/tools/#{tool_name}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/integration-providers/#{integration_provider}/integrations/#{integration_name}/tools/#{tool_name}"
 end
         Vellum::ComposioToolDefinition.from_json(json_object: response.body)
       end
@@ -183,8 +177,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "important": important, "include_deprecated": include_deprecated, "integration_name": integration_name, "limit": limit, "offset": offset, "search": search }.compact
