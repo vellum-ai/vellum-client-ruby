@@ -32,6 +32,7 @@ module Vellum
     #   * :default (Hash)
     #   * :extensions (Hash)
     #     * :color (String) 
+    #     * :description (String) 
     # @param parameters [Hash] Request of type Vellum::PromptParameters, as a Hash
     #   * :stop (Array<String>) 
     #   * :temperature (Float) 
@@ -119,6 +120,7 @@ end
     #   * :default (Hash)
     #   * :extensions (Hash)
     #     * :color (String) 
+    #     * :description (String) 
     # @param parameters [Hash] Request of type Vellum::PromptParameters, as a Hash
     #   * :stop (Array<String>) 
     #   * :temperature (Float) 
