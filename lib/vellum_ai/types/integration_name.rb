@@ -75,6 +75,7 @@ module Vellum
 #  * `COINBASE` - Coinbase
 #  * `DISCORD` - Discord
 #  * `DOCUSIGN` - DocuSign
+#  * `TRELLO` - Trello
   class IntegrationName
 
     SLACK = "SLACK"
@@ -151,6 +152,7 @@ module Vellum
     COINBASE = "COINBASE"
     DISCORD = "DISCORD"
     DOCUSIGN = "DOCUSIGN"
+    TRELLO = "TRELLO"
 
   end
 end
