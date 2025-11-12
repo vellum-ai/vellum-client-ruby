@@ -54,6 +54,7 @@ module Vellum
 #  * `PEOPLEDATALABS` - People Data Labs
 #  * `PERPLEXITY` - Perplexity
 #  * `POSTHOG` - PostHog
+#  * `PRODUCTBOARD` - Productboard
 #  * `REDDIT` - Reddit
 #  * `SEMRUSH` - Semrush
 #  * `SEMANTICSCHOLAR` - Semantic Scholar
@@ -131,6 +132,7 @@ module Vellum
     PEOPLEDATALABS = "PEOPLEDATALABS"
     PERPLEXITY = "PERPLEXITY"
     POSTHOG = "POSTHOG"
+    PRODUCTBOARD = "PRODUCTBOARD"
     REDDIT = "REDDIT"
     SEMRUSH = "SEMRUSH"
     SEMANTICSCHOLAR = "SEMANTICSCHOLAR"

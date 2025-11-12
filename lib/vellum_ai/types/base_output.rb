@@ -4,9 +4,9 @@ require "json"
 
 module Vellum
   class BaseOutput
-  # @return [Hash{String => Object}] 
+  # @return [Object] 
     attr_reader :value
-  # @return [Hash{String => Object}] 
+  # @return [Object] 
     attr_reader :delta
   # @return [String] 
     attr_reader :name
@@ -18,8 +18,8 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param value [Hash{String => Object}] 
-    # @param delta [Hash{String => Object}] 
+    # @param value [Object] 
+    # @param delta [Object] 
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::BaseOutput]
@@ -62,8 +62,8 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.value&.is_a?(Hash) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
-      obj.delta&.is_a?(Hash) != false || raise("Passed value for field obj.delta is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.delta&.is_a?(Object) != false || raise("Passed value for field obj.delta is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end

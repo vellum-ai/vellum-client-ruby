@@ -9,6 +9,9 @@ require_relative "workflow_output_array"
 require_relative "workflow_output_error"
 require_relative "workflow_output_function_call"
 require_relative "workflow_output_image"
+require_relative "workflow_output_audio"
+require_relative "workflow_output_video"
+require_relative "workflow_output_document"
 
 module Vellum
   class WorkflowOutput
@@ -110,6 +113,36 @@ end
       rescue StandardError
         # noop
       end
+      begin
+        Vellum::WorkflowOutputAudio.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowOutputAudio.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowOutputVideo.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowOutputVideo.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::WorkflowOutputDocument.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::WorkflowOutputDocument.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
  return struct
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
@@ -161,6 +194,21 @@ end
       end
       begin
         return Vellum::WorkflowOutputImage.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowOutputAudio.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowOutputVideo.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::WorkflowOutputDocument.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
