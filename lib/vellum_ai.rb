@@ -21,6 +21,7 @@ require_relative "vellum_ai/prompts/client"
 require_relative "vellum_ai/sandboxes/client"
 require_relative "vellum_ai/test_suite_runs/client"
 require_relative "vellum_ai/test_suites/client"
+require_relative "vellum_ai/uploaded_files/client"
 require_relative "vellum_ai/workflow_deployments/client"
 require_relative "vellum_ai/workflow_executions/client"
 require_relative "vellum_ai/workflow_sandboxes/client"
@@ -90,6 +91,8 @@ module Vellum
     attr_reader :test_suite_runs
   # @return [Vellum::TestSuitesClient] 
     attr_reader :test_suites
+  # @return [Vellum::UploadedFilesClient] 
+    attr_reader :uploaded_files
   # @return [Vellum::WorkflowDeploymentsClient] 
     attr_reader :workflow_deployments
   # @return [Vellum::WorkflowExecutionsClient] 
@@ -138,6 +141,7 @@ module Vellum
       @sandboxes = Vellum::SandboxesClient.new(request_client: @request_client)
       @test_suite_runs = Vellum::TestSuiteRunsClient.new(request_client: @request_client)
       @test_suites = Vellum::TestSuitesClient.new(request_client: @request_client)
+      @uploaded_files = Vellum::UploadedFilesClient.new(request_client: @request_client)
       @workflow_deployments = Vellum::WorkflowDeploymentsClient.new(request_client: @request_client)
       @workflow_executions = Vellum::WorkflowExecutionsClient.new(request_client: @request_client)
       @workflow_sandboxes = Vellum::WorkflowSandboxesClient.new(request_client: @request_client)
@@ -559,6 +563,8 @@ end
     attr_reader :test_suite_runs
   # @return [Vellum::AsyncTestSuitesClient] 
     attr_reader :test_suites
+  # @return [Vellum::AsyncUploadedFilesClient] 
+    attr_reader :uploaded_files
   # @return [Vellum::AsyncWorkflowDeploymentsClient] 
     attr_reader :workflow_deployments
   # @return [Vellum::AsyncWorkflowExecutionsClient] 
@@ -607,6 +613,7 @@ end
       @sandboxes = Vellum::AsyncSandboxesClient.new(request_client: @async_request_client)
       @test_suite_runs = Vellum::AsyncTestSuiteRunsClient.new(request_client: @async_request_client)
       @test_suites = Vellum::AsyncTestSuitesClient.new(request_client: @async_request_client)
+      @uploaded_files = Vellum::AsyncUploadedFilesClient.new(request_client: @async_request_client)
       @workflow_deployments = Vellum::AsyncWorkflowDeploymentsClient.new(request_client: @async_request_client)
       @workflow_executions = Vellum::AsyncWorkflowExecutionsClient.new(request_client: @async_request_client)
       @workflow_sandboxes = Vellum::AsyncWorkflowSandboxesClient.new(request_client: @async_request_client)
