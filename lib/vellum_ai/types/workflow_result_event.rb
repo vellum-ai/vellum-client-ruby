@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative "workflow_node_result_event_state"
+require_relative "workflow_result_event_state"
 require "date"
 require_relative "workflow_result_event_output_data"
 require_relative "workflow_event_error"
@@ -12,7 +12,7 @@ module Vellum
   class WorkflowResultEvent
   # @return [String] 
     attr_reader :id
-  # @return [Vellum::WorkflowNodeResultEventState] 
+  # @return [Vellum::WorkflowResultEventState] 
     attr_reader :state
   # @return [DateTime] 
     attr_reader :ts
@@ -33,7 +33,7 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param state [Vellum::WorkflowNodeResultEventState] 
+    # @param state [Vellum::WorkflowResultEventState] 
     # @param ts [DateTime] 
     # @param output [Vellum::WorkflowResultEventOutputData] 
     # @param error [Vellum::WorkflowEventError] 
@@ -113,7 +113,7 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.state.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
+      obj.state.is_a?(Vellum::WorkflowResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.ts.is_a?(DateTime) != false || raise("Passed value for field obj.ts is not the expected type, validation failed.")
       obj.output.nil? || Vellum::WorkflowResultEventOutputData.validate_raw(obj: obj.output)
       obj.error.nil? || Vellum::WorkflowEventError.validate_raw(obj: obj.error)

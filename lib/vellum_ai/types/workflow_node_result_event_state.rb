@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Vellum
-# * `INITIATED` - Initiated
-#  * `STREAMING` - Streaming
-#  * `FULFILLED` - Fulfilled
-#  * `REJECTED` - Rejected
+# * `INITIATED` - INITIATED
+#  * `STREAMING` - STREAMING
+#  * `FULFILLED` - FULFILLED
+#  * `REJECTED` - REJECTED
   class WorkflowNodeResultEventState
 
     INITIATED = "INITIATED"
