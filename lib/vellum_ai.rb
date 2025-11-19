@@ -44,6 +44,7 @@ require_relative "vellum_ai/types/execute_prompt_response"
 require_relative "vellum_ai/types/workflow_request_input_request"
 require_relative "vellum_ai/types/workflow_expand_meta_request"
 require_relative "vellum_ai/types/execute_workflow_response"
+require_relative "vellum_ai/types/execute_workflow_async_response"
 require_relative "vellum_ai/types/generate_request"
 require_relative "vellum_ai/types/generate_options_request"
 require_relative "vellum_ai/types/generate_response"
@@ -173,8 +174,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -218,8 +217,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -282,8 +279,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -336,8 +331,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -347,6 +340,51 @@ end
   req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/execute-workflow"
 end
       Vellum::ExecuteWorkflowResponse.from_json(json_object: response.body)
+    end
+# Executes a deployed Workflow asynchronously and returns the execution ID.
+    #
+    # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding
+#  values.Request of type Array<Vellum::WorkflowRequestInputRequest>, as a Hash
+    # @param workflow_deployment_id [String] The ID of the Workflow Deployment. Must provide either this or
+#  workflow_deployment_name.
+    # @param workflow_deployment_name [String] The name of the Workflow Deployment. Must provide either this or
+#  workflow_deployment_id.
+    # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the
+#  Workflow Deployment
+    # @param external_id [String] Optionally include a unique identifier for tracking purposes. Must be unique
+#  within a given Workspace.
+    # @param previous_execution_id [String] The ID of a previous Workflow Execution to reference for initial State loading.
+    # @param metadata [Hash{String => Object}] Arbitrary JSON metadata associated with this request. Can be used to capture
+#  additional monitoring data such as user id, session id, etc. for future
+#  analysis.
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::ExecuteWorkflowAsyncResponse]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.execute_workflow_async(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+    def execute_workflow_async(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, previous_execution_id: nil, metadata: nil, request_options: nil)
+      response = @request_client.conn.post do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  req.body = { **(request_options&.additional_body_parameters || {}), inputs: inputs, workflow_deployment_id: workflow_deployment_id, workflow_deployment_name: workflow_deployment_name, release_tag: release_tag, external_id: external_id, previous_execution_id: previous_execution_id, metadata: metadata }.compact
+  req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/execute-workflow-async"
+end
+      Vellum::ExecuteWorkflowAsyncResponse.from_json(json_object: response.body)
     end
 # Generate a completion using a previously defined deployment.
 #  Important: This endpoint is DEPRECATED and has been superseded by
@@ -381,8 +419,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -431,8 +467,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -474,8 +508,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -514,8 +546,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -645,8 +675,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -690,8 +718,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -754,8 +780,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -808,8 +832,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -819,6 +841,51 @@ end
   req.url "#{@async_request_client.get_url(environment: Predict, request_options: request_options)}/v1/execute-workflow"
 end
       Vellum::ExecuteWorkflowResponse.from_json(json_object: response.body)
+    end
+# Executes a deployed Workflow asynchronously and returns the execution ID.
+    #
+    # @param inputs [Array<Hash>] The list of inputs defined in the Workflow's Deployment with their corresponding
+#  values.Request of type Array<Vellum::WorkflowRequestInputRequest>, as a Hash
+    # @param workflow_deployment_id [String] The ID of the Workflow Deployment. Must provide either this or
+#  workflow_deployment_name.
+    # @param workflow_deployment_name [String] The name of the Workflow Deployment. Must provide either this or
+#  workflow_deployment_id.
+    # @param release_tag [String] Optionally specify a release tag if you want to pin to a specific release of the
+#  Workflow Deployment
+    # @param external_id [String] Optionally include a unique identifier for tracking purposes. Must be unique
+#  within a given Workspace.
+    # @param previous_execution_id [String] The ID of a previous Workflow Execution to reference for initial State loading.
+    # @param metadata [Hash{String => Object}] Arbitrary JSON metadata associated with this request. Can be used to capture
+#  additional monitoring data such as user id, session id, etc. for future
+#  analysis.
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::ExecuteWorkflowAsyncResponse]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.execute_workflow_async(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+    def execute_workflow_async(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, previous_execution_id: nil, metadata: nil, request_options: nil)
+      response = @async_request_client.conn.post do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  end
+  req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  req.body = { **(request_options&.additional_body_parameters || {}), inputs: inputs, workflow_deployment_id: workflow_deployment_id, workflow_deployment_name: workflow_deployment_name, release_tag: release_tag, external_id: external_id, previous_execution_id: previous_execution_id, metadata: metadata }.compact
+  req.url "#{@async_request_client.get_url(environment: Predict, request_options: request_options)}/v1/execute-workflow-async"
+end
+      Vellum::ExecuteWorkflowAsyncResponse.from_json(json_object: response.body)
     end
 # Generate a completion using a previously defined deployment.
 #  Important: This endpoint is DEPRECATED and has been superseded by
@@ -853,8 +920,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -903,8 +968,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -946,8 +1009,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -986,8 +1047,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
