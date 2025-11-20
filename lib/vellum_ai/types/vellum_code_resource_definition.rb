@@ -8,6 +8,8 @@ module Vellum
     attr_reader :name
   # @return [Array<String>] The module that this resource is defined in.
     attr_reader :module_
+  # @return [Boolean] Whether this node should be excluded from monitoring views.
+    attr_reader :exclude_from_monitoring
   # @return [String] 
     attr_reader :id
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -20,15 +22,19 @@ module Vellum
 
     # @param name [String] 
     # @param module_ [Array<String>] The module that this resource is defined in.
+    # @param exclude_from_monitoring [Boolean] Whether this node should be excluded from monitoring views.
     # @param id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumCodeResourceDefinition]
-    def initialize(name:, module_:, id:, additional_properties: nil)
+    def initialize(name:, module_:, exclude_from_monitoring: OMIT, id:, additional_properties: nil)
       @name = name
       @module_ = module_
+      @exclude_from_monitoring = exclude_from_monitoring if exclude_from_monitoring != OMIT
       @id = id
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "module": module_, "id": id }
+      @_field_set = { "name": name, "module": module_, "exclude_from_monitoring": exclude_from_monitoring, "id": id }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of VellumCodeResourceDefinition
     #
@@ -39,10 +45,12 @@ module Vellum
       parsed_json = JSON.parse(json_object)
       name = parsed_json["name"]
       module_ = parsed_json["module"]
+      exclude_from_monitoring = parsed_json["exclude_from_monitoring"]
       id = parsed_json["id"]
       new(
         name: name,
         module_: module_,
+        exclude_from_monitoring: exclude_from_monitoring,
         id: id,
         additional_properties: struct
       )
@@ -62,6 +70,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.module_.is_a?(Array) != false || raise("Passed value for field obj.module_ is not the expected type, validation failed.")
+      obj.exclude_from_monitoring&.is_a?(Boolean) != false || raise("Passed value for field obj.exclude_from_monitoring is not the expected type, validation failed.")
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
     end
   end
