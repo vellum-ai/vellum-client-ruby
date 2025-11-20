@@ -48,6 +48,9 @@ end
 # Retrieve a previously uploaded file by its ID
     #
     # @param id [String] A UUID string identifying this uploaded file.
+    # @param expiry_seconds [Integer] The number of seconds until the signed URL expires. Must be > 0 and <= 2592000
+#  (30 days). Non-numeric or out-of-range values fall back to the default (604800
+#  seconds or 7 days).
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::UploadedFileRead]
     # @example
@@ -57,7 +60,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.uploaded_files.retrieve(id: "id")
-    def retrieve(id:, request_options: nil)
+    def retrieve(id:, expiry_seconds: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -71,9 +74,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  unless request_options.nil? || request_options&.additional_query_parameters.nil?
-    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
-  end
+  req.params = { **(request_options&.additional_query_parameters || {}), "expiry_seconds": expiry_seconds }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -152,6 +153,9 @@ end
 # Retrieve a previously uploaded file by its ID
     #
     # @param id [String] A UUID string identifying this uploaded file.
+    # @param expiry_seconds [Integer] The number of seconds until the signed URL expires. Must be > 0 and <= 2592000
+#  (30 days). Non-numeric or out-of-range values fall back to the default (604800
+#  seconds or 7 days).
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::UploadedFileRead]
     # @example
@@ -161,7 +165,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.uploaded_files.retrieve(id: "id")
-    def retrieve(id:, request_options: nil)
+    def retrieve(id:, expiry_seconds: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -176,9 +180,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  unless request_options.nil? || request_options&.additional_query_parameters.nil?
-    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
-  end
+  req.params = { **(request_options&.additional_query_parameters || {}), "expiry_seconds": expiry_seconds }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
