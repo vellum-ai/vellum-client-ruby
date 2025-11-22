@@ -51,8 +51,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "document_index_id": document_index_id, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
@@ -86,8 +84,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -123,8 +119,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -167,8 +161,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -189,13 +181,15 @@ end
 #  to be re-indexed.
     # @param label [String] A human-friendly name for this document. Typically the filename.
     # @param contents [String, IO] 
+    # @param url [String] A URL from which the document can be downloaded. Either contents or url must be
+#  provided.
     # @param keywords [Array<String>] Optionally include a list of keywords that'll be associated with this document.
 #  Used when performing keyword searches.
     # @param metadata [String] A stringified JSON object containing any metadata associated with the document
 #  that you'd like to filter upon later.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::UploadDocumentResponse]
-    def upload(add_to_index_names: nil, external_id: nil, label:, contents:, keywords: nil, metadata: nil, request_options: nil)
+    def upload(add_to_index_names: nil, external_id: nil, label:, contents: nil, url: nil, keywords: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -205,14 +199,14 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), add_to_index_names: add_to_index_names, external_id: external_id, label: label, contents: Vellum::FileUtilities.as_faraday_multipart(file_like: contents), keywords: keywords, metadata: metadata }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), add_to_index_names: add_to_index_names, external_id: external_id, label: label, contents: unless contents.nil?
+  Vellum::FileUtilities.as_faraday_multipart(file_like: contents)
+end, url: url, keywords: keywords, metadata: metadata }.compact
   req.url "#{@request_client.get_url(environment: Documents, request_options: request_options)}/v1/upload-document"
 end
       Vellum::UploadDocumentResponse.from_json(json_object: response.body)
@@ -257,8 +251,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "document_index_id": document_index_id, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
@@ -294,8 +286,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -333,8 +323,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -379,8 +367,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -402,13 +388,15 @@ end
 #  to be re-indexed.
     # @param label [String] A human-friendly name for this document. Typically the filename.
     # @param contents [String, IO] 
+    # @param url [String] A URL from which the document can be downloaded. Either contents or url must be
+#  provided.
     # @param keywords [Array<String>] Optionally include a list of keywords that'll be associated with this document.
 #  Used when performing keyword searches.
     # @param metadata [String] A stringified JSON object containing any metadata associated with the document
 #  that you'd like to filter upon later.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::UploadDocumentResponse]
-    def upload(add_to_index_names: nil, external_id: nil, label:, contents:, keywords: nil, metadata: nil, request_options: nil)
+    def upload(add_to_index_names: nil, external_id: nil, label:, contents: nil, url: nil, keywords: nil, metadata: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -419,14 +407,14 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), add_to_index_names: add_to_index_names, external_id: external_id, label: label, contents: Vellum::FileUtilities.as_faraday_multipart(file_like: contents), keywords: keywords, metadata: metadata }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), add_to_index_names: add_to_index_names, external_id: external_id, label: label, contents: unless contents.nil?
+  Vellum::FileUtilities.as_faraday_multipart(file_like: contents)
+end, url: url, keywords: keywords, metadata: metadata }.compact
   req.url "#{@request_client.get_url(environment: Documents, request_options: request_options)}/v1/upload-document"
 end
         Vellum::UploadDocumentResponse.from_json(json_object: response.body)

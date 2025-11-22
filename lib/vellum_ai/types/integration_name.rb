@@ -10,6 +10,7 @@ module Vellum
 #  * `CODA` - Coda
 #  * `HUBSPOT` - Hubspot
 #  * `INTERCOM` - Intercom
+#  * `INSTAGRAM` - Instagram
 #  * `LINEAR` - Linear
 #  * `LINKUP` - Linkup
 #  * `LISTENNOTES` - Listen Notes
@@ -23,6 +24,13 @@ module Vellum
 #  * `GOOGLE_CALENDAR` - Google Calendar
 #  * `GOOGLE_DRIVE` - Google Drive
 #  * `GMAIL` - Gmail
+#  * `GOOGLE_ADS` - Google Ads
+#  * `GOOGLE_ANALYTICS` - Google Analytics
+#  * `GOOGLE_DOCS` - Google Docs
+#  * `GOOGLE_PHOTOS` - Google Photos
+#  * `GOOGLE_SEARCH_CONSOLE` - Google Search Console
+#  * `GOOGLE_SLIDES` - Google Slides
+#  * `GOOGLE_TASKS` - Google Tasks
 #  * `ACCULYNX` - AccuLynx
 #  * `AFFINITY` - Affinity
 #  * `AGENCYZOOM` - AgencyZoom
@@ -72,6 +80,7 @@ module Vellum
 #  * `ZENROWS` - ZenRows
 #  * `DROPBOX` - Dropbox
 #  * `EVENTBRITE` - Eventbrite
+#  * `FACEBOOK` - Facebook
 #  * `CONFLUENCE` - Confluence
 #  * `COINBASE` - Coinbase
 #  * `DISCORD` - Discord
@@ -88,6 +97,7 @@ module Vellum
     CODA = "CODA"
     HUBSPOT = "HUBSPOT"
     INTERCOM = "INTERCOM"
+    INSTAGRAM = "INSTAGRAM"
     LINEAR = "LINEAR"
     LINKUP = "LINKUP"
     LISTENNOTES = "LISTENNOTES"
@@ -101,6 +111,13 @@ module Vellum
     GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
     GOOGLE_DRIVE = "GOOGLE_DRIVE"
     GMAIL = "GMAIL"
+    GOOGLE_ADS = "GOOGLE_ADS"
+    GOOGLE_ANALYTICS = "GOOGLE_ANALYTICS"
+    GOOGLE_DOCS = "GOOGLE_DOCS"
+    GOOGLE_PHOTOS = "GOOGLE_PHOTOS"
+    GOOGLE_SEARCH_CONSOLE = "GOOGLE_SEARCH_CONSOLE"
+    GOOGLE_SLIDES = "GOOGLE_SLIDES"
+    GOOGLE_TASKS = "GOOGLE_TASKS"
     ACCULYNX = "ACCULYNX"
     AFFINITY = "AFFINITY"
     AGENCYZOOM = "AGENCYZOOM"
@@ -150,6 +167,7 @@ module Vellum
     ZENROWS = "ZENROWS"
     DROPBOX = "DROPBOX"
     EVENTBRITE = "EVENTBRITE"
+    FACEBOOK = "FACEBOOK"
     CONFLUENCE = "CONFLUENCE"
     COINBASE = "COINBASE"
     DISCORD = "DISCORD"
