@@ -19,6 +19,8 @@ module Vellum
     attr_reader :default
   # @return [Vellum::VellumVariableExtensions] 
     attr_reader :extensions
+  # @return [Hash{String => Object}] 
+    attr_reader :schema
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -33,17 +35,19 @@ module Vellum
     # @param required [Boolean] 
     # @param default [Vellum::VellumValue] 
     # @param extensions [Vellum::VellumVariableExtensions] 
+    # @param schema [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumVariable]
-    def initialize(id:, key:, type:, required: OMIT, default: OMIT, extensions: OMIT, additional_properties: nil)
+    def initialize(id:, key:, type:, required: OMIT, default: OMIT, extensions: OMIT, schema: OMIT, additional_properties: nil)
       @id = id
       @key = key
       @type = type
       @required = required if required != OMIT
       @default = default if default != OMIT
       @extensions = extensions if extensions != OMIT
+      @schema = schema if schema != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "key": key, "type": type, "required": required, "default": default, "extensions": extensions }.reject do | _k, v |
+      @_field_set = { "id": id, "key": key, "type": type, "required": required, "default": default, "extensions": extensions, "schema": schema }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -70,6 +74,7 @@ end
       else
         extensions = nil
       end
+      schema = parsed_json["schema"]
       new(
         id: id,
         key: key,
@@ -77,6 +82,7 @@ end
         required: required,
         default: default,
         extensions: extensions,
+        schema: schema,
         additional_properties: struct
       )
     end
@@ -99,6 +105,7 @@ end
       obj.required&.is_a?(Boolean) != false || raise("Passed value for field obj.required is not the expected type, validation failed.")
       obj.default.nil? || Vellum::VellumValue.validate_raw(obj: obj.default)
       obj.extensions.nil? || Vellum::VellumVariableExtensions.validate_raw(obj: obj.extensions)
+      obj.schema&.is_a?(Hash) != false || raise("Passed value for field obj.schema is not the expected type, validation failed.")
     end
   end
 end

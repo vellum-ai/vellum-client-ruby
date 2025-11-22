@@ -15,6 +15,7 @@ module Vellum
 #  * `DOCUMENT` - DOCUMENT
 #  * `NULL` - NULL
 #  * `THINKING` - THINKING
+#  * `REFERENCE` - REFERENCE
   class VellumVariableType
 
     STRING = "STRING"
@@ -31,6 +32,7 @@ module Vellum
     DOCUMENT = "DOCUMENT"
     NULL = "NULL"
     THINKING = "THINKING"
+    REFERENCE = "REFERENCE"
 
   end
 end
