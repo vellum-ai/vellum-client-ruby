@@ -5,6 +5,7 @@ require_relative "../types/workflow_push_deployment_config_request"
 require_relative "../types/dataset_row_push_request"
 require_relative "../types/workflow_push_response"
 require_relative "../../core/file_utilities"
+require_relative "../types/runner_config_request"
 require "json"
 require "async"
 require "async"
@@ -141,6 +142,12 @@ end
     #
     # @param files [Hash{String => Object}] 
     # @param module_ [String] 
+    # @param runner_config [Hash] Request of type Vellum::RunnerConfigRequest, as a Hash
+    #   * :container_image_name (String) 
+    #   * :container_image_tag (String) 
+    #   * :codegen_version (String) 
+    #   * :sdk_version (String) 
+    #   * :is_deployment_inlining_enabled (Boolean) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -150,7 +157,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
-    def serialize_workflow_files(files:, module_: nil, request_options: nil)
+    def serialize_workflow_files(files:, module_: nil, runner_config: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -167,7 +174,7 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_ }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_, runner_config: runner_config }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
 end
       parsed_json = JSON.parse(response.body)
@@ -308,6 +315,12 @@ end
     #
     # @param files [Hash{String => Object}] 
     # @param module_ [String] 
+    # @param runner_config [Hash] Request of type Vellum::RunnerConfigRequest, as a Hash
+    #   * :container_image_name (String) 
+    #   * :container_image_tag (String) 
+    #   * :codegen_version (String) 
+    #   * :sdk_version (String) 
+    #   * :is_deployment_inlining_enabled (Boolean) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -317,7 +330,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
-    def serialize_workflow_files(files:, module_: nil, request_options: nil)
+    def serialize_workflow_files(files:, module_: nil, runner_config: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -335,7 +348,7 @@ end
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_ }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_, runner_config: runner_config }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
 end
         parsed_json = JSON.parse(response.body)
