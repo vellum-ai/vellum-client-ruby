@@ -17,7 +17,9 @@ module Vellum
 #  * `LMNT` - LMNT
 #  * `LINKEDIN` - LinkedIn
 #  * `MAILCHIMP` - Mailchimp
+#  * `MIRO` - Miro
 #  * `MEM0` - Mem0
+#  * `MONDAY` - Monday
 #  * `NEON` - Neon
 #  * `GITHUB` - Github
 #  * `GOOGLE_SHEETS` - Google Sheets
@@ -70,10 +72,12 @@ module Vellum
 #  * `SERPAPI` - Serp Api
 #  * `SHARE_POINT` - SharePoint
 #  * `SHORTCUT` - Shortcut
+#  * `SPOTIFY` - Spotify
 #  * `STRIPE` - Stripe
 #  * `SUPABASE` - Supabase
 #  * `TAVILY` - Tavily
 #  * `TELEGRAM` - Telegram
+#  * `TODOIST` - Todoist
 #  * `WEBFLOW` - Webflow
 #  * `YOUSEARCH` - You Search
 #  * `ZENDESK` - Zendesk
@@ -104,7 +108,9 @@ module Vellum
     LMNT = "LMNT"
     LINKEDIN = "LINKEDIN"
     MAILCHIMP = "MAILCHIMP"
+    MIRO = "MIRO"
     MEM_0 = "MEM0"
+    MONDAY = "MONDAY"
     NEON = "NEON"
     GITHUB = "GITHUB"
     GOOGLE_SHEETS = "GOOGLE_SHEETS"
@@ -157,10 +163,12 @@ module Vellum
     SERPAPI = "SERPAPI"
     SHARE_POINT = "SHARE_POINT"
     SHORTCUT = "SHORTCUT"
+    SPOTIFY = "SPOTIFY"
     STRIPE = "STRIPE"
     SUPABASE = "SUPABASE"
     TAVILY = "TAVILY"
     TELEGRAM = "TELEGRAM"
+    TODOIST = "TODOIST"
     WEBFLOW = "WEBFLOW"
     YOUSEARCH = "YOUSEARCH"
     ZENDESK = "ZENDESK"
