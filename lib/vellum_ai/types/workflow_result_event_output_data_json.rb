@@ -39,11 +39,11 @@ module Vellum
     # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowResultEventOutputDataJson]
-    def initialize(id: OMIT, name:, state:, node_id:, delta: OMIT, type:, value:, additional_properties: nil)
+    def initialize(id: OMIT, name:, state:, node_id: OMIT, delta: OMIT, type:, value:, additional_properties: nil)
       @id = id if id != OMIT
       @name = name
       @state = state
-      @node_id = node_id
+      @node_id = node_id if node_id != OMIT
       @delta = delta if delta != OMIT
       @type = type
       @value = value
@@ -93,7 +93,7 @@ end
       obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.state.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
-      obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
+      obj.node_id&.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
       obj.delta&.is_a?(String) != false || raise("Passed value for field obj.delta is not the expected type, validation failed.")
       obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
