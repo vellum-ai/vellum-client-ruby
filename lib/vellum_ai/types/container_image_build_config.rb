@@ -9,6 +9,8 @@ module Vellum
     attr_reader :packages
   # @return [String] 
     attr_reader :user_script
+  # @return [String] 
+    attr_reader :hotswappable_version
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -19,13 +21,15 @@ module Vellum
 
     # @param packages [Array<Vellum::CodeExecutionPackage>] 
     # @param user_script [String] 
+    # @param hotswappable_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ContainerImageBuildConfig]
-    def initialize(packages:, user_script: OMIT, additional_properties: nil)
+    def initialize(packages:, user_script: OMIT, hotswappable_version: OMIT, additional_properties: nil)
       @packages = packages
       @user_script = user_script if user_script != OMIT
+      @hotswappable_version = hotswappable_version if hotswappable_version != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "packages": packages, "user_script": user_script }.reject do | _k, v |
+      @_field_set = { "packages": packages, "user_script": user_script, "hotswappable_version": hotswappable_version }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -41,9 +45,11 @@ end
   Vellum::CodeExecutionPackage.from_json(json_object: item)
 end
       user_script = parsed_json["user_script"]
+      hotswappable_version = parsed_json["hotswappable_version"]
       new(
         packages: packages,
         user_script: user_script,
+        hotswappable_version: hotswappable_version,
         additional_properties: struct
       )
     end
@@ -62,6 +68,7 @@ end
     def self.validate_raw(obj:)
       obj.packages.is_a?(Array) != false || raise("Passed value for field obj.packages is not the expected type, validation failed.")
       obj.user_script&.is_a?(String) != false || raise("Passed value for field obj.user_script is not the expected type, validation failed.")
+      obj.hotswappable_version&.is_a?(String) != false || raise("Passed value for field obj.hotswappable_version is not the expected type, validation failed.")
     end
   end
 end

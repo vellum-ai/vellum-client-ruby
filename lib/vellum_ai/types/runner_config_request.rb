@@ -14,6 +14,8 @@ module Vellum
     attr_reader :sdk_version
   # @return [Boolean] 
     attr_reader :is_deployment_inlining_enabled
+  # @return [String] 
+    attr_reader :server_version
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -27,16 +29,18 @@ module Vellum
     # @param codegen_version [String] 
     # @param sdk_version [String] 
     # @param is_deployment_inlining_enabled [Boolean] 
+    # @param server_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::RunnerConfigRequest]
-    def initialize(container_image_name: OMIT, container_image_tag: OMIT, codegen_version: OMIT, sdk_version: OMIT, is_deployment_inlining_enabled: OMIT, additional_properties: nil)
+    def initialize(container_image_name: OMIT, container_image_tag: OMIT, codegen_version: OMIT, sdk_version: OMIT, is_deployment_inlining_enabled: OMIT, server_version: OMIT, additional_properties: nil)
       @container_image_name = container_image_name if container_image_name != OMIT
       @container_image_tag = container_image_tag if container_image_tag != OMIT
       @codegen_version = codegen_version if codegen_version != OMIT
       @sdk_version = sdk_version if sdk_version != OMIT
       @is_deployment_inlining_enabled = is_deployment_inlining_enabled if is_deployment_inlining_enabled != OMIT
+      @server_version = server_version if server_version != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "container_image_name": container_image_name, "container_image_tag": container_image_tag, "codegen_version": codegen_version, "sdk_version": sdk_version, "is_deployment_inlining_enabled": is_deployment_inlining_enabled }.reject do | _k, v |
+      @_field_set = { "container_image_name": container_image_name, "container_image_tag": container_image_tag, "codegen_version": codegen_version, "sdk_version": sdk_version, "is_deployment_inlining_enabled": is_deployment_inlining_enabled, "server_version": server_version }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -52,12 +56,14 @@ end
       codegen_version = parsed_json["codegen_version"]
       sdk_version = parsed_json["sdk_version"]
       is_deployment_inlining_enabled = parsed_json["is_deployment_inlining_enabled"]
+      server_version = parsed_json["server_version"]
       new(
         container_image_name: container_image_name,
         container_image_tag: container_image_tag,
         codegen_version: codegen_version,
         sdk_version: sdk_version,
         is_deployment_inlining_enabled: is_deployment_inlining_enabled,
+        server_version: server_version,
         additional_properties: struct
       )
     end
@@ -79,6 +85,7 @@ end
       obj.codegen_version&.is_a?(String) != false || raise("Passed value for field obj.codegen_version is not the expected type, validation failed.")
       obj.sdk_version&.is_a?(String) != false || raise("Passed value for field obj.sdk_version is not the expected type, validation failed.")
       obj.is_deployment_inlining_enabled&.is_a?(Boolean) != false || raise("Passed value for field obj.is_deployment_inlining_enabled is not the expected type, validation failed.")
+      obj.server_version&.is_a?(String) != false || raise("Passed value for field obj.server_version is not the expected type, validation failed.")
     end
   end
 end
