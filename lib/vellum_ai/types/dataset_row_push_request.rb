@@ -8,6 +8,8 @@ module Vellum
     attr_reader :label
   # @return [Hash{String => Object}] 
     attr_reader :inputs
+  # @return [String] 
+    attr_reader :workflow_trigger_id
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -18,13 +20,17 @@ module Vellum
 
     # @param label [String] 
     # @param inputs [Hash{String => Object}] 
+    # @param workflow_trigger_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::DatasetRowPushRequest]
-    def initialize(label:, inputs:, additional_properties: nil)
+    def initialize(label:, inputs:, workflow_trigger_id: OMIT, additional_properties: nil)
       @label = label
       @inputs = inputs
+      @workflow_trigger_id = workflow_trigger_id if workflow_trigger_id != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "label": label, "inputs": inputs }
+      @_field_set = { "label": label, "inputs": inputs, "workflow_trigger_id": workflow_trigger_id }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of DatasetRowPushRequest
     #
@@ -35,9 +41,11 @@ module Vellum
       parsed_json = JSON.parse(json_object)
       label = parsed_json["label"]
       inputs = parsed_json["inputs"]
+      workflow_trigger_id = parsed_json["workflow_trigger_id"]
       new(
         label: label,
         inputs: inputs,
+        workflow_trigger_id: workflow_trigger_id,
         additional_properties: struct
       )
     end
@@ -56,6 +64,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.inputs.is_a?(Hash) != false || raise("Passed value for field obj.inputs is not the expected type, validation failed.")
+      obj.workflow_trigger_id&.is_a?(String) != false || raise("Passed value for field obj.workflow_trigger_id is not the expected type, validation failed.")
     end
   end
 end

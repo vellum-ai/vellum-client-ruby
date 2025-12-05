@@ -110,6 +110,7 @@ end
     # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
     #   * :label (String) 
     #   * :inputs (Hash{String => Object}) 
+    #   * :workflow_trigger_id (String) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
@@ -148,6 +149,7 @@ end
     #   * :codegen_version (String) 
     #   * :sdk_version (String) 
     #   * :is_deployment_inlining_enabled (Boolean) 
+    #   * :server_version (String) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -281,6 +283,7 @@ end
     # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
     #   * :label (String) 
     #   * :inputs (Hash{String => Object}) 
+    #   * :workflow_trigger_id (String) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
@@ -321,6 +324,7 @@ end
     #   * :codegen_version (String) 
     #   * :sdk_version (String) 
     #   * :is_deployment_inlining_enabled (Boolean) 
+    #   * :server_version (String) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example

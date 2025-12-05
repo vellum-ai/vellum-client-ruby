@@ -21,6 +21,7 @@ module Vellum
 #  * `MEM0` - Mem0
 #  * `MONDAY` - Monday
 #  * `NEON` - Neon
+#  * `OUTLOOK` - Outlook
 #  * `GITHUB` - Github
 #  * `GOOGLE_SHEETS` - Google Sheets
 #  * `GOOGLE_CALENDAR` - Google Calendar
@@ -112,6 +113,7 @@ module Vellum
     MEM_0 = "MEM0"
     MONDAY = "MONDAY"
     NEON = "NEON"
+    OUTLOOK = "OUTLOOK"
     GITHUB = "GITHUB"
     GOOGLE_SHEETS = "GOOGLE_SHEETS"
     GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
