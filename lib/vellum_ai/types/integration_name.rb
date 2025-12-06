@@ -91,6 +91,10 @@ module Vellum
 #  * `DISCORD` - Discord
 #  * `DOCUSIGN` - DocuSign
 #  * `TRELLO` - Trello
+#  * `HEYREACH` - HeyReach
+#  * `ACTIVE_CAMPAIGN` - Active Campaign
+#  * `CUSTOMER_IO` - Customer.io
+#  * `SEGMENT` - Segment
   class IntegrationName
 
     SLACK = "SLACK"
@@ -183,6 +187,10 @@ module Vellum
     DISCORD = "DISCORD"
     DOCUSIGN = "DOCUSIGN"
     TRELLO = "TRELLO"
+    HEYREACH = "HEYREACH"
+    ACTIVE_CAMPAIGN = "ACTIVE_CAMPAIGN"
+    CUSTOMER_IO = "CUSTOMER_IO"
+    SEGMENT = "SEGMENT"
 
   end
 end
