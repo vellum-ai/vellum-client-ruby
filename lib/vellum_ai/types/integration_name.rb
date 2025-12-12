@@ -52,6 +52,7 @@ module Vellum
 #  * `EXA` - Exa
 #  * `GAMMA` - Gamma
 #  * `GITLAB` - Gitlab
+#  * `GONG` - Gong
 #  * `FIRECRAWL` - Firecrawl
 #  * `FIGMA` - Figma
 #  * `FIREFLIES` - Fireflies
@@ -148,6 +149,7 @@ module Vellum
     EXA = "EXA"
     GAMMA = "GAMMA"
     GITLAB = "GITLAB"
+    GONG = "GONG"
     FIRECRAWL = "FIRECRAWL"
     FIGMA = "FIGMA"
     FIREFLIES = "FIREFLIES"
