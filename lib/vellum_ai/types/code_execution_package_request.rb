@@ -1,16 +1,15 @@
 # frozen_string_literal: true
-require "date"
 require "ostruct"
 require "json"
 
 module Vellum
-  class ContainerImageContainerImageTag
+  class CodeExecutionPackageRequest
+  # @return [String] 
+    attr_reader :version
   # @return [String] 
     attr_reader :name
-  # @return [DateTime] 
-    attr_reader :modified
   # @return [String] 
-    attr_reader :history_item_sha
+    attr_reader :repository
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -19,42 +18,38 @@ module Vellum
 
     OMIT = Object.new
 
+    # @param version [String] 
     # @param name [String] 
-    # @param modified [DateTime] 
-    # @param history_item_sha [String] 
+    # @param repository [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::ContainerImageContainerImageTag]
-    def initialize(name:, modified:, history_item_sha: OMIT, additional_properties: nil)
+    # @return [Vellum::CodeExecutionPackageRequest]
+    def initialize(version:, name:, repository: OMIT, additional_properties: nil)
+      @version = version
       @name = name
-      @modified = modified
-      @history_item_sha = history_item_sha if history_item_sha != OMIT
+      @repository = repository if repository != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "modified": modified, "history_item_sha": history_item_sha }.reject do | _k, v |
+      @_field_set = { "version": version, "name": name, "repository": repository }.reject do | _k, v |
   v == OMIT
 end
     end
-# Deserialize a JSON object to an instance of ContainerImageContainerImageTag
+# Deserialize a JSON object to an instance of CodeExecutionPackageRequest
     #
     # @param json_object [String] 
-    # @return [Vellum::ContainerImageContainerImageTag]
+    # @return [Vellum::CodeExecutionPackageRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
+      version = parsed_json["version"]
       name = parsed_json["name"]
-      modified = unless parsed_json["modified"].nil?
-  DateTime.parse(parsed_json["modified"])
-else
-  nil
-end
-      history_item_sha = parsed_json["history_item_sha"]
+      repository = parsed_json["repository"]
       new(
+        version: version,
         name: name,
-        modified: modified,
-        history_item_sha: history_item_sha,
+        repository: repository,
         additional_properties: struct
       )
     end
-# Serialize an instance of ContainerImageContainerImageTag to a JSON object
+# Serialize an instance of CodeExecutionPackageRequest to a JSON object
     #
     # @return [String]
     def to_json
@@ -67,9 +62,9 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
+      obj.version.is_a?(String) != false || raise("Passed value for field obj.version is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.modified.is_a?(DateTime) != false || raise("Passed value for field obj.modified is not the expected type, validation failed.")
-      obj.history_item_sha&.is_a?(String) != false || raise("Passed value for field obj.history_item_sha is not the expected type, validation failed.")
+      obj.repository&.is_a?(String) != false || raise("Passed value for field obj.repository is not the expected type, validation failed.")
     end
   end
 end

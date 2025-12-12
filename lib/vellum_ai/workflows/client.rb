@@ -49,8 +49,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -84,8 +82,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -98,7 +94,8 @@ end
 end
       Vellum::WorkflowResolvedState.from_json(json_object: response.body)
     end
-    # @param exec_config [String] The execution configuration of the workflow.
+    # @param exec_config [String] The execution configuration of the workflow. If not provided, it will be derived
+#  from the artifact.
     # @param workflow_sandbox_id [String] 
     # @param deployment_config [Hash] Request of type Vellum::WorkflowPushDeploymentConfigRequest, as a Hash
     #   * :label (String) 
@@ -115,7 +112,7 @@ end
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowPushResponse]
-    def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dataset: nil, dry_run: nil, strict: nil, request_options: nil)
+    def push(exec_config: nil, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dataset: nil, dry_run: nil, strict: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -125,8 +122,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -169,8 +164,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -219,8 +212,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -256,8 +247,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -271,7 +260,8 @@ end
         Vellum::WorkflowResolvedState.from_json(json_object: response.body)
       end
     end
-    # @param exec_config [String] The execution configuration of the workflow.
+    # @param exec_config [String] The execution configuration of the workflow. If not provided, it will be derived
+#  from the artifact.
     # @param workflow_sandbox_id [String] 
     # @param deployment_config [Hash] Request of type Vellum::WorkflowPushDeploymentConfigRequest, as a Hash
     #   * :label (String) 
@@ -288,7 +278,7 @@ end
     # @param strict [Boolean] 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::WorkflowPushResponse]
-    def push(exec_config:, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dataset: nil, dry_run: nil, strict: nil, request_options: nil)
+    def push(exec_config: nil, workflow_sandbox_id: nil, deployment_config: nil, artifact: nil, dataset: nil, dry_run: nil, strict: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -299,8 +289,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -345,8 +333,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
