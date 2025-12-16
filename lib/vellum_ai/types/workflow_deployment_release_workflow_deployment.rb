@@ -5,6 +5,8 @@ require "json"
 module Vellum
   class WorkflowDeploymentReleaseWorkflowDeployment
   # @return [String] 
+    attr_reader :id
+  # @return [String] 
     attr_reader :name
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -14,13 +16,15 @@ module Vellum
 
     OMIT = Object.new
 
+    # @param id [String] 
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowDeploymentReleaseWorkflowDeployment]
-    def initialize(name:, additional_properties: nil)
+    def initialize(id:, name:, additional_properties: nil)
+      @id = id
       @name = name
       @additional_properties = additional_properties
-      @_field_set = { "name": name }
+      @_field_set = { "id": id, "name": name }
     end
 # Deserialize a JSON object to an instance of
 #  WorkflowDeploymentReleaseWorkflowDeployment
@@ -30,8 +34,13 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
       name = parsed_json["name"]
-      new(name: name, additional_properties: struct)
+      new(
+        id: id,
+        name: name,
+        additional_properties: struct
+      )
     end
 # Serialize an instance of WorkflowDeploymentReleaseWorkflowDeployment to a JSON
 #  object
@@ -47,6 +56,7 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
+      obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
