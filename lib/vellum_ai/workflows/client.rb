@@ -49,8 +49,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -84,8 +82,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -109,8 +105,10 @@ end
     #   * :release_description (String) 
     # @param artifact [String, IO] 
     # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
+    #   * :id (String) 
     #   * :label (String) 
     #   * :inputs (Hash{String => Object}) 
+    #   * :mocks (Array<Hash{String => Object}>) 
     #   * :workflow_trigger_id (String) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
@@ -126,8 +124,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -170,8 +166,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -220,8 +214,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -257,8 +249,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -283,8 +273,10 @@ end
     #   * :release_description (String) 
     # @param artifact [String, IO] 
     # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
+    #   * :id (String) 
     #   * :label (String) 
     #   * :inputs (Hash{String => Object}) 
+    #   * :mocks (Array<Hash{String => Object}>) 
     #   * :workflow_trigger_id (String) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
@@ -301,8 +293,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -347,8 +337,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
