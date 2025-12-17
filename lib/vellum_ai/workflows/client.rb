@@ -109,8 +109,10 @@ end
     #   * :release_description (String) 
     # @param artifact [String, IO] 
     # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
+    #   * :id (String) 
     #   * :label (String) 
     #   * :inputs (Hash{String => Object}) 
+    #   * :mocks (Array<Hash{String => Object}>) 
     #   * :workflow_trigger_id (String) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
@@ -283,8 +285,10 @@ end
     #   * :release_description (String) 
     # @param artifact [String, IO] 
     # @param dataset [Array<Hash>] List of dataset rows with inputs for scenarios.Request of type Array<Vellum::DatasetRowPushRequest>, as a Hash
+    #   * :id (String) 
     #   * :label (String) 
     #   * :inputs (Hash{String => Object}) 
+    #   * :mocks (Array<Hash{String => Object}>) 
     #   * :workflow_trigger_id (String) 
     # @param dry_run [Boolean] 
     # @param strict [Boolean] 
