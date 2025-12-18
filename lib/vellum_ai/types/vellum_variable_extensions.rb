@@ -9,6 +9,8 @@ module Vellum
     attr_reader :color
   # @return [String] 
     attr_reader :description
+  # @return [String] 
+    attr_reader :title
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -19,13 +21,15 @@ module Vellum
 
     # @param color [String] 
     # @param description [String] 
+    # @param title [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumVariableExtensions]
-    def initialize(color: OMIT, description: OMIT, additional_properties: nil)
+    def initialize(color: OMIT, description: OMIT, title: OMIT, additional_properties: nil)
       @color = color if color != OMIT
       @description = description if description != OMIT
+      @title = title if title != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "color": color, "description": description }.reject do | _k, v |
+      @_field_set = { "color": color, "description": description, "title": title }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -38,9 +42,11 @@ end
       parsed_json = JSON.parse(json_object)
       color = parsed_json["color"]
       description = parsed_json["description"]
+      title = parsed_json["title"]
       new(
         color: color,
         description: description,
+        title: title,
         additional_properties: struct
       )
     end
@@ -59,6 +65,7 @@ end
     def self.validate_raw(obj:)
       obj.color&.is_a?(String) != false || raise("Passed value for field obj.color is not the expected type, validation failed.")
       obj.description&.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
+      obj.title&.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
     end
   end
 end

@@ -20,6 +20,8 @@ module Vellum
     # @param expand [String] The response fields to expand for more information.
 #  - 'integration_credentials' expands the list of integration credentials that the
 #  authenticated entity has access to for the auth config.
+#  - 'additional_parameters' (retrieve only) fetches additional parameter
+#  requirements for the auth config.
     # @param integration_name [String] 
     # @param integration_provider [String] 
     # @param limit [Integer] Number of results to return per page.
@@ -73,6 +75,8 @@ end
     # @param expand [String] The response fields to expand for more information.
 #  - 'integration_credentials' expands the list of integration credentials that the
 #  authenticated entity has access to for the auth config.
+#  - 'additional_parameters' (retrieve only) fetches additional parameter
+#  requirements for the auth config.
     # @param integration_name [String] 
     # @param integration_provider [String] 
     # @param limit [Integer] Number of results to return per page.
