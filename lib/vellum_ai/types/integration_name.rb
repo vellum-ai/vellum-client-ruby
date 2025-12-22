@@ -68,6 +68,7 @@ module Vellum
 #  * `POSTHOG` - PostHog
 #  * `PRODUCTBOARD` - Productboard
 #  * `REDDIT` - Reddit
+#  * `SALESFORCE` - Salesforce
 #  * `SEMRUSH` - Semrush
 #  * `SEMANTICSCHOLAR` - Semantic Scholar
 #  * `SENDGRID` - SendGrid
@@ -165,6 +166,7 @@ module Vellum
     POSTHOG = "POSTHOG"
     PRODUCTBOARD = "PRODUCTBOARD"
     REDDIT = "REDDIT"
+    SALESFORCE = "SALESFORCE"
     SEMRUSH = "SEMRUSH"
     SEMANTICSCHOLAR = "SEMANTICSCHOLAR"
     SENDGRID = "SENDGRID"
