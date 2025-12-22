@@ -6,6 +6,7 @@ require_relative "node_execution_fulfilled_event"
 require_relative "node_execution_rejected_event"
 require_relative "node_execution_paused_event"
 require_relative "node_execution_resumed_event"
+require_relative "node_execution_log_event"
 require_relative "workflow_execution_initiated_event"
 require_relative "workflow_execution_streaming_event"
 require_relative "workflow_execution_rejected_event"
@@ -78,6 +79,16 @@ end
         Vellum::NodeExecutionResumedEvent.validate_raw(obj: struct)
         unless struct.nil?
   return Vellum::NodeExecutionResumedEvent.from_json(json_object: struct)
+else
+  return nil
+end
+      rescue StandardError
+        # noop
+      end
+      begin
+        Vellum::NodeExecutionLogEvent.validate_raw(obj: struct)
+        unless struct.nil?
+  return Vellum::NodeExecutionLogEvent.from_json(json_object: struct)
 else
   return nil
 end
@@ -190,6 +201,11 @@ end
       end
       begin
         return Vellum::NodeExecutionResumedEvent.validate_raw(obj: obj)
+      rescue StandardError
+        # noop
+      end
+      begin
+        return Vellum::NodeExecutionLogEvent.validate_raw(obj: obj)
       rescue StandardError
         # noop
       end
