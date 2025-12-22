@@ -20,6 +20,8 @@ module Vellum
     attr_reader :input_parameters
   # @return [Hash{String => Object}] 
     attr_reader :output_parameters
+  # @return [String] 
+    attr_reader :toolkit_version
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -35,9 +37,10 @@ module Vellum
     # @param description [String] 
     # @param input_parameters [Hash{String => Object}] 
     # @param output_parameters [Hash{String => Object}] 
+    # @param toolkit_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ComposioToolDefinition]
-    def initialize(provider:, integration:, name:, label:, description:, input_parameters:, output_parameters:, additional_properties: nil)
+    def initialize(provider:, integration:, name:, label:, description:, input_parameters:, output_parameters:, toolkit_version:, additional_properties: nil)
       @provider = provider
       @integration = integration
       @name = name
@@ -45,8 +48,9 @@ module Vellum
       @description = description
       @input_parameters = input_parameters
       @output_parameters = output_parameters
+      @toolkit_version = toolkit_version
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters }
+      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters, "toolkit_version": toolkit_version }
     end
 # Deserialize a JSON object to an instance of ComposioToolDefinition
     #
@@ -67,6 +71,7 @@ module Vellum
       description = parsed_json["description"]
       input_parameters = parsed_json["input_parameters"]
       output_parameters = parsed_json["output_parameters"]
+      toolkit_version = parsed_json["toolkit_version"]
       new(
         provider: provider,
         integration: integration,
@@ -75,6 +80,7 @@ module Vellum
         description: description,
         input_parameters: input_parameters,
         output_parameters: output_parameters,
+        toolkit_version: toolkit_version,
         additional_properties: struct
       )
     end
@@ -98,6 +104,7 @@ module Vellum
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
       obj.input_parameters.is_a?(Hash) != false || raise("Passed value for field obj.input_parameters is not the expected type, validation failed.")
       obj.output_parameters.is_a?(Hash) != false || raise("Passed value for field obj.output_parameters is not the expected type, validation failed.")
+      obj.toolkit_version.is_a?(String) != false || raise("Passed value for field obj.toolkit_version is not the expected type, validation failed.")
     end
   end
 end

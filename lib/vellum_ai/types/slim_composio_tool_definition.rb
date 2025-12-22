@@ -15,6 +15,8 @@ module Vellum
     attr_reader :label
   # @return [String] 
     attr_reader :description
+  # @return [String] 
+    attr_reader :toolkit_version
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -28,16 +30,18 @@ module Vellum
     # @param name [String] 
     # @param label [String] 
     # @param description [String] 
+    # @param toolkit_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimComposioToolDefinition]
-    def initialize(provider:, integration:, name:, label:, description:, additional_properties: nil)
+    def initialize(provider:, integration:, name:, label:, description:, toolkit_version:, additional_properties: nil)
       @provider = provider
       @integration = integration
       @name = name
       @label = label
       @description = description
+      @toolkit_version = toolkit_version
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description }
+      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description, "toolkit_version": toolkit_version }
     end
 # Deserialize a JSON object to an instance of SlimComposioToolDefinition
     #
@@ -56,12 +60,14 @@ module Vellum
       name = parsed_json["name"]
       label = parsed_json["label"]
       description = parsed_json["description"]
+      toolkit_version = parsed_json["toolkit_version"]
       new(
         provider: provider,
         integration: integration,
         name: name,
         label: label,
         description: description,
+        toolkit_version: toolkit_version,
         additional_properties: struct
       )
     end
@@ -83,6 +89,7 @@ module Vellum
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.description.is_a?(String) != false || raise("Passed value for field obj.description is not the expected type, validation failed.")
+      obj.toolkit_version.is_a?(String) != false || raise("Passed value for field obj.toolkit_version is not the expected type, validation failed.")
     end
   end
 end
