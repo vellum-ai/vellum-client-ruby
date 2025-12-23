@@ -25,6 +25,8 @@ module Vellum
     # @param integration_name [String] The integration name
     # @param integration_provider [String] The integration provider name
     # @param tool_name [String] The tool's unique name, as specified by the integration provider
+    # @param toolkit_version [String] The version of the toolkit to use. Pass 'latest' to get the latest version, or a
+#  specific version string to pin it. If not provided, uses the provider's default.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_TOOL_DEFINITION]
     # @example
@@ -38,7 +40,7 @@ module Vellum
 #    integration_provider: "integration_provider",
 #    tool_name: "tool_name"
 #  )
-    def retrieve_integration_tool_definition(integration_name:, integration_provider:, tool_name:, request_options: nil)
+    def retrieve_integration_tool_definition(integration_name:, integration_provider:, tool_name:, toolkit_version: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -52,9 +54,7 @@ module Vellum
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  unless request_options.nil? || request_options&.additional_query_parameters.nil?
-    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
-  end
+  req.params = { **(request_options&.additional_query_parameters || {}), "toolkit_version": toolkit_version }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -68,6 +68,7 @@ end
     # @param request [Hash] Request of type Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_REQUEST, as a Hash
     #   * :provider (String) 
     #   * :arguments (Hash{String => Object}) 
+    #   * :toolkit_version (String) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_RESPONSE]
     # @example
@@ -193,6 +194,8 @@ end
     # @param integration_name [String] The integration name
     # @param integration_provider [String] The integration provider name
     # @param tool_name [String] The tool's unique name, as specified by the integration provider
+    # @param toolkit_version [String] The version of the toolkit to use. Pass 'latest' to get the latest version, or a
+#  specific version string to pin it. If not provided, uses the provider's default.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_TOOL_DEFINITION]
     # @example
@@ -206,7 +209,7 @@ end
 #    integration_provider: "integration_provider",
 #    tool_name: "tool_name"
 #  )
-    def retrieve_integration_tool_definition(integration_name:, integration_provider:, tool_name:, request_options: nil)
+    def retrieve_integration_tool_definition(integration_name:, integration_provider:, tool_name:, toolkit_version: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -221,9 +224,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  unless request_options.nil? || request_options&.additional_query_parameters.nil?
-    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
-  end
+  req.params = { **(request_options&.additional_query_parameters || {}), "toolkit_version": toolkit_version }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -238,6 +239,7 @@ end
     # @param request [Hash] Request of type Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_REQUEST, as a Hash
     #   * :provider (String) 
     #   * :arguments (Hash{String => Object}) 
+    #   * :toolkit_version (String) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_RESPONSE]
     # @example

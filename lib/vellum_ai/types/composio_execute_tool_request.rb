@@ -9,6 +9,8 @@ module Vellum
     attr_reader :provider
   # @return [Hash{String => Object}] 
     attr_reader :arguments
+  # @return [String] 
+    attr_reader :toolkit_version
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -19,13 +21,17 @@ module Vellum
 
     # @param provider [String] 
     # @param arguments [Hash{String => Object}] 
+    # @param toolkit_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ComposioExecuteToolRequest]
-    def initialize(provider:, arguments:, additional_properties: nil)
+    def initialize(provider:, arguments:, toolkit_version: OMIT, additional_properties: nil)
       @provider = provider
       @arguments = arguments
+      @toolkit_version = toolkit_version if toolkit_version != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "arguments": arguments }
+      @_field_set = { "provider": provider, "arguments": arguments, "toolkit_version": toolkit_version }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of ComposioExecuteToolRequest
     #
@@ -36,9 +42,11 @@ module Vellum
       parsed_json = JSON.parse(json_object)
       provider = parsed_json["provider"]
       arguments = parsed_json["arguments"]
+      toolkit_version = parsed_json["toolkit_version"]
       new(
         provider: provider,
         arguments: arguments,
+        toolkit_version: toolkit_version,
         additional_properties: struct
       )
     end
@@ -57,6 +65,7 @@ module Vellum
     def self.validate_raw(obj:)
       obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       obj.arguments.is_a?(Hash) != false || raise("Passed value for field obj.arguments is not the expected type, validation failed.")
+      obj.toolkit_version&.is_a?(String) != false || raise("Passed value for field obj.toolkit_version is not the expected type, validation failed.")
     end
   end
 end
