@@ -13,6 +13,8 @@ module Vellum
     attr_reader :final_state
   # @return [Hash{String => Object}] 
     attr_reader :server_metadata
+  # @return [Boolean] 
+    attr_reader :redacted
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -25,15 +27,17 @@ module Vellum
     # @param outputs [Hash{String => Object}] 
     # @param final_state [Hash{String => Object}] 
     # @param server_metadata [Hash{String => Object}] 
+    # @param redacted [Boolean] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionFulfilledBody]
-    def initialize(workflow_definition:, outputs:, final_state: OMIT, server_metadata: OMIT, additional_properties: nil)
+    def initialize(workflow_definition:, outputs:, final_state: OMIT, server_metadata: OMIT, redacted: OMIT, additional_properties: nil)
       @workflow_definition = workflow_definition
       @outputs = outputs
       @final_state = final_state if final_state != OMIT
       @server_metadata = server_metadata if server_metadata != OMIT
+      @redacted = redacted if redacted != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "workflow_definition": workflow_definition, "outputs": outputs, "final_state": final_state, "server_metadata": server_metadata }.reject do | _k, v |
+      @_field_set = { "workflow_definition": workflow_definition, "outputs": outputs, "final_state": final_state, "server_metadata": server_metadata, "redacted": redacted }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -53,11 +57,13 @@ end
       outputs = parsed_json["outputs"]
       final_state = parsed_json["final_state"]
       server_metadata = parsed_json["server_metadata"]
+      redacted = parsed_json["redacted"]
       new(
         workflow_definition: workflow_definition,
         outputs: outputs,
         final_state: final_state,
         server_metadata: server_metadata,
+        redacted: redacted,
         additional_properties: struct
       )
     end
@@ -78,6 +84,7 @@ end
       obj.outputs.is_a?(Hash) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
       obj.final_state&.is_a?(Hash) != false || raise("Passed value for field obj.final_state is not the expected type, validation failed.")
       obj.server_metadata&.is_a?(Hash) != false || raise("Passed value for field obj.server_metadata is not the expected type, validation failed.")
+      obj.redacted&.is_a?(Boolean) != false || raise("Passed value for field obj.redacted is not the expected type, validation failed.")
     end
   end
 end
