@@ -14,6 +14,8 @@ module Vellum
     attr_reader :outputs
   # @return [Boolean] 
     attr_reader :mocked
+  # @return [Boolean] 
+    attr_reader :redacted
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -26,15 +28,17 @@ module Vellum
     # @param invoked_ports [Array<Vellum::InvokedPort>] 
     # @param outputs [Hash{String => Object}] 
     # @param mocked [Boolean] 
+    # @param redacted [Boolean] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NodeExecutionFulfilledBody]
-    def initialize(node_definition:, invoked_ports: OMIT, outputs:, mocked: OMIT, additional_properties: nil)
+    def initialize(node_definition:, invoked_ports: OMIT, outputs:, mocked: OMIT, redacted: OMIT, additional_properties: nil)
       @node_definition = node_definition
       @invoked_ports = invoked_ports if invoked_ports != OMIT
       @outputs = outputs
       @mocked = mocked if mocked != OMIT
+      @redacted = redacted if redacted != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "node_definition": node_definition, "invoked_ports": invoked_ports, "outputs": outputs, "mocked": mocked }.reject do | _k, v |
+      @_field_set = { "node_definition": node_definition, "invoked_ports": invoked_ports, "outputs": outputs, "mocked": mocked, "redacted": redacted }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -57,11 +61,13 @@ end
 end
       outputs = parsed_json["outputs"]
       mocked = parsed_json["mocked"]
+      redacted = parsed_json["redacted"]
       new(
         node_definition: node_definition,
         invoked_ports: invoked_ports,
         outputs: outputs,
         mocked: mocked,
+        redacted: redacted,
         additional_properties: struct
       )
     end
@@ -82,6 +88,7 @@ end
       obj.invoked_ports&.is_a?(Array) != false || raise("Passed value for field obj.invoked_ports is not the expected type, validation failed.")
       obj.outputs.is_a?(Hash) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
       obj.mocked&.is_a?(Boolean) != false || raise("Passed value for field obj.mocked is not the expected type, validation failed.")
+      obj.redacted&.is_a?(Boolean) != false || raise("Passed value for field obj.redacted is not the expected type, validation failed.")
     end
   end
 end
