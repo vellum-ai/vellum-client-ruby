@@ -74,6 +74,7 @@ module Vellum
 #  * `SENDGRID` - SendGrid
 #  * `SERPAPI` - Serp Api
 #  * `SHARE_POINT` - SharePoint
+#  * `SHOPIFY` - Shopify
 #  * `SHORTCUT` - Shortcut
 #  * `SPOTIFY` - Spotify
 #  * `STRIPE` - Stripe
@@ -97,6 +98,7 @@ module Vellum
 #  * `ACTIVE_CAMPAIGN` - Active Campaign
 #  * `CUSTOMER_IO` - Customer.io
 #  * `SEGMENT` - Segment
+#  * `WHATSAPP` - WhatsApp
   class IntegrationName
 
     SLACK = "SLACK"
@@ -172,6 +174,7 @@ module Vellum
     SENDGRID = "SENDGRID"
     SERPAPI = "SERPAPI"
     SHARE_POINT = "SHARE_POINT"
+    SHOPIFY = "SHOPIFY"
     SHORTCUT = "SHORTCUT"
     SPOTIFY = "SPOTIFY"
     STRIPE = "STRIPE"
@@ -195,6 +198,7 @@ module Vellum
     ACTIVE_CAMPAIGN = "ACTIVE_CAMPAIGN"
     CUSTOMER_IO = "CUSTOMER_IO"
     SEGMENT = "SEGMENT"
+    WHATSAPP = "WHATSAPP"
 
   end
 end
