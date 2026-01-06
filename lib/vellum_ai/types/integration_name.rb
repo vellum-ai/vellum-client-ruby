@@ -45,6 +45,7 @@ module Vellum
 #  * `BITBUCKET` - Bitbucket
 #  * `BOX` - Box
 #  * `BREVO` - Brevo
+#  * `BREX` - Brex
 #  * `BROWSERBASE_TOOL` - Browserbase Tool
 #  * `CAL` - Cal
 #  * `CANVAS` - Canvas
@@ -145,6 +146,7 @@ module Vellum
     BITBUCKET = "BITBUCKET"
     BOX = "BOX"
     BREVO = "BREVO"
+    BREX = "BREX"
     BROWSERBASE_TOOL = "BROWSERBASE_TOOL"
     CAL = "CAL"
     CANVAS = "CANVAS"
