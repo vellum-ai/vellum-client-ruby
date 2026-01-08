@@ -77,6 +77,7 @@ module Vellum
 #  * `SHARE_POINT` - SharePoint
 #  * `SHOPIFY` - Shopify
 #  * `SHORTCUT` - Shortcut
+#  * `SLACKBOT` - Slackbot
 #  * `SPOTIFY` - Spotify
 #  * `STRIPE` - Stripe
 #  * `SUPABASE` - Supabase
@@ -178,6 +179,7 @@ module Vellum
     SHARE_POINT = "SHARE_POINT"
     SHOPIFY = "SHOPIFY"
     SHORTCUT = "SHORTCUT"
+    SLACKBOT = "SLACKBOT"
     SPOTIFY = "SPOTIFY"
     STRIPE = "STRIPE"
     SUPABASE = "SUPABASE"

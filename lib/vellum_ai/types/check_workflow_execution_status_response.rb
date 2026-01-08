@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require_relative "workflow_result_event_state"
+require_relative "check_workflow_execution_status_error"
 require "ostruct"
 require "json"
 
@@ -10,6 +11,8 @@ module Vellum
     attr_reader :status
   # @return [Hash{String => Object}] 
     attr_reader :outputs
+  # @return [Vellum::CheckWorkflowExecutionStatusError] 
+    attr_reader :error
   # @return [String] 
     attr_reader :execution_id
   # @return [String] 
@@ -24,17 +27,19 @@ module Vellum
 
     # @param status [Vellum::WorkflowResultEventState] 
     # @param outputs [Hash{String => Object}] 
+    # @param error [Vellum::CheckWorkflowExecutionStatusError] 
     # @param execution_id [String] 
     # @param execution_detail_url [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::CheckWorkflowExecutionStatusResponse]
-    def initialize(status:, outputs: OMIT, execution_id:, execution_detail_url: OMIT, additional_properties: nil)
+    def initialize(status:, outputs: OMIT, error: OMIT, execution_id:, execution_detail_url: OMIT, additional_properties: nil)
       @status = status
       @outputs = outputs if outputs != OMIT
+      @error = error if error != OMIT
       @execution_id = execution_id
       @execution_detail_url = execution_detail_url if execution_detail_url != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "status": status, "outputs": outputs, "execution_id": execution_id, "execution_detail_url": execution_detail_url }.reject do | _k, v |
+      @_field_set = { "status": status, "outputs": outputs, "error": error, "execution_id": execution_id, "execution_detail_url": execution_detail_url }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -47,11 +52,18 @@ end
       parsed_json = JSON.parse(json_object)
       status = parsed_json["status"]
       outputs = parsed_json["outputs"]
+      unless parsed_json["error"].nil?
+        error = parsed_json["error"].to_json
+        error = Vellum::CheckWorkflowExecutionStatusError.from_json(json_object: error)
+      else
+        error = nil
+      end
       execution_id = parsed_json["execution_id"]
       execution_detail_url = parsed_json["execution_detail_url"]
       new(
         status: status,
         outputs: outputs,
+        error: error,
         execution_id: execution_id,
         execution_detail_url: execution_detail_url,
         additional_properties: struct
@@ -72,6 +84,7 @@ end
     def self.validate_raw(obj:)
       obj.status.is_a?(Vellum::WorkflowResultEventState) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       obj.outputs&.is_a?(Hash) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
+      obj.error.nil? || Vellum::CheckWorkflowExecutionStatusError.validate_raw(obj: obj.error)
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
       obj.execution_detail_url&.is_a?(String) != false || raise("Passed value for field obj.execution_detail_url is not the expected type, validation failed.")
     end
