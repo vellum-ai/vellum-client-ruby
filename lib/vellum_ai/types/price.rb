@@ -7,7 +7,7 @@ module Vellum
   class Price
   # @return [Float] 
     attr_reader :value
-  # @return [Vellum::UNIT_ENUM] 
+  # @return [Vellum::UnitEnum] 
     attr_reader :unit
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -18,7 +18,7 @@ module Vellum
     OMIT = Object.new
 
     # @param value [Float] 
-    # @param unit [Vellum::UNIT_ENUM] 
+    # @param unit [Vellum::UnitEnum] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::Price]
     def initialize(value:, unit:, additional_properties: nil)
@@ -56,7 +56,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.value.is_a?(Float) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
-      obj.unit.is_a?(String) != false || raise("Passed value for field obj.unit is not the expected type, validation failed.")
+      obj.unit.is_a?(Vellum::UnitEnum) != false || raise("Passed value for field obj.unit is not the expected type, validation failed.")
     end
   end
 end

@@ -120,7 +120,7 @@ module Vellum
     LINKEDIN = "LINKEDIN"
     MAILCHIMP = "MAILCHIMP"
     MIRO = "MIRO"
-    MEM_0 = "MEM0"
+    MEM0 = "MEM0"
     MONDAY = "MONDAY"
     NEON = "NEON"
     OUTLOOK = "OUTLOOK"

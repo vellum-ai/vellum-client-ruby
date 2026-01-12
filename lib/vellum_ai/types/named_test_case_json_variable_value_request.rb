@@ -4,9 +4,7 @@ require "json"
 
 module Vellum
 # Named Test Case value that is of type JSON
-  class NamedTestCaseJsonVariableValueRequest
-  # @return [String] 
-    attr_reader :type
+  class NamedTestCaseJSONVariableValueRequest
   # @return [Object] 
     attr_reader :value
   # @return [String] 
@@ -19,37 +17,35 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param value [Object] 
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::NamedTestCaseJsonVariableValueRequest]
-    def initialize(type:, value:, name:, additional_properties: nil)
-      @type = type
-      @value = value
+    # @return [Vellum::NamedTestCaseJSONVariableValueRequest]
+    def initialize(value: OMIT, name:, additional_properties: nil)
+      @value = value if value != OMIT
       @name = name
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value, "name": name }
+      @_field_set = { "value": value, "name": name }.reject do | _k, v |
+  v == OMIT
+end
     end
 # Deserialize a JSON object to an instance of
-#  NamedTestCaseJsonVariableValueRequest
+#  NamedTestCaseJSONVariableValueRequest
     #
     # @param json_object [String] 
-    # @return [Vellum::NamedTestCaseJsonVariableValueRequest]
+    # @return [Vellum::NamedTestCaseJSONVariableValueRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       value = parsed_json["value"]
       name = parsed_json["name"]
       new(
-        type: type,
         value: value,
         name: name,
         additional_properties: struct
       )
     end
-# Serialize an instance of NamedTestCaseJsonVariableValueRequest to a JSON object
+# Serialize an instance of NamedTestCaseJSONVariableValueRequest to a JSON object
     #
     # @return [String]
     def to_json
@@ -62,8 +58,7 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end

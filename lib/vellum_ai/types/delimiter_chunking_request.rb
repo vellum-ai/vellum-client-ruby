@@ -5,8 +5,6 @@ require "json"
 
 module Vellum
   class DelimiterChunkingRequest
-  # @return [String] 
-    attr_reader :chunker_name
   # @return [Vellum::DelimiterChunkerConfigRequest] 
     attr_reader :chunker_config
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -17,15 +15,13 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param chunker_name [String] 
     # @param chunker_config [Vellum::DelimiterChunkerConfigRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::DelimiterChunkingRequest]
-    def initialize(chunker_name:, chunker_config: OMIT, additional_properties: nil)
-      @chunker_name = chunker_name
+    def initialize(chunker_config: OMIT, additional_properties: nil)
       @chunker_config = chunker_config if chunker_config != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "chunker_name": chunker_name, "chunker_config": chunker_config }.reject do | _k, v |
+      @_field_set = { "chunker_config": chunker_config }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -36,18 +32,13 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      chunker_name = parsed_json["chunker_name"]
       unless parsed_json["chunker_config"].nil?
         chunker_config = parsed_json["chunker_config"].to_json
         chunker_config = Vellum::DelimiterChunkerConfigRequest.from_json(json_object: chunker_config)
       else
         chunker_config = nil
       end
-      new(
-        chunker_name: chunker_name,
-        chunker_config: chunker_config,
-        additional_properties: struct
-      )
+      new(chunker_config: chunker_config, additional_properties: struct)
     end
 # Serialize an instance of DelimiterChunkingRequest to a JSON object
     #
@@ -62,7 +53,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.chunker_name.is_a?(String) != false || raise("Passed value for field obj.chunker_name is not the expected type, validation failed.")
       obj.chunker_config.nil? || Vellum::DelimiterChunkerConfigRequest.validate_raw(obj: obj.chunker_config)
     end
   end

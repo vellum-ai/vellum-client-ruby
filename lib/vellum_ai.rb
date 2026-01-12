@@ -113,7 +113,7 @@ module Vellum
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @return [Vellum::Client]
     def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version: nil)
       @request_client = Vellum::RequestClient.new(
@@ -151,12 +151,12 @@ module Vellum
       @workspaces = Vellum::WorkspacesClient.new(request_client: @request_client)
     end
     # @param url [String] 
-    # @param method [Vellum::MethodEnum] 
+    # @param method_ [Vellum::MethodEnum] 
     # @param body [String, Array<Object>, Hash{String => Object}] 
-    # @param headers [Hash{String => Vellum::ExecuteApiRequestHeadersValue}] 
+    # @param headers [Hash{String => Vellum::ExecuteAPIRequestHeadersValue}] 
     # @param bearer_token [String, Vellum::VellumSecret] 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::ExecuteApiResponse]
+    # @return [Vellum::ExecuteAPIResponse]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
@@ -164,7 +164,7 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.execute_api(url: "x")
-    def execute_api(url:, method: nil, body: nil, headers: nil, bearer_token: nil, request_options: nil)
+    def execute_api(url:, method_: nil, body: nil, headers: nil, bearer_token: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -174,17 +174,15 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), url: url, method: method, body: body, headers: headers, bearer_token: bearer_token }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), url: url, method: method_, body: body, headers: headers, bearer_token: bearer_token }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/execute-api"
 end
-      Vellum::ExecuteApiResponse.from_json(json_object: response.body)
+      Vellum::ExecuteAPIResponse.from_json(json_object: response.body)
     end
     # @param code [String] 
     # @param runtime [Vellum::CodeExecutionRuntime] 
@@ -204,8 +202,8 @@ end
 #  )
 #  api.execute_code(
 #    code: "x",
-#    runtime: PYTHON_3_11_6,
-#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
+#    runtime: PYTHON3116,
+#    input_values: ,
 #    packages: [{ version: "version", name: "name" }, { version: "version", name: "name" }],
 #    output_type: STRING
 #  )
@@ -219,8 +217,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -265,14 +261,14 @@ end
 #  additional monitoring data such as user id, session id, etc. for future
 #  analysis.
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::FulfilledExecutePromptResponse, Vellum::RejectedExecutePromptResponse]
+    # @return [Vellum::ExecutePromptResponse]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_prompt(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.execute_prompt(inputs: )
     def execute_prompt(inputs:, prompt_deployment_id: nil, prompt_deployment_name: nil, release_tag: nil, external_id: nil, expand_meta: nil, raw_overrides: nil, expand_raw: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -283,8 +279,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -326,7 +320,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_workflow(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.execute_workflow(inputs: )
     def execute_workflow(inputs:, expand_meta: nil, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, metadata: nil, previous_execution_id: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -337,8 +331,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -373,7 +365,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_workflow_async(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.execute_workflow_async(inputs: )
     def execute_workflow_async(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, previous_execution_id: nil, metadata: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -384,8 +376,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -429,8 +419,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -479,8 +467,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -522,8 +508,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -551,7 +535,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.submit_workflow_execution_actuals(actuals: [{ output_type: "STRING" }, { output_type: "STRING" }])
+#  api.submit_workflow_execution_actuals(actuals: )
     def submit_workflow_execution_actuals(actuals:, execution_id: nil, external_id: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -562,8 +546,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -632,7 +614,7 @@ end
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @return [Vellum::AsyncClient]
     def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version: nil)
       @async_request_client = Vellum::AsyncRequestClient.new(
@@ -670,12 +652,12 @@ end
       @workspaces = Vellum::AsyncWorkspacesClient.new(request_client: @async_request_client)
     end
     # @param url [String] 
-    # @param method [Vellum::MethodEnum] 
+    # @param method_ [Vellum::MethodEnum] 
     # @param body [String, Array<Object>, Hash{String => Object}] 
-    # @param headers [Hash{String => Vellum::ExecuteApiRequestHeadersValue}] 
+    # @param headers [Hash{String => Vellum::ExecuteAPIRequestHeadersValue}] 
     # @param bearer_token [String, Vellum::VellumSecret] 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::ExecuteApiResponse]
+    # @return [Vellum::ExecuteAPIResponse]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
@@ -683,7 +665,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.execute_api(url: "x")
-    def execute_api(url:, method: nil, body: nil, headers: nil, bearer_token: nil, request_options: nil)
+    def execute_api(url:, method_: nil, body: nil, headers: nil, bearer_token: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -693,17 +675,15 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), url: url, method: method, body: body, headers: headers, bearer_token: bearer_token }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), url: url, method: method_, body: body, headers: headers, bearer_token: bearer_token }.compact
   req.url "#{@async_request_client.get_url(environment: Default, request_options: request_options)}/v1/execute-api"
 end
-      Vellum::ExecuteApiResponse.from_json(json_object: response.body)
+      Vellum::ExecuteAPIResponse.from_json(json_object: response.body)
     end
     # @param code [String] 
     # @param runtime [Vellum::CodeExecutionRuntime] 
@@ -723,8 +703,8 @@ end
 #  )
 #  api.execute_code(
 #    code: "x",
-#    runtime: PYTHON_3_11_6,
-#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
+#    runtime: PYTHON3116,
+#    input_values: ,
 #    packages: [{ version: "version", name: "name" }, { version: "version", name: "name" }],
 #    output_type: STRING
 #  )
@@ -738,8 +718,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -784,14 +762,14 @@ end
 #  additional monitoring data such as user id, session id, etc. for future
 #  analysis.
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::FulfilledExecutePromptResponse, Vellum::RejectedExecutePromptResponse]
+    # @return [Vellum::ExecutePromptResponse]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_prompt(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.execute_prompt(inputs: )
     def execute_prompt(inputs:, prompt_deployment_id: nil, prompt_deployment_name: nil, release_tag: nil, external_id: nil, expand_meta: nil, raw_overrides: nil, expand_raw: nil, metadata: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -802,8 +780,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -845,7 +821,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_workflow(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.execute_workflow(inputs: )
     def execute_workflow(inputs:, expand_meta: nil, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, metadata: nil, previous_execution_id: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -856,8 +832,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -892,7 +866,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.execute_workflow_async(inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.execute_workflow_async(inputs: )
     def execute_workflow_async(inputs:, workflow_deployment_id: nil, workflow_deployment_name: nil, release_tag: nil, external_id: nil, previous_execution_id: nil, metadata: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -903,8 +877,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -948,8 +920,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -998,8 +968,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -1041,8 +1009,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -1070,7 +1036,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.submit_workflow_execution_actuals(actuals: [{ output_type: "STRING" }, { output_type: "STRING" }])
+#  api.submit_workflow_execution_actuals(actuals: )
     def submit_workflow_execution_actuals(actuals:, execution_id: nil, external_id: nil, request_options: nil)
       response = @async_request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -1081,8 +1047,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@async_request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

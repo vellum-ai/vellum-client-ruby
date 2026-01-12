@@ -10,85 +10,70 @@ require_relative "workflow_execution_snapshotted_event"
 
 module Vellum
   class VellumWorkflowExecutionEvent
+  # @return [Object] 
+    attr_reader :member
+  # @return [String] 
+    attr_reader :discriminant
 
+    private_class_method :new
+    alias kind_of? is_a?
 
+    # @param member [Object] 
+    # @param discriminant [String] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def initialize(member:, discriminant:)
+      @member = member
+      @discriminant = discriminant
+    end
 # Deserialize a JSON object to an instance of VellumWorkflowExecutionEvent
     #
     # @param json_object [String] 
     # @return [Vellum::VellumWorkflowExecutionEvent]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      begin
-        Vellum::WorkflowExecutionInitiatedEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionInitiatedEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
+      case struct.name
+      when "workflow.execution.initiated"
+        member = Vellum::WorkflowExecutionInitiatedEvent.from_json(json_object: json_object)
+      when "workflow.execution.streaming"
+        member = Vellum::WorkflowExecutionStreamingEvent.from_json(json_object: json_object)
+      when "workflow.execution.fulfilled"
+        member = Vellum::WorkflowExecutionFulfilledEvent.from_json(json_object: json_object)
+      when "workflow.execution.rejected"
+        member = Vellum::WorkflowExecutionRejectedEvent.from_json(json_object: json_object)
+      when "workflow.execution.paused"
+        member = Vellum::WorkflowExecutionPausedEvent.from_json(json_object: json_object)
+      when "workflow.execution.resumed"
+        member = Vellum::WorkflowExecutionResumedEvent.from_json(json_object: json_object)
+      when "workflow.execution.snapshotted"
+        member = Vellum::WorkflowExecutionSnapshottedEvent.from_json(json_object: json_object)
+      else
+        member = Vellum::WorkflowExecutionInitiatedEvent.from_json(json_object: json_object)
       end
-      begin
-        Vellum::WorkflowExecutionStreamingEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionStreamingEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
+      new(member: member, discriminant: struct.name)
+    end
+# For Union Types, to_json functionality is delegated to the wrapped member.
+    #
+    # @return [String]
+    def to_json
+      case @discriminant
+      when "workflow.execution.initiated"
+        { **@member.to_json, name: @discriminant }.to_json
+      when "workflow.execution.streaming"
+        { **@member.to_json, name: @discriminant }.to_json
+      when "workflow.execution.fulfilled"
+        { **@member.to_json, name: @discriminant }.to_json
+      when "workflow.execution.rejected"
+        { **@member.to_json, name: @discriminant }.to_json
+      when "workflow.execution.paused"
+        { **@member.to_json, name: @discriminant }.to_json
+      when "workflow.execution.resumed"
+        { **@member.to_json, name: @discriminant }.to_json
+      when "workflow.execution.snapshotted"
+        { **@member.to_json, name: @discriminant }.to_json
+      else
+        { "name": @discriminant, value: @member }.to_json
       end
-      begin
-        Vellum::WorkflowExecutionFulfilledEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionFulfilledEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
-      begin
-        Vellum::WorkflowExecutionRejectedEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionRejectedEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
-      begin
-        Vellum::WorkflowExecutionPausedEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionPausedEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
-      begin
-        Vellum::WorkflowExecutionResumedEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionResumedEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
-      begin
-        Vellum::WorkflowExecutionSnapshottedEvent.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::WorkflowExecutionSnapshottedEvent.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
- return struct
+      @member.to_json
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
 #  hash and check each fields type against the current object's property
@@ -97,42 +82,66 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      begin
-        return Vellum::WorkflowExecutionInitiatedEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
+      case obj.name
+      when "workflow.execution.initiated"
+        Vellum::WorkflowExecutionInitiatedEvent.validate_raw(obj: obj)
+      when "workflow.execution.streaming"
+        Vellum::WorkflowExecutionStreamingEvent.validate_raw(obj: obj)
+      when "workflow.execution.fulfilled"
+        Vellum::WorkflowExecutionFulfilledEvent.validate_raw(obj: obj)
+      when "workflow.execution.rejected"
+        Vellum::WorkflowExecutionRejectedEvent.validate_raw(obj: obj)
+      when "workflow.execution.paused"
+        Vellum::WorkflowExecutionPausedEvent.validate_raw(obj: obj)
+      when "workflow.execution.resumed"
+        Vellum::WorkflowExecutionResumedEvent.validate_raw(obj: obj)
+      when "workflow.execution.snapshotted"
+        Vellum::WorkflowExecutionSnapshottedEvent.validate_raw(obj: obj)
+      else
+        raise("Passed value matched no type within the union, validation failed.")
       end
-      begin
-        return Vellum::WorkflowExecutionStreamingEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::WorkflowExecutionFulfilledEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::WorkflowExecutionRejectedEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::WorkflowExecutionPausedEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::WorkflowExecutionResumedEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::WorkflowExecutionSnapshottedEvent.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      raise("Passed value matched no type within the union, validation failed.")
+    end
+# For Union Types, is_a? functionality is delegated to the wrapped member.
+    #
+    # @param obj [Object] 
+    # @return [Boolean]
+    def is_a?(obj)
+      @member.is_a?(obj)
+    end
+    # @param member [Vellum::WorkflowExecutionInitiatedEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_initiated(member:)
+      new(member: member, discriminant: "workflow.execution.initiated")
+    end
+    # @param member [Vellum::WorkflowExecutionStreamingEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_streaming(member:)
+      new(member: member, discriminant: "workflow.execution.streaming")
+    end
+    # @param member [Vellum::WorkflowExecutionFulfilledEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_fulfilled(member:)
+      new(member: member, discriminant: "workflow.execution.fulfilled")
+    end
+    # @param member [Vellum::WorkflowExecutionRejectedEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_rejected(member:)
+      new(member: member, discriminant: "workflow.execution.rejected")
+    end
+    # @param member [Vellum::WorkflowExecutionPausedEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_paused(member:)
+      new(member: member, discriminant: "workflow.execution.paused")
+    end
+    # @param member [Vellum::WorkflowExecutionResumedEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_resumed(member:)
+      new(member: member, discriminant: "workflow.execution.resumed")
+    end
+    # @param member [Vellum::WorkflowExecutionSnapshottedEvent] 
+    # @return [Vellum::VellumWorkflowExecutionEvent]
+    def self.workflow_execution_snapshotted(member:)
+      new(member: member, discriminant: "workflow.execution.snapshotted")
     end
   end
 end

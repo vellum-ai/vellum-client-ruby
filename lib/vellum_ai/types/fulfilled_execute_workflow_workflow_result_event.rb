@@ -10,8 +10,6 @@ module Vellum
   class FulfilledExecuteWorkflowWorkflowResultEvent
   # @return [String] 
     attr_reader :id
-  # @return [String] 
-    attr_reader :state
   # @return [DateTime] 
     attr_reader :ts
   # @return [Array<Vellum::WorkflowOutput>] 
@@ -25,18 +23,16 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param state [String] 
     # @param ts [DateTime] 
     # @param outputs [Array<Vellum::WorkflowOutput>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::FulfilledExecuteWorkflowWorkflowResultEvent]
-    def initialize(id:, state:, ts:, outputs:, additional_properties: nil)
+    def initialize(id:, ts:, outputs:, additional_properties: nil)
       @id = id
-      @state = state
       @ts = ts
       @outputs = outputs
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "state": state, "ts": ts, "outputs": outputs }
+      @_field_set = { "id": id, "ts": ts, "outputs": outputs }
     end
 # Deserialize a JSON object to an instance of
 #  FulfilledExecuteWorkflowWorkflowResultEvent
@@ -47,7 +43,6 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      state = parsed_json["state"]
       ts = unless parsed_json["ts"].nil?
   DateTime.parse(parsed_json["ts"])
 else
@@ -59,7 +54,6 @@ end
 end
       new(
         id: id,
-        state: state,
         ts: ts,
         outputs: outputs,
         additional_properties: struct
@@ -80,7 +74,6 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.ts.is_a?(DateTime) != false || raise("Passed value for field obj.ts is not the expected type, validation failed.")
       obj.outputs.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
     end

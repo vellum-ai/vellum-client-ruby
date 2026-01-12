@@ -4,11 +4,9 @@ require "json"
 
 module Vellum
 # A user input representing a JSON object
-  class JsonInputRequest
+  class JSONInputRequest
   # @return [String] The variable's name
     attr_reader :name
-  # @return [String] 
-    attr_reader :type
   # @return [Object] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -20,35 +18,33 @@ module Vellum
     OMIT = Object.new
 
     # @param name [String] The variable's name
-    # @param type [String] 
     # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::JsonInputRequest]
-    def initialize(name:, type:, value:, additional_properties: nil)
+    # @return [Vellum::JSONInputRequest]
+    def initialize(name:, value: OMIT, additional_properties: nil)
       @name = name
-      @type = type
-      @value = value
+      @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "type": type, "value": value }
+      @_field_set = { "name": name, "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
-# Deserialize a JSON object to an instance of JsonInputRequest
+# Deserialize a JSON object to an instance of JSONInputRequest
     #
     # @param json_object [String] 
-    # @return [Vellum::JsonInputRequest]
+    # @return [Vellum::JSONInputRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       name = parsed_json["name"]
-      type = parsed_json["type"]
       value = parsed_json["value"]
       new(
         name: name,
-        type: type,
         value: value,
         additional_properties: struct
       )
     end
-# Serialize an instance of JsonInputRequest to a JSON object
+# Serialize an instance of JSONInputRequest to a JSON object
     #
     # @return [String]
     def to_json
@@ -62,8 +58,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end

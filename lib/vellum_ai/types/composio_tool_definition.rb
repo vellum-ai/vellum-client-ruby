@@ -6,8 +6,6 @@ require "json"
 module Vellum
 # Serializer for Composio tool definition response.
   class ComposioToolDefinition
-  # @return [String] 
-    attr_reader :provider
   # @return [Vellum::Integration] 
     attr_reader :integration
   # @return [String] 
@@ -30,7 +28,6 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param provider [String] 
     # @param integration [Vellum::Integration] 
     # @param name [String] 
     # @param label [String] 
@@ -40,8 +37,7 @@ module Vellum
     # @param toolkit_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ComposioToolDefinition]
-    def initialize(provider:, integration:, name:, label:, description:, input_parameters:, output_parameters:, toolkit_version:, additional_properties: nil)
-      @provider = provider
+    def initialize(integration:, name:, label:, description:, input_parameters:, output_parameters:, toolkit_version:, additional_properties: nil)
       @integration = integration
       @name = name
       @label = label
@@ -50,7 +46,7 @@ module Vellum
       @output_parameters = output_parameters
       @toolkit_version = toolkit_version
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "integration": integration, "name": name, "label": label, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters, "toolkit_version": toolkit_version }
+      @_field_set = { "integration": integration, "name": name, "label": label, "description": description, "input_parameters": input_parameters, "output_parameters": output_parameters, "toolkit_version": toolkit_version }
     end
 # Deserialize a JSON object to an instance of ComposioToolDefinition
     #
@@ -59,7 +55,6 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      provider = parsed_json["provider"]
       unless parsed_json["integration"].nil?
         integration = parsed_json["integration"].to_json
         integration = Vellum::Integration.from_json(json_object: integration)
@@ -73,7 +68,6 @@ module Vellum
       output_parameters = parsed_json["output_parameters"]
       toolkit_version = parsed_json["toolkit_version"]
       new(
-        provider: provider,
         integration: integration,
         name: name,
         label: label,
@@ -97,7 +91,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       Vellum::Integration.validate_raw(obj: obj.integration)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")

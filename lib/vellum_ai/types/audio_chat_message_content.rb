@@ -6,8 +6,6 @@ require "json"
 module Vellum
 # An audio value that is used in a chat message.
   class AudioChatMessageContent
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::VellumAudio] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -18,15 +16,13 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param value [Vellum::VellumAudio] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::AudioChatMessageContent]
-    def initialize(type:, value:, additional_properties: nil)
-      @type = type
+    def initialize(value:, additional_properties: nil)
       @value = value
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value }
+      @_field_set = { "value": value }
     end
 # Deserialize a JSON object to an instance of AudioChatMessageContent
     #
@@ -35,18 +31,13 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
         value = Vellum::VellumAudio.from_json(json_object: value)
       else
         value = nil
       end
-      new(
-        type: type,
-        value: value,
-        additional_properties: struct
-      )
+      new(value: value, additional_properties: struct)
     end
 # Serialize an instance of AudioChatMessageContent to a JSON object
     #
@@ -61,7 +52,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::VellumAudio.validate_raw(obj: obj.value)
     end
   end

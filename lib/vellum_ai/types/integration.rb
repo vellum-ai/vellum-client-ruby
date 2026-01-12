@@ -9,7 +9,7 @@ module Vellum
   class Integration
   # @return [String] 
     attr_reader :id
-  # @return [Vellum::INTEGRATION_PROVIDER] 
+  # @return [Vellum::IntegrationProvider] 
     attr_reader :provider
   # @return [Vellum::IntegrationName] 
     attr_reader :name
@@ -22,7 +22,7 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param provider [Vellum::INTEGRATION_PROVIDER] 
+    # @param provider [Vellum::IntegrationProvider] 
     # @param name [Vellum::IntegrationName] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::Integration]
@@ -64,7 +64,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
+      obj.provider.is_a?(Vellum::IntegrationProvider) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end

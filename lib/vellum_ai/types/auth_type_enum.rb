@@ -6,7 +6,7 @@ module Vellum
   class AuthTypeEnum
 
     API_KEY = "API_KEY"
-    OAUTH_2 = "OAUTH2"
+    OAUTH2 = "OAUTH2"
 
   end
 end

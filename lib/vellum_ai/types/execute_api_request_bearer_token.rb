@@ -3,13 +3,13 @@ require "json"
 require_relative "vellum_secret"
 
 module Vellum
-  class ExecuteApiRequestBearerToken
+  class ExecuteAPIRequestBearerToken
 
 
-# Deserialize a JSON object to an instance of ExecuteApiRequestBearerToken
+# Deserialize a JSON object to an instance of ExecuteAPIRequestBearerToken
     #
     # @param json_object [String] 
-    # @return [Vellum::ExecuteApiRequestBearerToken]
+    # @return [Vellum::ExecuteAPIRequestBearerToken]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       begin

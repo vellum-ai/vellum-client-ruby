@@ -8,8 +8,6 @@ module Vellum
     attr_reader :id
   # @return [String] The unique name given to the terminal node that produced this output.
     attr_reader :name
-  # @return [String] 
-    attr_reader :type
   # @return [Float] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -22,17 +20,15 @@ module Vellum
 
     # @param id [String] 
     # @param name [String] The unique name given to the terminal node that produced this output.
-    # @param type [String] 
     # @param value [Float] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TerminalNodeNumberResult]
-    def initialize(id: OMIT, name:, type:, value: OMIT, additional_properties: nil)
+    def initialize(id: OMIT, name:, value: OMIT, additional_properties: nil)
       @id = id if id != OMIT
       @name = name
-      @type = type
       @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "type": type, "value": value }.reject do | _k, v |
+      @_field_set = { "id": id, "name": name, "value": value }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -45,12 +41,10 @@ end
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
       name = parsed_json["name"]
-      type = parsed_json["type"]
       value = parsed_json["value"]
       new(
         id: id,
         name: name,
-        type: type,
         value: value,
         additional_properties: struct
       )
@@ -70,7 +64,6 @@ end
     def self.validate_raw(obj:)
       obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(Float) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end

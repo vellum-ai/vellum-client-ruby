@@ -23,7 +23,7 @@ module Vellum
     #
     # @param test_suite_id [String] The ID of the Test Suite to run. Must provide either this or test_suite_id.
     # @param test_suite_name [String] The name of the Test Suite to run. Must provide either this or test_suite_id.
-    # @param exec_config [Vellum::TestSuiteRunDeploymentReleaseTagExecConfigRequest, Vellum::TestSuiteRunPromptSandboxExecConfigRequest, Vellum::TestSuiteRunPromptSandboxHistoryItemExecConfigRequest, Vellum::TestSuiteRunWorkflowReleaseTagExecConfigRequest, Vellum::TestSuiteRunWorkflowSandboxExecConfigRequest, Vellum::TestSuiteRunWorkflowSandboxHistoryItemExecConfigRequest, Vellum::TestSuiteRunExternalExecConfigRequest] Configuration that defines how the Test Suite should be run
+    # @param exec_config [Vellum::TestSuiteRunExecConfigRequest] Configuration that defines how the Test Suite should be run
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::TestSuiteRunRead]
     # @example
@@ -32,7 +32,7 @@ module Vellum
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.test_suite_runs.create(exec_config: { type: "DEPLOYMENT_RELEASE_TAG", data: { deployment_id: "deployment_id" } })
+#  api.test_suite_runs.create
     def create(test_suite_id: nil, test_suite_name: nil, exec_config:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -43,8 +43,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -77,8 +75,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -119,8 +115,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "limit": limit, "offset": offset }.compact
@@ -146,7 +140,7 @@ end
     #
     # @param test_suite_id [String] The ID of the Test Suite to run. Must provide either this or test_suite_id.
     # @param test_suite_name [String] The name of the Test Suite to run. Must provide either this or test_suite_id.
-    # @param exec_config [Vellum::TestSuiteRunDeploymentReleaseTagExecConfigRequest, Vellum::TestSuiteRunPromptSandboxExecConfigRequest, Vellum::TestSuiteRunPromptSandboxHistoryItemExecConfigRequest, Vellum::TestSuiteRunWorkflowReleaseTagExecConfigRequest, Vellum::TestSuiteRunWorkflowSandboxExecConfigRequest, Vellum::TestSuiteRunWorkflowSandboxHistoryItemExecConfigRequest, Vellum::TestSuiteRunExternalExecConfigRequest] Configuration that defines how the Test Suite should be run
+    # @param exec_config [Vellum::TestSuiteRunExecConfigRequest] Configuration that defines how the Test Suite should be run
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::TestSuiteRunRead]
     # @example
@@ -155,7 +149,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.test_suite_runs.create(exec_config: { type: "DEPLOYMENT_RELEASE_TAG", data: { deployment_id: "deployment_id" } })
+#  api.test_suite_runs.create
     def create(test_suite_id: nil, test_suite_name: nil, exec_config:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -167,8 +161,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -203,8 +195,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -247,8 +237,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "limit": limit, "offset": offset }.compact

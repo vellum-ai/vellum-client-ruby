@@ -8,8 +8,6 @@ module Vellum
 # The final data event returned indicating that the stream has ended and all final
 #  resolved values from the model can be found.
   class FulfilledExecutePromptEvent
-  # @return [String] 
-    attr_reader :state
   # @return [Array<Vellum::PromptOutput>] 
     attr_reader :outputs
   # @return [String] 
@@ -24,19 +22,17 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param state [String] 
     # @param outputs [Array<Vellum::PromptOutput>] 
     # @param execution_id [String] 
     # @param meta [Vellum::FulfilledPromptExecutionMeta] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::FulfilledExecutePromptEvent]
-    def initialize(state:, outputs:, execution_id:, meta: OMIT, additional_properties: nil)
-      @state = state
+    def initialize(outputs:, execution_id:, meta: OMIT, additional_properties: nil)
       @outputs = outputs
       @execution_id = execution_id
       @meta = meta if meta != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "state": state, "outputs": outputs, "execution_id": execution_id, "meta": meta }.reject do | _k, v |
+      @_field_set = { "outputs": outputs, "execution_id": execution_id, "meta": meta }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -47,7 +43,6 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      state = parsed_json["state"]
       outputs = parsed_json["outputs"]&.map do | item |
   item = item.to_json
   Vellum::PromptOutput.from_json(json_object: item)
@@ -60,7 +55,6 @@ end
         meta = nil
       end
       new(
-        state: state,
         outputs: outputs,
         execution_id: execution_id,
         meta: meta,
@@ -80,7 +74,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.outputs.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
       obj.meta.nil? || Vellum::FulfilledPromptExecutionMeta.validate_raw(obj: obj.meta)

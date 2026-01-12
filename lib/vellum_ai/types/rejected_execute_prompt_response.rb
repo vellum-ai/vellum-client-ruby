@@ -14,8 +14,6 @@ module Vellum
     attr_reader :raw
   # @return [String] The ID of the execution.
     attr_reader :execution_id
-  # @return [String] 
-    attr_reader :state
   # @return [Vellum::VellumError] 
     attr_reader :error
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -30,18 +28,16 @@ module Vellum
     # @param raw [Hash{String => Object}] The subset of the raw response from the model that the request opted into with
 #  `expand_raw`.
     # @param execution_id [String] The ID of the execution.
-    # @param state [String] 
     # @param error [Vellum::VellumError] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::RejectedExecutePromptResponse]
-    def initialize(meta: OMIT, raw: OMIT, execution_id:, state:, error:, additional_properties: nil)
+    def initialize(meta: OMIT, raw: OMIT, execution_id:, error:, additional_properties: nil)
       @meta = meta if meta != OMIT
       @raw = raw if raw != OMIT
       @execution_id = execution_id
-      @state = state
       @error = error
       @additional_properties = additional_properties
-      @_field_set = { "meta": meta, "raw": raw, "execution_id": execution_id, "state": state, "error": error }.reject do | _k, v |
+      @_field_set = { "meta": meta, "raw": raw, "execution_id": execution_id, "error": error }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -60,7 +56,6 @@ end
       end
       raw = parsed_json["raw"]
       execution_id = parsed_json["execution_id"]
-      state = parsed_json["state"]
       unless parsed_json["error"].nil?
         error = parsed_json["error"].to_json
         error = Vellum::VellumError.from_json(json_object: error)
@@ -71,7 +66,6 @@ end
         meta: meta,
         raw: raw,
         execution_id: execution_id,
-        state: state,
         error: error,
         additional_properties: struct
       )
@@ -92,7 +86,6 @@ end
       obj.meta.nil? || Vellum::PromptExecutionMeta.validate_raw(obj: obj.meta)
       obj.raw&.is_a?(Hash) != false || raise("Passed value for field obj.raw is not the expected type, validation failed.")
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       Vellum::VellumError.validate_raw(obj: obj.error)
     end
   end

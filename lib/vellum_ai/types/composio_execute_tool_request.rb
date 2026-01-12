@@ -5,8 +5,6 @@ require "json"
 module Vellum
 # Payload for executing a Composio tool with provider id and tool arguments.
   class ComposioExecuteToolRequest
-  # @return [String] 
-    attr_reader :provider
   # @return [Hash{String => Object}] 
     attr_reader :arguments
   # @return [String] 
@@ -19,17 +17,15 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param provider [String] 
     # @param arguments [Hash{String => Object}] 
     # @param toolkit_version [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ComposioExecuteToolRequest]
-    def initialize(provider:, arguments:, toolkit_version: OMIT, additional_properties: nil)
-      @provider = provider
+    def initialize(arguments:, toolkit_version: OMIT, additional_properties: nil)
       @arguments = arguments
       @toolkit_version = toolkit_version if toolkit_version != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "arguments": arguments, "toolkit_version": toolkit_version }.reject do | _k, v |
+      @_field_set = { "arguments": arguments, "toolkit_version": toolkit_version }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -40,11 +36,9 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      provider = parsed_json["provider"]
       arguments = parsed_json["arguments"]
       toolkit_version = parsed_json["toolkit_version"]
       new(
-        provider: provider,
         arguments: arguments,
         toolkit_version: toolkit_version,
         additional_properties: struct
@@ -63,7 +57,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       obj.arguments.is_a?(Hash) != false || raise("Passed value for field obj.arguments is not the expected type, validation failed.")
       obj.toolkit_version&.is_a?(String) != false || raise("Passed value for field obj.toolkit_version is not the expected type, validation failed.")
     end

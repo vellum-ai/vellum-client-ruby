@@ -51,8 +51,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "document_index_id": document_index_id, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
@@ -86,8 +84,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -123,8 +119,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -142,7 +136,7 @@ end
     # @param id [String] 
     # @param label [String] A human-readable label for the document. Defaults to the originally uploaded
 #  file's file name.
-    # @param status [Vellum::DOCUMENT_STATUS] The current status of the document
+    # @param status [Vellum::DocumentStatus] The current status of the document
 #  * `ACTIVE` - Active
     # @param keywords [Array<String>] A list of keywords that'll be associated with the document. Used as part of
 #  keyword search.
@@ -167,8 +161,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -207,8 +199,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -261,8 +251,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "document_index_id": document_index_id, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
@@ -298,8 +286,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -337,8 +323,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -357,7 +341,7 @@ end
     # @param id [String] 
     # @param label [String] A human-readable label for the document. Defaults to the originally uploaded
 #  file's file name.
-    # @param status [Vellum::DOCUMENT_STATUS] The current status of the document
+    # @param status [Vellum::DocumentStatus] The current status of the document
 #  * `ACTIVE` - Active
     # @param keywords [Array<String>] A list of keywords that'll be associated with the document. Used as part of
 #  keyword search.
@@ -383,8 +367,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -425,8 +407,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

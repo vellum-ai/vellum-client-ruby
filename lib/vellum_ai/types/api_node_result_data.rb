@@ -3,7 +3,7 @@ require "ostruct"
 require "json"
 
 module Vellum
-  class ApiNodeResultData
+  class APINodeResultData
   # @return [Hash{String => Object}] 
     attr_reader :json
   # @return [String] 
@@ -31,7 +31,7 @@ module Vellum
     # @param status_code_output_id [String] 
     # @param status_code [Integer] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::ApiNodeResultData]
+    # @return [Vellum::APINodeResultData]
     def initialize(json: OMIT, text_output_id:, text: OMIT, json_output_id:, status_code_output_id:, status_code:, additional_properties: nil)
       @json = json if json != OMIT
       @text_output_id = text_output_id
@@ -44,10 +44,10 @@ module Vellum
   v == OMIT
 end
     end
-# Deserialize a JSON object to an instance of ApiNodeResultData
+# Deserialize a JSON object to an instance of APINodeResultData
     #
     # @param json_object [String] 
-    # @return [Vellum::ApiNodeResultData]
+    # @return [Vellum::APINodeResultData]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -67,7 +67,7 @@ end
         additional_properties: struct
       )
     end
-# Serialize an instance of ApiNodeResultData to a JSON object
+# Serialize an instance of APINodeResultData to a JSON object
     #
     # @return [String]
     def to_json

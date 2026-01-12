@@ -4,11 +4,9 @@ require "json"
 
 module Vellum
 # Output for a test suite run metric that is of type NUMBER
-  class TestSuiteRunMetricJsonOutput
+  class TestSuiteRunMetricJSONOutput
   # @return [Object] 
     attr_reader :value
-  # @return [String] 
-    attr_reader :type
   # @return [String] 
     attr_reader :name
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -20,35 +18,33 @@ module Vellum
     OMIT = Object.new
 
     # @param value [Object] 
-    # @param type [String] 
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::TestSuiteRunMetricJsonOutput]
-    def initialize(value:, type:, name:, additional_properties: nil)
-      @value = value
-      @type = type
+    # @return [Vellum::TestSuiteRunMetricJSONOutput]
+    def initialize(value: OMIT, name:, additional_properties: nil)
+      @value = value if value != OMIT
       @name = name
       @additional_properties = additional_properties
-      @_field_set = { "value": value, "type": type, "name": name }
+      @_field_set = { "value": value, "name": name }.reject do | _k, v |
+  v == OMIT
+end
     end
-# Deserialize a JSON object to an instance of TestSuiteRunMetricJsonOutput
+# Deserialize a JSON object to an instance of TestSuiteRunMetricJSONOutput
     #
     # @param json_object [String] 
-    # @return [Vellum::TestSuiteRunMetricJsonOutput]
+    # @return [Vellum::TestSuiteRunMetricJSONOutput]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       value = parsed_json["value"]
-      type = parsed_json["type"]
       name = parsed_json["name"]
       new(
         value: value,
-        type: type,
         name: name,
         additional_properties: struct
       )
     end
-# Serialize an instance of TestSuiteRunMetricJsonOutput to a JSON object
+# Serialize an instance of TestSuiteRunMetricJSONOutput to a JSON object
     #
     # @return [String]
     def to_json
@@ -61,8 +57,7 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end

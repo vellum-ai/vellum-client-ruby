@@ -6,8 +6,6 @@ require "json"
 module Vellum
 # Vectorizer for hkunlp/instructor-xl.
   class HkunlpInstructorXlVectorizerRequest
-  # @return [String] 
-    attr_reader :model_name
   # @return [Vellum::InstructorVectorizerConfigRequest] 
     attr_reader :config
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -18,15 +16,13 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param model_name [String] 
     # @param config [Vellum::InstructorVectorizerConfigRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::HkunlpInstructorXlVectorizerRequest]
-    def initialize(model_name:, config:, additional_properties: nil)
-      @model_name = model_name
+    def initialize(config:, additional_properties: nil)
       @config = config
       @additional_properties = additional_properties
-      @_field_set = { "model_name": model_name, "config": config }
+      @_field_set = { "config": config }
     end
 # Deserialize a JSON object to an instance of HkunlpInstructorXlVectorizerRequest
     #
@@ -35,18 +31,13 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      model_name = parsed_json["model_name"]
       unless parsed_json["config"].nil?
         config = parsed_json["config"].to_json
         config = Vellum::InstructorVectorizerConfigRequest.from_json(json_object: config)
       else
         config = nil
       end
-      new(
-        model_name: model_name,
-        config: config,
-        additional_properties: struct
-      )
+      new(config: config, additional_properties: struct)
     end
 # Serialize an instance of HkunlpInstructorXlVectorizerRequest to a JSON object
     #
@@ -61,7 +52,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.model_name.is_a?(String) != false || raise("Passed value for field obj.model_name is not the expected type, validation failed.")
       Vellum::InstructorVectorizerConfigRequest.validate_raw(obj: obj.config)
     end
   end

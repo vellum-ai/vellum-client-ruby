@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative "../../requests"
 require_relative "../types/paginated_test_suite_test_case_list"
-require_relative "../types/upsert_test_suite_test_case_request"
+require_relative "../types/upsert_test_suite_test_case_request_body"
 require_relative "../types/test_suite_test_case"
 require "async"
 require "async"
@@ -43,8 +43,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset }.compact
@@ -65,7 +63,7 @@ end
 #  or overwritten with default values.
     #
     # @param id [String] Either the Test Suites' ID or its unique name
-    # @param request [Hash] Request of type Vellum::UpsertTestSuiteTestCaseRequest, as a Hash
+    # @param request [Hash] Request of type Vellum::UpsertTestSuiteTestCaseRequestBody, as a Hash
     #   * :id (String) 
     #   * :external_id (String) 
     #   * :label (String) 
@@ -79,7 +77,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { input_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }], evaluation_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }] })
+#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { input_values: , evaluation_values:  })
     def upsert_test_suite_test_case(id:, request:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -90,8 +88,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -125,8 +121,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -174,8 +168,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset }.compact
@@ -197,7 +189,7 @@ end
 #  or overwritten with default values.
     #
     # @param id [String] Either the Test Suites' ID or its unique name
-    # @param request [Hash] Request of type Vellum::UpsertTestSuiteTestCaseRequest, as a Hash
+    # @param request [Hash] Request of type Vellum::UpsertTestSuiteTestCaseRequestBody, as a Hash
     #   * :id (String) 
     #   * :external_id (String) 
     #   * :label (String) 
@@ -211,7 +203,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { input_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }], evaluation_values: [{ type: "STRING", name: "x" }, { type: "STRING", name: "x" }] })
+#  api.test_suites.upsert_test_suite_test_case(id: "id", request: { input_values: , evaluation_values:  })
     def upsert_test_suite_test_case(id:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -223,8 +215,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -260,8 +250,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

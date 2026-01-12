@@ -4,9 +4,7 @@ require "json"
 
 module Vellum
 # A value representing a JSON object.
-  class JsonVellumValue
-  # @return [String] 
-    attr_reader :type
+  class JSONVellumValue
   # @return [Object] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -17,32 +15,27 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param value [Object] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::JsonVellumValue]
-    def initialize(type:, value:, additional_properties: nil)
-      @type = type
-      @value = value
+    # @return [Vellum::JSONVellumValue]
+    def initialize(value: OMIT, additional_properties: nil)
+      @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value }
+      @_field_set = { "value": value }.reject do | _k, v |
+  v == OMIT
+end
     end
-# Deserialize a JSON object to an instance of JsonVellumValue
+# Deserialize a JSON object to an instance of JSONVellumValue
     #
     # @param json_object [String] 
-    # @return [Vellum::JsonVellumValue]
+    # @return [Vellum::JSONVellumValue]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       value = parsed_json["value"]
-      new(
-        type: type,
-        value: value,
-        additional_properties: struct
-      )
+      new(value: value, additional_properties: struct)
     end
-# Serialize an instance of JsonVellumValue to a JSON object
+# Serialize an instance of JSONVellumValue to a JSON object
     #
     # @return [String]
     def to_json
@@ -55,8 +48,7 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
 end

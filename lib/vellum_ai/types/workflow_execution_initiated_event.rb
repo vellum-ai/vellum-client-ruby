@@ -13,15 +13,13 @@ module Vellum
     attr_reader :parent
   # @return [Array<Vellum::SpanLink>] 
     attr_reader :links
-  # @return [String] 
-    attr_reader :name
   # @return [Vellum::WorkflowExecutionInitiatedBody] 
     attr_reader :body
   # @return [String] 
     attr_reader :id
   # @return [DateTime] 
     attr_reader :timestamp
-  # @return [Vellum::ApiVersionEnum] 
+  # @return [Vellum::APIVersionEnum] 
     attr_reader :api_version
   # @return [String] 
     attr_reader :trace_id
@@ -37,19 +35,17 @@ module Vellum
 
     # @param parent [Vellum::ParentContext] 
     # @param links [Array<Vellum::SpanLink>] 
-    # @param name [String] 
     # @param body [Vellum::WorkflowExecutionInitiatedBody] 
     # @param id [String] 
     # @param timestamp [DateTime] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @param trace_id [String] 
     # @param span_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionInitiatedEvent]
-    def initialize(parent: OMIT, links: OMIT, name:, body:, id:, timestamp:, api_version: OMIT, trace_id:, span_id:, additional_properties: nil)
+    def initialize(parent: OMIT, links: OMIT, body:, id:, timestamp:, api_version: OMIT, trace_id:, span_id:, additional_properties: nil)
       @parent = parent if parent != OMIT
       @links = links if links != OMIT
-      @name = name
       @body = body
       @id = id
       @timestamp = timestamp
@@ -57,7 +53,7 @@ module Vellum
       @trace_id = trace_id
       @span_id = span_id
       @additional_properties = additional_properties
-      @_field_set = { "parent": parent, "links": links, "name": name, "body": body, "id": id, "timestamp": timestamp, "api_version": api_version, "trace_id": trace_id, "span_id": span_id }.reject do | _k, v |
+      @_field_set = { "parent": parent, "links": links, "body": body, "id": id, "timestamp": timestamp, "api_version": api_version, "trace_id": trace_id, "span_id": span_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -78,7 +74,6 @@ end
   item = item.to_json
   Vellum::SpanLink.from_json(json_object: item)
 end
-      name = parsed_json["name"]
       unless parsed_json["body"].nil?
         body = parsed_json["body"].to_json
         body = Vellum::WorkflowExecutionInitiatedBody.from_json(json_object: body)
@@ -97,7 +92,6 @@ end
       new(
         parent: parent,
         links: links,
-        name: name,
         body: body,
         id: id,
         timestamp: timestamp,
@@ -122,11 +116,10 @@ end
     def self.validate_raw(obj:)
       obj.parent.nil? || Vellum::ParentContext.validate_raw(obj: obj.parent)
       obj.links&.is_a?(Array) != false || raise("Passed value for field obj.links is not the expected type, validation failed.")
-      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       Vellum::WorkflowExecutionInitiatedBody.validate_raw(obj: obj.body)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.timestamp.is_a?(DateTime) != false || raise("Passed value for field obj.timestamp is not the expected type, validation failed.")
-      obj.api_version&.is_a?(Vellum::ApiVersionEnum) != false || raise("Passed value for field obj.api_version is not the expected type, validation failed.")
+      obj.api_version&.is_a?(Vellum::APIVersionEnum) != false || raise("Passed value for field obj.api_version is not the expected type, validation failed.")
       obj.trace_id.is_a?(String) != false || raise("Passed value for field obj.trace_id is not the expected type, validation failed.")
       obj.span_id.is_a?(String) != false || raise("Passed value for field obj.span_id is not the expected type, validation failed.")
     end

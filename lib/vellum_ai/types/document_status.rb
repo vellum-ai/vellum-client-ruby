@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
 module Vellum
-  DOCUMENT_STATUS = String
+# * `ACTIVE` - Active
+  class DocumentStatus
+
+    ACTIVE = "ACTIVE"
+
+  end
 end

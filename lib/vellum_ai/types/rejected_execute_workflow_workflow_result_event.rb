@@ -10,8 +10,6 @@ module Vellum
   class RejectedExecuteWorkflowWorkflowResultEvent
   # @return [String] 
     attr_reader :id
-  # @return [String] 
-    attr_reader :state
   # @return [DateTime] 
     attr_reader :ts
   # @return [Vellum::WorkflowEventError] 
@@ -25,18 +23,16 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param state [String] 
     # @param ts [DateTime] 
     # @param error [Vellum::WorkflowEventError] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::RejectedExecuteWorkflowWorkflowResultEvent]
-    def initialize(id:, state:, ts:, error:, additional_properties: nil)
+    def initialize(id:, ts:, error:, additional_properties: nil)
       @id = id
-      @state = state
       @ts = ts
       @error = error
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "state": state, "ts": ts, "error": error }
+      @_field_set = { "id": id, "ts": ts, "error": error }
     end
 # Deserialize a JSON object to an instance of
 #  RejectedExecuteWorkflowWorkflowResultEvent
@@ -47,7 +43,6 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      state = parsed_json["state"]
       ts = unless parsed_json["ts"].nil?
   DateTime.parse(parsed_json["ts"])
 else
@@ -61,7 +56,6 @@ end
       end
       new(
         id: id,
-        state: state,
         ts: ts,
         error: error,
         additional_properties: struct
@@ -82,7 +76,6 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.ts.is_a?(DateTime) != false || raise("Passed value for field obj.ts is not the expected type, validation failed.")
       Vellum::WorkflowEventError.validate_raw(obj: obj.error)
     end

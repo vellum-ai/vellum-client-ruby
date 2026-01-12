@@ -8,65 +8,62 @@ require_relative "test_suite_run_metric_array_output"
 
 module Vellum
   class TestSuiteRunMetricOutput
+  # @return [Object] 
+    attr_reader :member
+  # @return [String] 
+    attr_reader :discriminant
 
+    private_class_method :new
+    alias kind_of? is_a?
 
+    # @param member [Object] 
+    # @param discriminant [String] 
+    # @return [Vellum::TestSuiteRunMetricOutput]
+    def initialize(member:, discriminant:)
+      @member = member
+      @discriminant = discriminant
+    end
 # Deserialize a JSON object to an instance of TestSuiteRunMetricOutput
     #
     # @param json_object [String] 
     # @return [Vellum::TestSuiteRunMetricOutput]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      begin
-        Vellum::TestSuiteRunMetricStringOutput.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::TestSuiteRunMetricStringOutput.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
+      case struct.type
+      when "STRING"
+        member = Vellum::TestSuiteRunMetricStringOutput.from_json(json_object: json_object)
+      when "NUMBER"
+        member = Vellum::TestSuiteRunMetricNumberOutput.from_json(json_object: json_object)
+      when "JSON"
+        member = Vellum::TestSuiteRunMetricJSONOutput.from_json(json_object: json_object)
+      when "ERROR"
+        member = Vellum::TestSuiteRunMetricErrorOutput.from_json(json_object: json_object)
+      when "ARRAY"
+        member = Vellum::TestSuiteRunMetricArrayOutput.from_json(json_object: json_object)
+      else
+        member = Vellum::TestSuiteRunMetricStringOutput.from_json(json_object: json_object)
       end
-      begin
-        Vellum::TestSuiteRunMetricNumberOutput.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::TestSuiteRunMetricNumberOutput.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
+      new(member: member, discriminant: struct.type)
+    end
+# For Union Types, to_json functionality is delegated to the wrapped member.
+    #
+    # @return [String]
+    def to_json
+      case @discriminant
+      when "STRING"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "NUMBER"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "JSON"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ERROR"
+        { **@member.to_json, type: @discriminant }.to_json
+      when "ARRAY"
+        { **@member.to_json, type: @discriminant }.to_json
+      else
+        { "type": @discriminant, value: @member }.to_json
       end
-      begin
-        Vellum::TestSuiteRunMetricJsonOutput.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::TestSuiteRunMetricJsonOutput.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
-      begin
-        Vellum::TestSuiteRunMetricErrorOutput.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::TestSuiteRunMetricErrorOutput.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
-      begin
-        Vellum::TestSuiteRunMetricArrayOutput.validate_raw(obj: struct)
-        unless struct.nil?
-  return Vellum::TestSuiteRunMetricArrayOutput.from_json(json_object: struct)
-else
-  return nil
-end
-      rescue StandardError
-        # noop
-      end
- return struct
+      @member.to_json
     end
 # Leveraged for Union-type generation, validate_raw attempts to parse the given
 #  hash and check each fields type against the current object's property
@@ -75,32 +72,52 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      begin
-        return Vellum::TestSuiteRunMetricStringOutput.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
+      case obj.type
+      when "STRING"
+        Vellum::TestSuiteRunMetricStringOutput.validate_raw(obj: obj)
+      when "NUMBER"
+        Vellum::TestSuiteRunMetricNumberOutput.validate_raw(obj: obj)
+      when "JSON"
+        Vellum::TestSuiteRunMetricJSONOutput.validate_raw(obj: obj)
+      when "ERROR"
+        Vellum::TestSuiteRunMetricErrorOutput.validate_raw(obj: obj)
+      when "ARRAY"
+        Vellum::TestSuiteRunMetricArrayOutput.validate_raw(obj: obj)
+      else
+        raise("Passed value matched no type within the union, validation failed.")
       end
-      begin
-        return Vellum::TestSuiteRunMetricNumberOutput.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::TestSuiteRunMetricJsonOutput.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::TestSuiteRunMetricErrorOutput.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      begin
-        return Vellum::TestSuiteRunMetricArrayOutput.validate_raw(obj: obj)
-      rescue StandardError
-        # noop
-      end
-      raise("Passed value matched no type within the union, validation failed.")
+    end
+# For Union Types, is_a? functionality is delegated to the wrapped member.
+    #
+    # @param obj [Object] 
+    # @return [Boolean]
+    def is_a?(obj)
+      @member.is_a?(obj)
+    end
+    # @param member [Vellum::TestSuiteRunMetricStringOutput] 
+    # @return [Vellum::TestSuiteRunMetricOutput]
+    def self.string(member:)
+      new(member: member, discriminant: "STRING")
+    end
+    # @param member [Vellum::TestSuiteRunMetricNumberOutput] 
+    # @return [Vellum::TestSuiteRunMetricOutput]
+    def self.number(member:)
+      new(member: member, discriminant: "NUMBER")
+    end
+    # @param member [Vellum::TestSuiteRunMetricJSONOutput] 
+    # @return [Vellum::TestSuiteRunMetricOutput]
+    def self.json(member:)
+      new(member: member, discriminant: "JSON")
+    end
+    # @param member [Vellum::TestSuiteRunMetricErrorOutput] 
+    # @return [Vellum::TestSuiteRunMetricOutput]
+    def self.error(member:)
+      new(member: member, discriminant: "ERROR")
+    end
+    # @param member [Vellum::TestSuiteRunMetricArrayOutput] 
+    # @return [Vellum::TestSuiteRunMetricOutput]
+    def self.array(member:)
+      new(member: member, discriminant: "ARRAY")
     end
   end
 end

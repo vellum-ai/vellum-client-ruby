@@ -9,8 +9,6 @@ module Vellum
   # @return [String] 
     attr_reader :key
   # @return [String] 
-    attr_reader :type
-  # @return [String] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -22,17 +20,15 @@ module Vellum
 
     # @param node_input_id [String] 
     # @param key [String] 
-    # @param type [String] 
     # @param value [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NodeInputCompiledStringValue]
-    def initialize(node_input_id:, key:, type:, value: OMIT, additional_properties: nil)
+    def initialize(node_input_id:, key:, value: OMIT, additional_properties: nil)
       @node_input_id = node_input_id
       @key = key
-      @type = type
       @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "node_input_id": node_input_id, "key": key, "type": type, "value": value }.reject do | _k, v |
+      @_field_set = { "node_input_id": node_input_id, "key": key, "value": value }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -45,12 +41,10 @@ end
       parsed_json = JSON.parse(json_object)
       node_input_id = parsed_json["node_input_id"]
       key = parsed_json["key"]
-      type = parsed_json["type"]
       value = parsed_json["value"]
       new(
         node_input_id: node_input_id,
         key: key,
-        type: type,
         value: value,
         additional_properties: struct
       )
@@ -70,7 +64,6 @@ end
     def self.validate_raw(obj:)
       obj.node_input_id.is_a?(String) != false || raise("Passed value for field obj.node_input_id is not the expected type, validation failed.")
       obj.key.is_a?(String) != false || raise("Passed value for field obj.key is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end

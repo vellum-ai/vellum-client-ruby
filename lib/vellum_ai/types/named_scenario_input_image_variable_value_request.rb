@@ -5,8 +5,6 @@ require "json"
 
 module Vellum
   class NamedScenarioInputImageVariableValueRequest
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::VellumImageRequest] 
     attr_reader :value
   # @return [String] 
@@ -19,17 +17,15 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param value [Vellum::VellumImageRequest] 
     # @param name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NamedScenarioInputImageVariableValueRequest]
-    def initialize(type:, value:, name:, additional_properties: nil)
-      @type = type
+    def initialize(value:, name:, additional_properties: nil)
       @value = value
       @name = name
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value, "name": name }
+      @_field_set = { "value": value, "name": name }
     end
 # Deserialize a JSON object to an instance of
 #  NamedScenarioInputImageVariableValueRequest
@@ -39,7 +35,6 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
         value = Vellum::VellumImageRequest.from_json(json_object: value)
@@ -48,7 +43,6 @@ module Vellum
       end
       name = parsed_json["name"]
       new(
-        type: type,
         value: value,
         name: name,
         additional_properties: struct
@@ -68,7 +62,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::VellumImageRequest.validate_raw(obj: obj.value)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end

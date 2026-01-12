@@ -7,8 +7,6 @@ module Vellum
   # @return [String] 
     attr_reader :id
   # @return [String] 
-    attr_reader :type
-  # @return [String] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -19,16 +17,14 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
-    # @param type [String] 
     # @param value [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TemplatingNodeStringResult]
-    def initialize(id:, type:, value: OMIT, additional_properties: nil)
+    def initialize(id:, value: OMIT, additional_properties: nil)
       @id = id
-      @type = type
       @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "type": type, "value": value }.reject do | _k, v |
+      @_field_set = { "id": id, "value": value }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -40,11 +36,9 @@ end
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      type = parsed_json["type"]
       value = parsed_json["value"]
       new(
         id: id,
-        type: type,
         value: value,
         additional_properties: struct
       )
@@ -63,7 +57,6 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end

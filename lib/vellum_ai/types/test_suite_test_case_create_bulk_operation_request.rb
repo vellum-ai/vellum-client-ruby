@@ -9,8 +9,6 @@ module Vellum
   # @return [String] An ID representing this specific operation. Can later be used to look up
 #  information about the operation's success in the response.
     attr_reader :id
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::CreateTestSuiteTestCaseRequest] 
     attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -23,16 +21,14 @@ module Vellum
 
     # @param id [String] An ID representing this specific operation. Can later be used to look up
 #  information about the operation's success in the response.
-    # @param type [String] 
     # @param data [Vellum::CreateTestSuiteTestCaseRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TestSuiteTestCaseCreateBulkOperationRequest]
-    def initialize(id:, type:, data:, additional_properties: nil)
+    def initialize(id:, data:, additional_properties: nil)
       @id = id
-      @type = type
       @data = data
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "type": type, "data": data }
+      @_field_set = { "id": id, "data": data }
     end
 # Deserialize a JSON object to an instance of
 #  TestSuiteTestCaseCreateBulkOperationRequest
@@ -43,7 +39,6 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      type = parsed_json["type"]
       unless parsed_json["data"].nil?
         data = parsed_json["data"].to_json
         data = Vellum::CreateTestSuiteTestCaseRequest.from_json(json_object: data)
@@ -52,7 +47,6 @@ module Vellum
       end
       new(
         id: id,
-        type: type,
         data: data,
         additional_properties: struct
       )
@@ -72,7 +66,6 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::CreateTestSuiteTestCaseRequest.validate_raw(obj: obj.data)
     end
   end

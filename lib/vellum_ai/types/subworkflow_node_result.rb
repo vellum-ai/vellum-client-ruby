@@ -6,8 +6,6 @@ require "json"
 module Vellum
 # A Node Result Event emitted from a Subworkflow Node.
   class SubworkflowNodeResult
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::SubworkflowNodeResultData] 
     attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -18,15 +16,13 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param data [Vellum::SubworkflowNodeResultData] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SubworkflowNodeResult]
-    def initialize(type:, data: OMIT, additional_properties: nil)
-      @type = type
+    def initialize(data: OMIT, additional_properties: nil)
       @data = data if data != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "data": data }.reject do | _k, v |
+      @_field_set = { "data": data }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -37,18 +33,13 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       unless parsed_json["data"].nil?
         data = parsed_json["data"].to_json
         data = Vellum::SubworkflowNodeResultData.from_json(json_object: data)
       else
         data = nil
       end
-      new(
-        type: type,
-        data: data,
-        additional_properties: struct
-      )
+      new(data: data, additional_properties: struct)
     end
 # Serialize an instance of SubworkflowNodeResult to a JSON object
     #
@@ -63,7 +54,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.data.nil? || Vellum::SubworkflowNodeResultData.validate_raw(obj: obj.data)
     end
   end

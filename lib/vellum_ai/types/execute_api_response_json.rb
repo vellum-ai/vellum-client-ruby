@@ -2,13 +2,13 @@
 require "json"
 
 module Vellum
-  class ExecuteApiResponseJson
+  class ExecuteAPIResponseJSON
 
 
-# Deserialize a JSON object to an instance of ExecuteApiResponseJson
+# Deserialize a JSON object to an instance of ExecuteAPIResponseJSON
     #
     # @param json_object [String] 
-    # @return [Vellum::ExecuteApiResponseJson]
+    # @return [Vellum::ExecuteAPIResponseJSON]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       begin

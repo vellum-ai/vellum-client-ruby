@@ -1,6 +1,0 @@
-# frozen_string_literal: true
-require_relative "prompt_version_build_config_sandbox"
-
-module Vellum
-  COMPONENTS_SCHEMAS_PROMPT_VERSION_BUILD_CONFIG_SANDBOX = Vellum::PromptVersionBuildConfigSandbox
-end

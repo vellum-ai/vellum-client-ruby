@@ -6,7 +6,7 @@ module Vellum
 #  * `ENVIRONMENT_API_KEY` - ENVIRONMENT_API_KEY
 #  * `JWT` - JWT
 #  * `SERVICE_TOKEN` - SERVICE_TOKEN
-  class ApiActorTypeEnum
+  class APIActorTypeEnum
 
     ANONYMOUS = "ANONYMOUS"
     WORKSPACE_API_KEY = "WORKSPACE_API_KEY"

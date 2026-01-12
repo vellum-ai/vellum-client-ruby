@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative "components_schemas_slim_composio_tool_definition"
+require_relative "slim_tool_definition"
 require "ostruct"
 require "json"
 
@@ -11,7 +11,7 @@ module Vellum
     attr_reader :next_
   # @return [String] 
     attr_reader :previous
-  # @return [Array<Vellum::COMPONENTS_SCHEMAS_SLIM_COMPOSIO_TOOL_DEFINITION>] 
+  # @return [Array<Vellum::SlimToolDefinition>] 
     attr_reader :results
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -24,7 +24,7 @@ module Vellum
     # @param count [Integer] 
     # @param next_ [String] 
     # @param previous [String] 
-    # @param results [Array<Vellum::COMPONENTS_SCHEMAS_SLIM_COMPOSIO_TOOL_DEFINITION>] 
+    # @param results [Array<Vellum::SlimToolDefinition>] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PaginatedSlimToolDefinitionList]
     def initialize(count:, next_: OMIT, previous: OMIT, results:, additional_properties: nil)
@@ -49,7 +49,7 @@ end
       previous = parsed_json["previous"]
       results = parsed_json["results"]&.map do | item |
   item = item.to_json
-  Vellum::SlimComposioToolDefinition.from_json(json_object: item)
+  Vellum::SlimToolDefinition.from_json(json_object: item)
 end
       new(
         count: count,

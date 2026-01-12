@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative "parent_context"
 require_relative "span_link"
+require_relative "workflow_release_tag_enum"
 require "ostruct"
 require "json"
 
@@ -10,7 +11,7 @@ module Vellum
     attr_reader :parent
   # @return [Array<Vellum::SpanLink>] 
     attr_reader :links
-  # @return [String] 
+  # @return [Vellum::WorkflowReleaseTagEnum] 
     attr_reader :type
   # @return [String] 
     attr_reader :span_id
@@ -40,7 +41,7 @@ module Vellum
 
     # @param parent [Vellum::ParentContext] 
     # @param links [Array<Vellum::SpanLink>] 
-    # @param type [String] 
+    # @param type [Vellum::WorkflowReleaseTagEnum] 
     # @param span_id [String] 
     # @param deployment_id [String] 
     # @param deployment_name [String] 
@@ -128,7 +129,7 @@ end
     def self.validate_raw(obj:)
       obj.parent.nil? || Vellum::ParentContext.validate_raw(obj: obj.parent)
       obj.links&.is_a?(Array) != false || raise("Passed value for field obj.links is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.type.is_a?(Vellum::WorkflowReleaseTagEnum) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.span_id.is_a?(String) != false || raise("Passed value for field obj.span_id is not the expected type, validation failed.")
       obj.deployment_id.is_a?(String) != false || raise("Passed value for field obj.deployment_id is not the expected type, validation failed.")
       obj.deployment_name.is_a?(String) != false || raise("Passed value for field obj.deployment_name is not the expected type, validation failed.")

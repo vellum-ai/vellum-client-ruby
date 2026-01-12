@@ -27,7 +27,7 @@ module Vellum
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @return [Vellum::RequestClient]
     def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version: nil)
       @default_environment = environment
@@ -56,7 +56,7 @@ end
     end
     # @return [Hash{String => String}]
     def get_headers
-      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '1.13.1' }
+      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.3.3' }
       headers["X-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
  headers
     end
@@ -77,7 +77,7 @@ end
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long] 
     # @param api_key [String] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @return [Vellum::AsyncRequestClient]
     def initialize(base_url: nil, environment: Vellum::Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, api_key:, api_version: nil)
       @default_environment = environment
@@ -107,7 +107,7 @@ end
     end
     # @return [Hash{String => String}]
     def get_headers
-      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '1.13.1' }
+      headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name": 'vellum_ai', "X-Fern-SDK-Version": '0.3.3' }
       headers["X-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
  headers
     end
@@ -119,7 +119,7 @@ end
     attr_reader :base_url
   # @return [String] 
     attr_reader :api_key
-  # @return [Vellum::ApiVersionEnum] 
+  # @return [Vellum::APIVersionEnum] 
     attr_reader :api_version
   # @return [Hash{String => Object}] 
     attr_reader :additional_headers
@@ -133,7 +133,7 @@ end
 
     # @param base_url [String] 
     # @param api_key [String] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @param additional_headers [Hash{String => Object}] 
     # @param additional_query_parameters [Hash{String => Object}] 
     # @param additional_body_parameters [Hash{String => Object}] 
@@ -156,7 +156,7 @@ end
     attr_reader :base_url
   # @return [String] 
     attr_reader :api_key
-  # @return [Vellum::ApiVersionEnum] 
+  # @return [Vellum::APIVersionEnum] 
     attr_reader :api_version
   # @return [Hash{String => Object}] 
     attr_reader :additional_headers
@@ -170,7 +170,7 @@ end
 
     # @param base_url [String] 
     # @param api_key [String] 
-    # @param api_version [Vellum::ApiVersionEnum] 
+    # @param api_version [Vellum::APIVersionEnum] 
     # @param additional_headers [Hash{String => Object}] 
     # @param additional_query_parameters [Hash{String => Object}] 
     # @param additional_body_parameters [Hash{String => Object}] 

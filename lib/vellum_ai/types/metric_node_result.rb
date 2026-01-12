@@ -5,8 +5,6 @@ require "json"
 module Vellum
 # A Node Result Event emitted from a Metric Node.
   class MetricNodeResult
-  # @return [String] 
-    attr_reader :type
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -15,13 +13,11 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::MetricNodeResult]
-    def initialize(type:, additional_properties: nil)
-      @type = type
+    def initialize(additional_properties: nil)
       @additional_properties = additional_properties
-      @_field_set = { "type": type }
+      @_field_set = {  }
     end
 # Deserialize a JSON object to an instance of MetricNodeResult
     #
@@ -29,9 +25,7 @@ module Vellum
     # @return [Vellum::MetricNodeResult]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
-      new(type: type, additional_properties: struct)
+      new(additional_properties: struct)
     end
 # Serialize an instance of MetricNodeResult to a JSON object
     #
@@ -46,7 +40,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
     end
   end
 end

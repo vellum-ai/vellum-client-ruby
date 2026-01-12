@@ -9,8 +9,6 @@ require "json"
 
 module Vellum
   class NodeExecutionSpan
-  # @return [String] 
-    attr_reader :name
   # @return [Array<Vellum::VellumNodeExecutionEvent>] 
     attr_reader :events
   # @return [Vellum::NodeExecutionSpanAttributes] 
@@ -33,7 +31,6 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param name [String] 
     # @param events [Array<Vellum::VellumNodeExecutionEvent>] 
     # @param attributes [Vellum::NodeExecutionSpanAttributes] 
     # @param usage_result [Vellum::WorkflowExecutionUsageCalculationFulfilledBody] 
@@ -43,8 +40,7 @@ module Vellum
     # @param parent_span_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::NodeExecutionSpan]
-    def initialize(name:, events:, attributes:, usage_result: OMIT, span_id:, start_ts:, end_ts:, parent_span_id: OMIT, additional_properties: nil)
-      @name = name
+    def initialize(events:, attributes:, usage_result: OMIT, span_id:, start_ts:, end_ts:, parent_span_id: OMIT, additional_properties: nil)
       @events = events
       @attributes = attributes
       @usage_result = usage_result if usage_result != OMIT
@@ -53,7 +49,7 @@ module Vellum
       @end_ts = end_ts
       @parent_span_id = parent_span_id if parent_span_id != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "events": events, "attributes": attributes, "usage_result": usage_result, "span_id": span_id, "start_ts": start_ts, "end_ts": end_ts, "parent_span_id": parent_span_id }.reject do | _k, v |
+      @_field_set = { "events": events, "attributes": attributes, "usage_result": usage_result, "span_id": span_id, "start_ts": start_ts, "end_ts": end_ts, "parent_span_id": parent_span_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -64,7 +60,6 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      name = parsed_json["name"]
       events = parsed_json["events"]&.map do | item |
   item = item.to_json
   Vellum::VellumNodeExecutionEvent.from_json(json_object: item)
@@ -94,7 +89,6 @@ else
 end
       parent_span_id = parsed_json["parent_span_id"]
       new(
-        name: name,
         events: events,
         attributes: attributes,
         usage_result: usage_result,
@@ -118,7 +112,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
       obj.events.is_a?(Array) != false || raise("Passed value for field obj.events is not the expected type, validation failed.")
       Vellum::NodeExecutionSpanAttributes.validate_raw(obj: obj.attributes)
       obj.usage_result.nil? || Vellum::WorkflowExecutionUsageCalculationFulfilledBody.validate_raw(obj: obj.usage_result)

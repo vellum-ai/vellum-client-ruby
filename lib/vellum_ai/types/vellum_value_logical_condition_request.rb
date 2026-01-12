@@ -7,8 +7,6 @@ require "json"
 module Vellum
 # A basic condition comparing two Vellum values.
   class VellumValueLogicalConditionRequest
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::VellumValueRequest] 
     attr_reader :lhs_variable
   # @return [Vellum::LogicalOperator] 
@@ -23,19 +21,17 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param lhs_variable [Vellum::VellumValueRequest] 
     # @param operator [Vellum::LogicalOperator] 
     # @param rhs_variable [Vellum::VellumValueRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumValueLogicalConditionRequest]
-    def initialize(type:, lhs_variable:, operator:, rhs_variable:, additional_properties: nil)
-      @type = type
+    def initialize(lhs_variable:, operator:, rhs_variable:, additional_properties: nil)
       @lhs_variable = lhs_variable
       @operator = operator
       @rhs_variable = rhs_variable
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "lhs_variable": lhs_variable, "operator": operator, "rhs_variable": rhs_variable }
+      @_field_set = { "lhs_variable": lhs_variable, "operator": operator, "rhs_variable": rhs_variable }
     end
 # Deserialize a JSON object to an instance of VellumValueLogicalConditionRequest
     #
@@ -44,7 +40,6 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       unless parsed_json["lhs_variable"].nil?
         lhs_variable = parsed_json["lhs_variable"].to_json
         lhs_variable = Vellum::VellumValueRequest.from_json(json_object: lhs_variable)
@@ -59,7 +54,6 @@ module Vellum
         rhs_variable = nil
       end
       new(
-        type: type,
         lhs_variable: lhs_variable,
         operator: operator,
         rhs_variable: rhs_variable,
@@ -79,7 +73,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::VellumValueRequest.validate_raw(obj: obj.lhs_variable)
       obj.operator.is_a?(Vellum::LogicalOperator) != false || raise("Passed value for field obj.operator is not the expected type, validation failed.")
       Vellum::VellumValueRequest.validate_raw(obj: obj.rhs_variable)

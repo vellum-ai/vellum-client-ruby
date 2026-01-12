@@ -1,12 +1,11 @@
 # frozen_string_literal: true
-require_relative "components_schemas_pdf_search_result_meta_source_request"
+require_relative "search_result_meta_source_request"
 require "ostruct"
 require "json"
-require_relative "pdf_search_result_meta_source_request"
 
 module Vellum
   class SearchResultMetaRequest
-  # @return [Vellum::COMPONENTS_SCHEMAS_PDF_SEARCH_RESULT_META_SOURCE_REQUEST] 
+  # @return [Vellum::SearchResultMetaSourceRequest] 
     attr_reader :source
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -16,7 +15,7 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param source [Vellum::COMPONENTS_SCHEMAS_PDF_SEARCH_RESULT_META_SOURCE_REQUEST] 
+    # @param source [Vellum::SearchResultMetaSourceRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SearchResultMetaRequest]
     def initialize(source: OMIT, additional_properties: nil)
@@ -35,7 +34,7 @@ end
       parsed_json = JSON.parse(json_object)
       unless parsed_json["source"].nil?
         source = parsed_json["source"].to_json
-        source = Vellum::PdfSearchResultMetaSourceRequest.from_json(json_object: source)
+        source = Vellum::SearchResultMetaSourceRequest.from_json(json_object: source)
       else
         source = nil
       end
@@ -54,7 +53,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.source.nil? || Vellum::PdfSearchResultMetaSourceRequest.validate_raw(obj: obj.source)
+      obj.source.nil? || Vellum::SearchResultMetaSourceRequest.validate_raw(obj: obj.source)
     end
   end
 end

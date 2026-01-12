@@ -28,7 +28,7 @@ module Vellum
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.events.create(request: [{ name: "node.execution.initiated", body: { node_definition: { name: "name", module_: ["module", "module"], id: "id" }, inputs: { "inputs": {"key":"value"} } }, id: "id", timestamp: DateTime.parse("2024-01-15T09:30:00.000Z"), trace_id: "trace_id", span_id: "span_id" }, { name: "node.execution.initiated", body: { node_definition: { name: "name", module_: ["module", "module"], id: "id" }, inputs: { "inputs": {"key":"value"} } }, id: "id", timestamp: DateTime.parse("2024-01-15T09:30:00.000Z"), trace_id: "trace_id", span_id: "span_id" }])
+#  api.events.create(request: )
     def create(request:, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -39,8 +39,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -74,7 +72,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.events.create(request: [{ name: "node.execution.initiated", body: { node_definition: { name: "name", module_: ["module", "module"], id: "id" }, inputs: { "inputs": {"key":"value"} } }, id: "id", timestamp: DateTime.parse("2024-01-15T09:30:00.000Z"), trace_id: "trace_id", span_id: "span_id" }, { name: "node.execution.initiated", body: { node_definition: { name: "name", module_: ["module", "module"], id: "id" }, inputs: { "inputs": {"key":"value"} } }, id: "id", timestamp: DateTime.parse("2024-01-15T09:30:00.000Z"), trace_id: "trace_id", span_id: "span_id" }])
+#  api.events.create(request: )
     def create(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -86,8 +84,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

@@ -52,7 +52,7 @@ module Vellum
     # @param functions [Array<Hash>] Request of type Array<Vellum::FunctionDefinition>, as a Hash
     #   * :state (Vellum::PromptBlockState) 
     #   * :cache_config (Hash)
-    #     * :type (Vellum::EPHEMERAL_PROMPT_CACHE_CONFIG_TYPE_ENUM) 
+    #     * :type (Vellum::EphemeralPromptCacheConfigTypeEnum) 
     #   * :name (String) 
     #   * :description (String) 
     #   * :parameters (Hash{String => Object}) 
@@ -65,7 +65,7 @@ module Vellum
     #   * :usage (Boolean) 
     #   * :finish_reason (Boolean) 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::InitiatedAdHocExecutePromptEvent, Vellum::StreamingAdHocExecutePromptEvent, Vellum::FulfilledAdHocExecutePromptEvent, Vellum::RejectedAdHocExecutePromptEvent]
+    # @return [Vellum::AdHocExecutePromptEvent]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
@@ -74,10 +74,10 @@ module Vellum
 #  )
 #  api.ad_hoc.adhoc_execute_prompt(
 #    ml_model: "x",
-#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
+#    input_values: ,
 #    input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }],
 #    parameters: {  },
-#    blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }]
+#    blocks: 
 #  )
     def adhoc_execute_prompt(ml_model:, input_values:, input_variables:, parameters:, settings: nil, blocks:, functions: nil, expand_meta: nil, request_options: nil)
       response = @request_client.conn.post do | req |
@@ -89,8 +89,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -142,7 +140,7 @@ end
     # @param functions [Array<Hash>] Request of type Array<Vellum::FunctionDefinition>, as a Hash
     #   * :state (Vellum::PromptBlockState) 
     #   * :cache_config (Hash)
-    #     * :type (Vellum::EPHEMERAL_PROMPT_CACHE_CONFIG_TYPE_ENUM) 
+    #     * :type (Vellum::EphemeralPromptCacheConfigTypeEnum) 
     #   * :name (String) 
     #   * :description (String) 
     #   * :parameters (Hash{String => Object}) 
@@ -155,7 +153,7 @@ end
     #   * :usage (Boolean) 
     #   * :finish_reason (Boolean) 
     # @param request_options [Vellum::RequestOptions] 
-    # @return [Vellum::InitiatedAdHocExecutePromptEvent, Vellum::StreamingAdHocExecutePromptEvent, Vellum::FulfilledAdHocExecutePromptEvent, Vellum::RejectedAdHocExecutePromptEvent]
+    # @return [Vellum::AdHocExecutePromptEvent]
     # @example
 #  api = Vellum::Client.new(
 #    base_url: "https://api.example.com",
@@ -164,10 +162,10 @@ end
 #  )
 #  api.ad_hoc.adhoc_execute_prompt(
 #    ml_model: "x",
-#    input_values: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }],
+#    input_values: ,
 #    input_variables: [{ id: "x", key: "key", type: STRING }, { id: "x", key: "key", type: STRING }],
 #    parameters: {  },
-#    blocks: [{ block_type: "JINJA", template: "template" }, { block_type: "JINJA", template: "template" }]
+#    blocks: 
 #  )
     def adhoc_execute_prompt(ml_model:, input_values:, input_variables:, parameters:, settings: nil, blocks:, functions: nil, expand_meta: nil, request_options: nil)
       Async do
@@ -180,8 +178,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?

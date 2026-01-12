@@ -29,7 +29,7 @@ module Vellum
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.metric_definitions.execute_metric_definition(id: "id", inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.metric_definitions.execute_metric_definition(id: "id", inputs: )
     def execute_metric_definition(id:, inputs:, release_tag: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -40,8 +40,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -52,10 +50,10 @@ module Vellum
 end
       Vellum::MetricDefinitionExecution.from_json(json_object: response.body)
     end
+    # @param id [String] A UUID string identifying this metric definition.
     # @param history_id_or_release_tag [String] Either the UUID of Metric Definition History Item you'd like to retrieve, or the
 #  name of a Release Tag that's pointing to the Metric Definition History Item
 #  you'd like to retrieve.
-    # @param id [String] A UUID string identifying this metric definition.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::MetricDefinitionHistoryItem]
     # @example
@@ -64,8 +62,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.metric_definitions.metric_definition_history_item_retrieve(history_id_or_release_tag: "history_id_or_release_tag", id: "id")
-    def metric_definition_history_item_retrieve(history_id_or_release_tag:, id:, request_options: nil)
+#  api.metric_definitions.metric_definition_history_item_retrieve(id: "id", history_id_or_release_tag: "history_id_or_release_tag")
+    def metric_definition_history_item_retrieve(id:, history_id_or_release_tag:, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -75,8 +73,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -85,7 +81,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/metric-definitions/#{history_id_or_release_tag}/history/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/metric-definitions/#{id}/history/#{history_id_or_release_tag}"
 end
       Vellum::MetricDefinitionHistoryItem.from_json(json_object: response.body)
     end
@@ -111,7 +107,7 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.metric_definitions.execute_metric_definition(id: "id", inputs: [{ name: "x", type: "STRING", value: "value" }, { name: "x", type: "STRING", value: "value" }])
+#  api.metric_definitions.execute_metric_definition(id: "id", inputs: )
     def execute_metric_definition(id:, inputs:, release_tag: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
@@ -123,8 +119,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -136,10 +130,10 @@ end
         Vellum::MetricDefinitionExecution.from_json(json_object: response.body)
       end
     end
+    # @param id [String] A UUID string identifying this metric definition.
     # @param history_id_or_release_tag [String] Either the UUID of Metric Definition History Item you'd like to retrieve, or the
 #  name of a Release Tag that's pointing to the Metric Definition History Item
 #  you'd like to retrieve.
-    # @param id [String] A UUID string identifying this metric definition.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::MetricDefinitionHistoryItem]
     # @example
@@ -148,8 +142,8 @@ end
 #    environment: Vellum::Environment::PRODUCTION,
 #    api_key: "YOUR_API_KEY"
 #  )
-#  api.metric_definitions.metric_definition_history_item_retrieve(history_id_or_release_tag: "history_id_or_release_tag", id: "id")
-    def metric_definition_history_item_retrieve(history_id_or_release_tag:, id:, request_options: nil)
+#  api.metric_definitions.metric_definition_history_item_retrieve(id: "id", history_id_or_release_tag: "history_id_or_release_tag")
+    def metric_definition_history_item_retrieve(id:, history_id_or_release_tag:, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -160,8 +154,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -170,7 +162,7 @@ end
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
-  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/metric-definitions/#{history_id_or_release_tag}/history/#{id}"
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/metric-definitions/#{id}/history/#{history_id_or_release_tag}"
 end
         Vellum::MetricDefinitionHistoryItem.from_json(json_object: response.body)
       end

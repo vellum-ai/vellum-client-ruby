@@ -3,13 +3,13 @@ require "json"
 require_relative "vellum_secret"
 
 module Vellum
-  class ExecuteApiRequestHeadersValue
+  class ExecuteAPIRequestHeadersValue
 
 
-# Deserialize a JSON object to an instance of ExecuteApiRequestHeadersValue
+# Deserialize a JSON object to an instance of ExecuteAPIRequestHeadersValue
     #
     # @param json_object [String] 
-    # @return [Vellum::ExecuteApiRequestHeadersValue]
+    # @return [Vellum::ExecuteAPIRequestHeadersValue]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       begin

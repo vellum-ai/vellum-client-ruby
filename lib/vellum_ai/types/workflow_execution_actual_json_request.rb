@@ -3,7 +3,7 @@ require "ostruct"
 require "json"
 
 module Vellum
-  class WorkflowExecutionActualJsonRequest
+  class WorkflowExecutionActualJSONRequest
   # @return [String] The Vellum-generated ID of a workflow output. Must provide either this or
 #  output_key. output_key is typically preferred.
     attr_reader :output_id
@@ -19,8 +19,6 @@ module Vellum
   # @return [Float] Optionally provide the timestamp representing when this feedback was collected.
 #  Used for reporting purposes.
     attr_reader :timestamp
-  # @return [String] 
-    attr_reader :output_type
   # @return [Hash{String => Object}] Optionally provide the value that the output ideally should have been.
     attr_reader :desired_output_value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -41,27 +39,25 @@ module Vellum
     # @param metadata [Hash{String => Object}] Optionally provide additional metadata about the feedback submission.
     # @param timestamp [Float] Optionally provide the timestamp representing when this feedback was collected.
 #  Used for reporting purposes.
-    # @param output_type [String] 
     # @param desired_output_value [Hash{String => Object}] Optionally provide the value that the output ideally should have been.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::WorkflowExecutionActualJsonRequest]
-    def initialize(output_id: OMIT, output_key: OMIT, quality: OMIT, metadata: OMIT, timestamp: OMIT, output_type:, desired_output_value: OMIT, additional_properties: nil)
+    # @return [Vellum::WorkflowExecutionActualJSONRequest]
+    def initialize(output_id: OMIT, output_key: OMIT, quality: OMIT, metadata: OMIT, timestamp: OMIT, desired_output_value: OMIT, additional_properties: nil)
       @output_id = output_id if output_id != OMIT
       @output_key = output_key if output_key != OMIT
       @quality = quality if quality != OMIT
       @metadata = metadata if metadata != OMIT
       @timestamp = timestamp if timestamp != OMIT
-      @output_type = output_type
       @desired_output_value = desired_output_value if desired_output_value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "output_id": output_id, "output_key": output_key, "quality": quality, "metadata": metadata, "timestamp": timestamp, "output_type": output_type, "desired_output_value": desired_output_value }.reject do | _k, v |
+      @_field_set = { "output_id": output_id, "output_key": output_key, "quality": quality, "metadata": metadata, "timestamp": timestamp, "desired_output_value": desired_output_value }.reject do | _k, v |
   v == OMIT
 end
     end
-# Deserialize a JSON object to an instance of WorkflowExecutionActualJsonRequest
+# Deserialize a JSON object to an instance of WorkflowExecutionActualJSONRequest
     #
     # @param json_object [String] 
-    # @return [Vellum::WorkflowExecutionActualJsonRequest]
+    # @return [Vellum::WorkflowExecutionActualJSONRequest]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
@@ -70,7 +66,6 @@ end
       quality = parsed_json["quality"]
       metadata = parsed_json["metadata"]
       timestamp = parsed_json["timestamp"]
-      output_type = parsed_json["output_type"]
       desired_output_value = parsed_json["desired_output_value"]
       new(
         output_id: output_id,
@@ -78,12 +73,11 @@ end
         quality: quality,
         metadata: metadata,
         timestamp: timestamp,
-        output_type: output_type,
         desired_output_value: desired_output_value,
         additional_properties: struct
       )
     end
-# Serialize an instance of WorkflowExecutionActualJsonRequest to a JSON object
+# Serialize an instance of WorkflowExecutionActualJSONRequest to a JSON object
     #
     # @return [String]
     def to_json
@@ -101,7 +95,6 @@ end
       obj.quality&.is_a?(Float) != false || raise("Passed value for field obj.quality is not the expected type, validation failed.")
       obj.metadata&.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
       obj.timestamp&.is_a?(Float) != false || raise("Passed value for field obj.timestamp is not the expected type, validation failed.")
-      obj.output_type.is_a?(String) != false || raise("Passed value for field obj.output_type is not the expected type, validation failed.")
       obj.desired_output_value&.is_a?(Hash) != false || raise("Passed value for field obj.desired_output_value is not the expected type, validation failed.")
     end
   end

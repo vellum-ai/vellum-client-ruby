@@ -7,8 +7,6 @@ module Vellum
   class PromptRequestImageInput
   # @return [String] The variable's name, as defined in the Prompt.
     attr_reader :key
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::VellumImage] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -20,16 +18,14 @@ module Vellum
     OMIT = Object.new
 
     # @param key [String] The variable's name, as defined in the Prompt.
-    # @param type [String] 
     # @param value [Vellum::VellumImage] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PromptRequestImageInput]
-    def initialize(key:, type:, value:, additional_properties: nil)
+    def initialize(key:, value:, additional_properties: nil)
       @key = key
-      @type = type
       @value = value
       @additional_properties = additional_properties
-      @_field_set = { "key": key, "type": type, "value": value }
+      @_field_set = { "key": key, "value": value }
     end
 # Deserialize a JSON object to an instance of PromptRequestImageInput
     #
@@ -39,7 +35,6 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       key = parsed_json["key"]
-      type = parsed_json["type"]
       unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
         value = Vellum::VellumImage.from_json(json_object: value)
@@ -48,7 +43,6 @@ module Vellum
       end
       new(
         key: key,
-        type: type,
         value: value,
         additional_properties: struct
       )
@@ -67,7 +61,6 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.key.is_a?(String) != false || raise("Passed value for field obj.key is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::VellumImage.validate_raw(obj: obj.value)
     end
   end

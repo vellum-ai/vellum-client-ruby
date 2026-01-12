@@ -9,8 +9,6 @@ module Vellum
   # @return [String] 
     attr_reader :name
   # @return [String] 
-    attr_reader :type
-  # @return [String] 
     attr_reader :value
   # @return [String] 
     attr_reader :output_variable_id
@@ -23,18 +21,16 @@ module Vellum
     OMIT = Object.new
 
     # @param name [String] 
-    # @param type [String] 
     # @param value [String] 
     # @param output_variable_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TestSuiteRunExecutionStringOutput]
-    def initialize(name:, type:, value: OMIT, output_variable_id:, additional_properties: nil)
+    def initialize(name:, value: OMIT, output_variable_id:, additional_properties: nil)
       @name = name
-      @type = type
       @value = value if value != OMIT
       @output_variable_id = output_variable_id
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "type": type, "value": value, "output_variable_id": output_variable_id }.reject do | _k, v |
+      @_field_set = { "name": name, "value": value, "output_variable_id": output_variable_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -46,12 +42,10 @@ end
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       name = parsed_json["name"]
-      type = parsed_json["type"]
       value = parsed_json["value"]
       output_variable_id = parsed_json["output_variable_id"]
       new(
         name: name,
-        type: type,
         value: value,
         output_variable_id: output_variable_id,
         additional_properties: struct
@@ -71,7 +65,6 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.output_variable_id.is_a?(String) != false || raise("Passed value for field obj.output_variable_id is not the expected type, validation failed.")
     end

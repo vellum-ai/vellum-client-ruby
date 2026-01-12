@@ -6,8 +6,6 @@ require "json"
 module Vellum
 # Prompt Sandbox Scenario input value that is of type CHAT_HISTORY
   class ScenarioInputChatHistoryVariableValue
-  # @return [String] 
-    attr_reader :type
   # @return [Array<Vellum::ChatMessage>] 
     attr_reader :value
   # @return [String] 
@@ -20,17 +18,15 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param value [Array<Vellum::ChatMessage>] 
     # @param input_variable_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ScenarioInputChatHistoryVariableValue]
-    def initialize(type:, value: OMIT, input_variable_id:, additional_properties: nil)
-      @type = type
+    def initialize(value: OMIT, input_variable_id:, additional_properties: nil)
       @value = value if value != OMIT
       @input_variable_id = input_variable_id
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value, "input_variable_id": input_variable_id }.reject do | _k, v |
+      @_field_set = { "value": value, "input_variable_id": input_variable_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -42,14 +38,12 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       value = parsed_json["value"]&.map do | item |
   item = item.to_json
   Vellum::ChatMessage.from_json(json_object: item)
 end
       input_variable_id = parsed_json["input_variable_id"]
       new(
-        type: type,
         value: value,
         input_variable_id: input_variable_id,
         additional_properties: struct
@@ -68,7 +62,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(Array) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.input_variable_id.is_a?(String) != false || raise("Passed value for field obj.input_variable_id is not the expected type, validation failed.")
     end

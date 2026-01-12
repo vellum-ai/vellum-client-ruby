@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
 module Vellum
-  INTEGRATION_PROVIDER = String
+# * `COMPOSIO` - Composio
+  class IntegrationProvider
+
+    COMPOSIO = "COMPOSIO"
+
+  end
 end

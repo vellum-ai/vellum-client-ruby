@@ -5,9 +5,7 @@ require "json"
 
 module Vellum
 # An output returned by a node that is of type JSON.
-  class NodeOutputCompiledJsonValue
-  # @return [String] 
-    attr_reader :type
+  class NodeOutputCompiledJSONValue
   # @return [Object] 
     attr_reader :value
   # @return [String] 
@@ -22,42 +20,38 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param value [Object] 
     # @param node_output_id [String] 
     # @param state [Vellum::WorkflowNodeResultEventState] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::NodeOutputCompiledJsonValue]
-    def initialize(type:, value:, node_output_id:, state: OMIT, additional_properties: nil)
-      @type = type
-      @value = value
+    # @return [Vellum::NodeOutputCompiledJSONValue]
+    def initialize(value: OMIT, node_output_id:, state: OMIT, additional_properties: nil)
+      @value = value if value != OMIT
       @node_output_id = node_output_id
       @state = state if state != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "value": value, "node_output_id": node_output_id, "state": state }.reject do | _k, v |
+      @_field_set = { "value": value, "node_output_id": node_output_id, "state": state }.reject do | _k, v |
   v == OMIT
 end
     end
-# Deserialize a JSON object to an instance of NodeOutputCompiledJsonValue
+# Deserialize a JSON object to an instance of NodeOutputCompiledJSONValue
     #
     # @param json_object [String] 
-    # @return [Vellum::NodeOutputCompiledJsonValue]
+    # @return [Vellum::NodeOutputCompiledJSONValue]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       value = parsed_json["value"]
       node_output_id = parsed_json["node_output_id"]
       state = parsed_json["state"]
       new(
-        type: type,
         value: value,
         node_output_id: node_output_id,
         state: state,
         additional_properties: struct
       )
     end
-# Serialize an instance of NodeOutputCompiledJsonValue to a JSON object
+# Serialize an instance of NodeOutputCompiledJSONValue to a JSON object
     #
     # @return [String]
     def to_json
@@ -70,8 +64,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      obj.value.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
+      obj.value&.is_a?(Object) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
       obj.node_output_id.is_a?(String) != false || raise("Passed value for field obj.node_output_id is not the expected type, validation failed.")
       obj.state&.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
     end

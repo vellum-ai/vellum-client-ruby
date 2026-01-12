@@ -11,8 +11,6 @@ module Vellum
   # @return [Array<Vellum::SpanLink>] 
     attr_reader :links
   # @return [String] 
-    attr_reader :type
-  # @return [String] 
     attr_reader :trigger_id
   # @return [String] 
     attr_reader :span_id
@@ -26,19 +24,17 @@ module Vellum
 
     # @param parent [Vellum::ParentContext] 
     # @param links [Array<Vellum::SpanLink>] 
-    # @param type [String] 
     # @param trigger_id [String] 
     # @param span_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ScheduledTriggerContext]
-    def initialize(parent: OMIT, links: OMIT, type:, trigger_id: OMIT, span_id:, additional_properties: nil)
+    def initialize(parent: OMIT, links: OMIT, trigger_id: OMIT, span_id:, additional_properties: nil)
       @parent = parent if parent != OMIT
       @links = links if links != OMIT
-      @type = type
       @trigger_id = trigger_id if trigger_id != OMIT
       @span_id = span_id
       @additional_properties = additional_properties
-      @_field_set = { "parent": parent, "links": links, "type": type, "trigger_id": trigger_id, "span_id": span_id }.reject do | _k, v |
+      @_field_set = { "parent": parent, "links": links, "trigger_id": trigger_id, "span_id": span_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -59,13 +55,11 @@ end
   item = item.to_json
   Vellum::SpanLink.from_json(json_object: item)
 end
-      type = parsed_json["type"]
       trigger_id = parsed_json["trigger_id"]
       span_id = parsed_json["span_id"]
       new(
         parent: parent,
         links: links,
-        type: type,
         trigger_id: trigger_id,
         span_id: span_id,
         additional_properties: struct
@@ -86,7 +80,6 @@ end
     def self.validate_raw(obj:)
       obj.parent.nil? || Vellum::ParentContext.validate_raw(obj: obj.parent)
       obj.links&.is_a?(Array) != false || raise("Passed value for field obj.links is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.trigger_id&.is_a?(String) != false || raise("Passed value for field obj.trigger_id is not the expected type, validation failed.")
       obj.span_id.is_a?(String) != false || raise("Passed value for field obj.span_id is not the expected type, validation failed.")
     end

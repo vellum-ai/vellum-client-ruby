@@ -5,7 +5,7 @@ require "json"
 
 module Vellum
   class EphemeralPromptCacheConfig
-  # @return [Vellum::EPHEMERAL_PROMPT_CACHE_CONFIG_TYPE_ENUM] 
+  # @return [Vellum::EphemeralPromptCacheConfigTypeEnum] 
     attr_reader :type
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -15,7 +15,7 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [Vellum::EPHEMERAL_PROMPT_CACHE_CONFIG_TYPE_ENUM] 
+    # @param type [Vellum::EphemeralPromptCacheConfigTypeEnum] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::EphemeralPromptCacheConfig]
     def initialize(type: OMIT, additional_properties: nil)
@@ -48,7 +48,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type&.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.type&.is_a?(Vellum::EphemeralPromptCacheConfigTypeEnum) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
     end
   end
 end

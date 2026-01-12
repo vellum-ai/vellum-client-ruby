@@ -19,7 +19,7 @@ module Vellum
     attr_reader :label
   # @return [Vellum::DocumentProcessingState] 
     attr_reader :processing_state
-  # @return [Vellum::DOCUMENT_STATUS] The current status of the document
+  # @return [Vellum::DocumentStatus] The current status of the document
 #  * `ACTIVE` - Active
     attr_reader :status
   # @return [Array<String>] A list of keywords that'll be associated with the document. Used as part of
@@ -46,7 +46,7 @@ module Vellum
     # @param label [String] A human-readable label for the document. Defaults to the originally uploaded
 #  file's file name.
     # @param processing_state [Vellum::DocumentProcessingState] 
-    # @param status [Vellum::DOCUMENT_STATUS] The current status of the document
+    # @param status [Vellum::DocumentStatus] The current status of the document
 #  * `ACTIVE` - Active
     # @param keywords [Array<String>] A list of keywords that'll be associated with the document. Used as part of
 #  keyword search.
@@ -128,7 +128,7 @@ end
       obj.last_uploaded_at.is_a?(DateTime) != false || raise("Passed value for field obj.last_uploaded_at is not the expected type, validation failed.")
       obj.label.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.processing_state.is_a?(Vellum::DocumentProcessingState) != false || raise("Passed value for field obj.processing_state is not the expected type, validation failed.")
-      obj.status&.is_a?(String) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+      obj.status&.is_a?(Vellum::DocumentStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       obj.keywords&.is_a?(Array) != false || raise("Passed value for field obj.keywords is not the expected type, validation failed.")
       obj.original_file_url&.is_a?(String) != false || raise("Passed value for field obj.original_file_url is not the expected type, validation failed.")
       obj.document_to_document_indexes.is_a?(Array) != false || raise("Passed value for field obj.document_to_document_indexes is not the expected type, validation failed.")

@@ -7,8 +7,6 @@ require "json"
 module Vellum
 # The final data returned indicating an error occurred during the stream.
   class RejectedAdHocExecutePromptEvent
-  # @return [String] 
-    attr_reader :state
   # @return [Vellum::VellumError] 
     attr_reader :error
   # @return [String] 
@@ -23,19 +21,17 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param state [String] 
     # @param error [Vellum::VellumError] 
     # @param execution_id [String] 
     # @param meta [Vellum::AdHocRejectedPromptExecutionMeta] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::RejectedAdHocExecutePromptEvent]
-    def initialize(state:, error:, execution_id:, meta: OMIT, additional_properties: nil)
-      @state = state
+    def initialize(error:, execution_id:, meta: OMIT, additional_properties: nil)
       @error = error
       @execution_id = execution_id
       @meta = meta if meta != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "state": state, "error": error, "execution_id": execution_id, "meta": meta }.reject do | _k, v |
+      @_field_set = { "error": error, "execution_id": execution_id, "meta": meta }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -46,7 +42,6 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      state = parsed_json["state"]
       unless parsed_json["error"].nil?
         error = parsed_json["error"].to_json
         error = Vellum::VellumError.from_json(json_object: error)
@@ -61,7 +56,6 @@ end
         meta = nil
       end
       new(
-        state: state,
         error: error,
         execution_id: execution_id,
         meta: meta,
@@ -81,7 +75,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       Vellum::VellumError.validate_raw(obj: obj.error)
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
       obj.meta.nil? || Vellum::AdHocRejectedPromptExecutionMeta.validate_raw(obj: obj.meta)

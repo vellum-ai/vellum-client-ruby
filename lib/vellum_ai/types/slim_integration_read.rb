@@ -14,7 +14,7 @@ module Vellum
     attr_reader :icon_url
   # @return [Vellum::IntegrationName] 
     attr_reader :name
-  # @return [Vellum::INTEGRATION_PROVIDER] 
+  # @return [Vellum::IntegrationProvider] 
     attr_reader :provider
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -28,7 +28,7 @@ module Vellum
     # @param label [String] 
     # @param icon_url [String] 
     # @param name [Vellum::IntegrationName] 
-    # @param provider [Vellum::INTEGRATION_PROVIDER] 
+    # @param provider [Vellum::IntegrationProvider] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimIntegrationRead]
     def initialize(id:, label: OMIT, icon_url:, name:, provider:, additional_properties: nil)
@@ -80,7 +80,7 @@ end
       obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.icon_url.is_a?(String) != false || raise("Passed value for field obj.icon_url is not the expected type, validation failed.")
       obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
+      obj.provider.is_a?(Vellum::IntegrationProvider) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
     end
   end
 end

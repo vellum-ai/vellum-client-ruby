@@ -5,8 +5,6 @@ require "json"
 module Vellum
 # Serializer for private vectorizer.
   class PrivateVectorizer
-  # @return [String] 
-    attr_reader :model_name
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -15,13 +13,11 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param model_name [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PrivateVectorizer]
-    def initialize(model_name:, additional_properties: nil)
-      @model_name = model_name
+    def initialize(additional_properties: nil)
       @additional_properties = additional_properties
-      @_field_set = { "model_name": model_name }
+      @_field_set = {  }
     end
 # Deserialize a JSON object to an instance of PrivateVectorizer
     #
@@ -29,9 +25,7 @@ module Vellum
     # @return [Vellum::PrivateVectorizer]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      parsed_json = JSON.parse(json_object)
-      model_name = parsed_json["model_name"]
-      new(model_name: model_name, additional_properties: struct)
+      new(additional_properties: struct)
     end
 # Serialize an instance of PrivateVectorizer to a JSON object
     #
@@ -46,7 +40,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.model_name.is_a?(String) != false || raise("Passed value for field obj.model_name is not the expected type, validation failed.")
     end
   end
 end

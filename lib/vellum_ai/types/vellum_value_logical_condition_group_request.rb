@@ -8,8 +8,6 @@ module Vellum
 # A higher-order condition that combines one or more basic conditions or other
 #  higher-order conditions.
   class VellumValueLogicalConditionGroupRequest
-  # @return [String] 
-    attr_reader :type
   # @return [Array<Vellum::VellumValueLogicalExpressionRequest>] 
     attr_reader :conditions
   # @return [Vellum::ConditionCombinator] 
@@ -24,19 +22,17 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
     # @param conditions [Array<Vellum::VellumValueLogicalExpressionRequest>] 
     # @param combinator [Vellum::ConditionCombinator] 
     # @param negated [Boolean] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumValueLogicalConditionGroupRequest]
-    def initialize(type:, conditions:, combinator:, negated:, additional_properties: nil)
-      @type = type
+    def initialize(conditions:, combinator:, negated:, additional_properties: nil)
       @conditions = conditions
       @combinator = combinator
       @negated = negated
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "conditions": conditions, "combinator": combinator, "negated": negated }
+      @_field_set = { "conditions": conditions, "combinator": combinator, "negated": negated }
     end
 # Deserialize a JSON object to an instance of
 #  VellumValueLogicalConditionGroupRequest
@@ -46,7 +42,6 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       conditions = parsed_json["conditions"]&.map do | item |
   item = item.to_json
   Vellum::VellumValueLogicalExpressionRequest.from_json(json_object: item)
@@ -54,7 +49,6 @@ end
       combinator = parsed_json["combinator"]
       negated = parsed_json["negated"]
       new(
-        type: type,
         conditions: conditions,
         combinator: combinator,
         negated: negated,
@@ -75,7 +69,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.conditions.is_a?(Array) != false || raise("Passed value for field obj.conditions is not the expected type, validation failed.")
       obj.combinator.is_a?(Vellum::ConditionCombinator) != false || raise("Passed value for field obj.combinator is not the expected type, validation failed.")
       obj.negated.is_a?(Boolean) != false || raise("Passed value for field obj.negated is not the expected type, validation failed.")

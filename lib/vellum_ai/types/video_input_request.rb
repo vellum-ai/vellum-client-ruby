@@ -8,8 +8,6 @@ module Vellum
   class VideoInputRequest
   # @return [String] The variable's name
     attr_reader :name
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::VellumVideoRequest] 
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -21,16 +19,14 @@ module Vellum
     OMIT = Object.new
 
     # @param name [String] The variable's name
-    # @param type [String] 
     # @param value [Vellum::VellumVideoRequest] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VideoInputRequest]
-    def initialize(name:, type:, value:, additional_properties: nil)
+    def initialize(name:, value:, additional_properties: nil)
       @name = name
-      @type = type
       @value = value
       @additional_properties = additional_properties
-      @_field_set = { "name": name, "type": type, "value": value }
+      @_field_set = { "name": name, "value": value }
     end
 # Deserialize a JSON object to an instance of VideoInputRequest
     #
@@ -40,7 +36,6 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       name = parsed_json["name"]
-      type = parsed_json["type"]
       unless parsed_json["value"].nil?
         value = parsed_json["value"].to_json
         value = Vellum::VellumVideoRequest.from_json(json_object: value)
@@ -49,7 +44,6 @@ module Vellum
       end
       new(
         name: name,
-        type: type,
         value: value,
         additional_properties: struct
       )
@@ -68,7 +62,6 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::VellumVideoRequest.validate_raw(obj: obj.value)
     end
   end

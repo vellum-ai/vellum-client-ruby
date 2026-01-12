@@ -5,10 +5,8 @@ require "json"
 
 module Vellum
 # A Node Result Event emitted from an API Node.
-  class ApiNodeResult
-  # @return [String] 
-    attr_reader :type
-  # @return [Vellum::ApiNodeResultData] 
+  class APINodeResult
+  # @return [Vellum::APINodeResultData] 
     attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -18,37 +16,30 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
-    # @param data [Vellum::ApiNodeResultData] 
+    # @param data [Vellum::APINodeResultData] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Vellum::ApiNodeResult]
-    def initialize(type:, data:, additional_properties: nil)
-      @type = type
+    # @return [Vellum::APINodeResult]
+    def initialize(data:, additional_properties: nil)
       @data = data
       @additional_properties = additional_properties
-      @_field_set = { "type": type, "data": data }
+      @_field_set = { "data": data }
     end
-# Deserialize a JSON object to an instance of ApiNodeResult
+# Deserialize a JSON object to an instance of APINodeResult
     #
     # @param json_object [String] 
-    # @return [Vellum::ApiNodeResult]
+    # @return [Vellum::APINodeResult]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      type = parsed_json["type"]
       unless parsed_json["data"].nil?
         data = parsed_json["data"].to_json
-        data = Vellum::ApiNodeResultData.from_json(json_object: data)
+        data = Vellum::APINodeResultData.from_json(json_object: data)
       else
         data = nil
       end
-      new(
-        type: type,
-        data: data,
-        additional_properties: struct
-      )
+      new(data: data, additional_properties: struct)
     end
-# Serialize an instance of ApiNodeResult to a JSON object
+# Serialize an instance of APINodeResult to a JSON object
     #
     # @return [String]
     def to_json
@@ -61,8 +52,7 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-      Vellum::ApiNodeResultData.validate_raw(obj: obj.data)
+      Vellum::APINodeResultData.validate_raw(obj: obj.data)
     end
   end
 end

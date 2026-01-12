@@ -5,8 +5,6 @@ require "json"
 module Vellum
 # Response payload with provider id and execution output from a Composio tool.
   class ComposioExecuteToolResponse
-  # @return [String] 
-    attr_reader :provider
   # @return [Hash{String => Object}] 
     attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -17,15 +15,13 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param provider [String] 
     # @param data [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ComposioExecuteToolResponse]
-    def initialize(provider:, data:, additional_properties: nil)
-      @provider = provider
+    def initialize(data:, additional_properties: nil)
       @data = data
       @additional_properties = additional_properties
-      @_field_set = { "provider": provider, "data": data }
+      @_field_set = { "data": data }
     end
 # Deserialize a JSON object to an instance of ComposioExecuteToolResponse
     #
@@ -34,13 +30,8 @@ module Vellum
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      provider = parsed_json["provider"]
       data = parsed_json["data"]
-      new(
-        provider: provider,
-        data: data,
-        additional_properties: struct
-      )
+      new(data: data, additional_properties: struct)
     end
 # Serialize an instance of ComposioExecuteToolResponse to a JSON object
     #
@@ -55,7 +46,6 @@ module Vellum
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
       obj.data.is_a?(Hash) != false || raise("Passed value for field obj.data is not the expected type, validation failed.")
     end
   end

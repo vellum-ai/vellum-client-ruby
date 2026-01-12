@@ -7,8 +7,6 @@ module Vellum
 # The initial data returned indicating that the response from the model has
 #  returned and begun streaming.
   class InitiatedExecutePromptEvent
-  # @return [String] 
-    attr_reader :state
   # @return [Vellum::InitiatedPromptExecutionMeta] 
     attr_reader :meta
   # @return [String] 
@@ -21,17 +19,15 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param state [String] 
     # @param meta [Vellum::InitiatedPromptExecutionMeta] 
     # @param execution_id [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::InitiatedExecutePromptEvent]
-    def initialize(state:, meta: OMIT, execution_id:, additional_properties: nil)
-      @state = state
+    def initialize(meta: OMIT, execution_id:, additional_properties: nil)
       @meta = meta if meta != OMIT
       @execution_id = execution_id
       @additional_properties = additional_properties
-      @_field_set = { "state": state, "meta": meta, "execution_id": execution_id }.reject do | _k, v |
+      @_field_set = { "meta": meta, "execution_id": execution_id }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -42,7 +38,6 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      state = parsed_json["state"]
       unless parsed_json["meta"].nil?
         meta = parsed_json["meta"].to_json
         meta = Vellum::InitiatedPromptExecutionMeta.from_json(json_object: meta)
@@ -51,7 +46,6 @@ end
       end
       execution_id = parsed_json["execution_id"]
       new(
-        state: state,
         meta: meta,
         execution_id: execution_id,
         additional_properties: struct
@@ -70,7 +64,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.meta.nil? || Vellum::InitiatedPromptExecutionMeta.validate_raw(obj: obj.meta)
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
     end

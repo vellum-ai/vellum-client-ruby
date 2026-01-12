@@ -17,8 +17,6 @@ module Vellum
   # @return [String] The newly output string value, meant to be concatenated with all previous. Will
 #  be non-null for events of state STREAMING.
     attr_reader :delta
-  # @return [String] 
-    attr_reader :type
   # @return [String] The entire string value. Will be non-null for events of state FULFILLED.
     attr_reader :value
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -35,20 +33,18 @@ module Vellum
     # @param node_id [String] 
     # @param delta [String] The newly output string value, meant to be concatenated with all previous. Will
 #  be non-null for events of state STREAMING.
-    # @param type [String] 
     # @param value [String] The entire string value. Will be non-null for events of state FULFILLED.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowResultEventOutputDataString]
-    def initialize(id: OMIT, name:, state:, node_id: OMIT, delta: OMIT, type:, value: OMIT, additional_properties: nil)
+    def initialize(id: OMIT, name:, state:, node_id: OMIT, delta: OMIT, value: OMIT, additional_properties: nil)
       @id = id if id != OMIT
       @name = name
       @state = state
       @node_id = node_id if node_id != OMIT
       @delta = delta if delta != OMIT
-      @type = type
       @value = value if value != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "name": name, "state": state, "node_id": node_id, "delta": delta, "type": type, "value": value }.reject do | _k, v |
+      @_field_set = { "id": id, "name": name, "state": state, "node_id": node_id, "delta": delta, "value": value }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -64,7 +60,6 @@ end
       state = parsed_json["state"]
       node_id = parsed_json["node_id"]
       delta = parsed_json["delta"]
-      type = parsed_json["type"]
       value = parsed_json["value"]
       new(
         id: id,
@@ -72,7 +67,6 @@ end
         state: state,
         node_id: node_id,
         delta: delta,
-        type: type,
         value: value,
         additional_properties: struct
       )
@@ -95,7 +89,6 @@ end
       obj.state.is_a?(Vellum::WorkflowNodeResultEventState) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.node_id&.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
       obj.delta&.is_a?(String) != false || raise("Passed value for field obj.delta is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end

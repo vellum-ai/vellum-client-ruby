@@ -7,8 +7,6 @@ require "json"
 module Vellum
 # The data returned for each delta during the prompt execution stream.
   class StreamingAdHocExecutePromptEvent
-  # @return [String] 
-    attr_reader :state
   # @return [Vellum::PromptOutput] 
     attr_reader :output
   # @return [Integer] 
@@ -28,7 +26,6 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param state [String] 
     # @param output [Vellum::PromptOutput] 
     # @param output_index [Integer] 
     # @param execution_id [String] 
@@ -37,15 +34,14 @@ module Vellum
 #  `expand_raw`.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::StreamingAdHocExecutePromptEvent]
-    def initialize(state:, output:, output_index:, execution_id:, meta: OMIT, raw: OMIT, additional_properties: nil)
-      @state = state
+    def initialize(output:, output_index:, execution_id:, meta: OMIT, raw: OMIT, additional_properties: nil)
       @output = output
       @output_index = output_index
       @execution_id = execution_id
       @meta = meta if meta != OMIT
       @raw = raw if raw != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "state": state, "output": output, "output_index": output_index, "execution_id": execution_id, "meta": meta, "raw": raw }.reject do | _k, v |
+      @_field_set = { "output": output, "output_index": output_index, "execution_id": execution_id, "meta": meta, "raw": raw }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -56,7 +52,6 @@ end
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      state = parsed_json["state"]
       unless parsed_json["output"].nil?
         output = parsed_json["output"].to_json
         output = Vellum::PromptOutput.from_json(json_object: output)
@@ -73,7 +68,6 @@ end
       end
       raw = parsed_json["raw"]
       new(
-        state: state,
         output: output,
         output_index: output_index,
         execution_id: execution_id,
@@ -95,7 +89,6 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       Vellum::PromptOutput.validate_raw(obj: obj.output)
       obj.output_index.is_a?(Integer) != false || raise("Passed value for field obj.output_index is not the expected type, validation failed.")
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")

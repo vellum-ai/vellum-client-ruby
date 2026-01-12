@@ -12,8 +12,6 @@ module Vellum
     attr_reader :run_id
   # @return [String] 
     attr_reader :external_id
-  # @return [String] 
-    attr_reader :type
   # @return [Vellum::WorkflowResultEvent] 
     attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -27,18 +25,16 @@ module Vellum
     # @param execution_id [String] 
     # @param run_id [String] 
     # @param external_id [String] 
-    # @param type [String] 
     # @param data [Vellum::WorkflowResultEvent] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionWorkflowResultEvent]
-    def initialize(execution_id:, run_id: OMIT, external_id: OMIT, type:, data:, additional_properties: nil)
+    def initialize(execution_id:, run_id: OMIT, external_id: OMIT, data:, additional_properties: nil)
       @execution_id = execution_id
       @run_id = run_id if run_id != OMIT
       @external_id = external_id if external_id != OMIT
-      @type = type
       @data = data
       @additional_properties = additional_properties
-      @_field_set = { "execution_id": execution_id, "run_id": run_id, "external_id": external_id, "type": type, "data": data }.reject do | _k, v |
+      @_field_set = { "execution_id": execution_id, "run_id": run_id, "external_id": external_id, "data": data }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -52,7 +48,6 @@ end
       execution_id = parsed_json["execution_id"]
       run_id = parsed_json["run_id"]
       external_id = parsed_json["external_id"]
-      type = parsed_json["type"]
       unless parsed_json["data"].nil?
         data = parsed_json["data"].to_json
         data = Vellum::WorkflowResultEvent.from_json(json_object: data)
@@ -63,7 +58,6 @@ end
         execution_id: execution_id,
         run_id: run_id,
         external_id: external_id,
-        type: type,
         data: data,
         additional_properties: struct
       )
@@ -84,7 +78,6 @@ end
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
       obj.run_id&.is_a?(String) != false || raise("Passed value for field obj.run_id is not the expected type, validation failed.")
       obj.external_id&.is_a?(String) != false || raise("Passed value for field obj.external_id is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       Vellum::WorkflowResultEvent.validate_raw(obj: obj.data)
     end
   end

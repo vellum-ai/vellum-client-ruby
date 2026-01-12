@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 require_relative "integration_name"
 require_relative "integration_provider"
-require_relative "components_schemas_composio_integration_exec_config"
+require_relative "integration_exec_config"
 require "ostruct"
 require "json"
-require_relative "composio_integration_exec_config"
 
 module Vellum
   class IntegrationRead
@@ -16,9 +15,9 @@ module Vellum
     attr_reader :icon_url
   # @return [Vellum::IntegrationName] 
     attr_reader :name
-  # @return [Vellum::INTEGRATION_PROVIDER] 
+  # @return [Vellum::IntegrationProvider] 
     attr_reader :provider
-  # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_INTEGRATION_EXEC_CONFIG] Integration provider specific information needed for filtering tools.
+  # @return [Vellum::IntegrationExecConfig] Integration provider specific information needed for filtering tools.
     attr_reader :exec_config
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -32,8 +31,8 @@ module Vellum
     # @param label [String] 
     # @param icon_url [String] 
     # @param name [Vellum::IntegrationName] 
-    # @param provider [Vellum::INTEGRATION_PROVIDER] 
-    # @param exec_config [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_INTEGRATION_EXEC_CONFIG] Integration provider specific information needed for filtering tools.
+    # @param provider [Vellum::IntegrationProvider] 
+    # @param exec_config [Vellum::IntegrationExecConfig] Integration provider specific information needed for filtering tools.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::IntegrationRead]
     def initialize(id:, label: OMIT, icon_url:, name:, provider:, exec_config:, additional_properties: nil)
@@ -62,7 +61,7 @@ end
       provider = parsed_json["provider"]
       unless parsed_json["exec_config"].nil?
         exec_config = parsed_json["exec_config"].to_json
-        exec_config = Vellum::ComposioIntegrationExecConfig.from_json(json_object: exec_config)
+        exec_config = Vellum::IntegrationExecConfig.from_json(json_object: exec_config)
       else
         exec_config = nil
       end
@@ -93,8 +92,8 @@ end
       obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
       obj.icon_url.is_a?(String) != false || raise("Passed value for field obj.icon_url is not the expected type, validation failed.")
       obj.name.is_a?(Vellum::IntegrationName) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-      obj.provider.is_a?(String) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
-      Vellum::ComposioIntegrationExecConfig.validate_raw(obj: obj.exec_config)
+      obj.provider.is_a?(Vellum::IntegrationProvider) != false || raise("Passed value for field obj.provider is not the expected type, validation failed.")
+      Vellum::IntegrationExecConfig.validate_raw(obj: obj.exec_config)
     end
   end
 end

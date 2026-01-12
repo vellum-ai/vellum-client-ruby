@@ -8,8 +8,6 @@ module Vellum
   # @return [String] An ID that maps back to one of the initially supplied operations. Can be used to
 #  determine the result of a given operation.
     attr_reader :id
-  # @return [String] 
-    attr_reader :type
   # @return [Hash{String => Object}] Details about the error that occurred
     attr_reader :data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -22,16 +20,14 @@ module Vellum
 
     # @param id [String] An ID that maps back to one of the initially supplied operations. Can be used to
 #  determine the result of a given operation.
-    # @param type [String] 
     # @param data [Hash{String => Object}] Details about the error that occurred
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::TestSuiteTestCaseRejectedBulkResult]
-    def initialize(id: OMIT, type:, data:, additional_properties: nil)
+    def initialize(id: OMIT, data:, additional_properties: nil)
       @id = id if id != OMIT
-      @type = type
       @data = data
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "type": type, "data": data }.reject do | _k, v |
+      @_field_set = { "id": id, "data": data }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -43,11 +39,9 @@ end
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
-      type = parsed_json["type"]
       data = parsed_json["data"]
       new(
         id: id,
-        type: type,
         data: data,
         additional_properties: struct
       )
@@ -66,7 +60,6 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id&.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.data.is_a?(Hash) != false || raise("Passed value for field obj.data is not the expected type, validation failed.")
     end
   end

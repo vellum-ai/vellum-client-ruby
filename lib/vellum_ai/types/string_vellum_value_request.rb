@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+require_relative "string_enum"
 require "ostruct"
 require "json"
 
 module Vellum
 # A value representing a string.
   class StringVellumValueRequest
-  # @return [String] 
+  # @return [Vellum::StringEnum] 
     attr_reader :type
   # @return [String] 
     attr_reader :value
@@ -17,7 +18,7 @@ module Vellum
 
     OMIT = Object.new
 
-    # @param type [String] 
+    # @param type [Vellum::StringEnum] 
     # @param value [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::StringVellumValueRequest]
@@ -57,7 +58,7 @@ end
     # @param obj [Object] 
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+      obj.type.is_a?(Vellum::StringEnum) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
       obj.value&.is_a?(String) != false || raise("Passed value for field obj.value is not the expected type, validation failed.")
     end
   end
