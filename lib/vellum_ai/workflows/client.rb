@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative "../../requests"
 require_relative "../types/workflow_resolved_state"
+require_relative "../types/workflow_sandbox_execute_node_response"
 require_relative "../types/check_workflow_execution_status_response"
 require_relative "../types/workflow_push_deployment_config_request"
 require_relative "../types/dataset_row_push_request"
@@ -8,6 +9,7 @@ require_relative "../types/workflow_push_response"
 require_relative "../../core/file_utilities"
 require_relative "../types/runner_config_request"
 require "json"
+require "async"
 require "async"
 require "async"
 require "async"
@@ -99,6 +101,40 @@ end
   req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/workflows/#{span_id}/state"
 end
       Vellum::WorkflowResolvedState.from_json(json_object: response.body)
+    end
+    # @param files [Hash{String => String}] 
+    # @param node [String] 
+    # @param inputs [Hash{String => Object}] 
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::NodeExecutionFulfilledEvent, Vellum::NodeExecutionRejectedEvent]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.execute_node(files: { "files": "files" }, node: "x")
+    def execute_node(files:, node:, inputs: nil, request_options: nil)
+      response = @request_client.conn.post do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, node: node, inputs: inputs }.compact
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/execute-node"
+end
+      Vellum::WorkflowSandboxExecuteNodeResponse.from_json(json_object: response.body)
     end
 # Checks if a workflow execution is currently executing (not fulfilled, not
 #  rejected, and has no end time).
@@ -312,6 +348,42 @@ end
   req.url "#{@request_client.get_url(environment: Predict, request_options: request_options)}/v1/workflows/#{span_id}/state"
 end
         Vellum::WorkflowResolvedState.from_json(json_object: response.body)
+      end
+    end
+    # @param files [Hash{String => String}] 
+    # @param node [String] 
+    # @param inputs [Hash{String => Object}] 
+    # @param request_options [Vellum::RequestOptions] 
+    # @return [Vellum::NodeExecutionFulfilledEvent, Vellum::NodeExecutionRejectedEvent]
+    # @example
+#  api = Vellum::Client.new(
+#    base_url: "https://api.example.com",
+#    environment: Vellum::Environment::PRODUCTION,
+#    api_key: "YOUR_API_KEY"
+#  )
+#  api.workflows.execute_node(files: { "files": "files" }, node: "x")
+    def execute_node(files:, node:, inputs: nil, request_options: nil)
+      Async do
+        response = @request_client.conn.post do | req |
+  unless request_options&.timeout_in_seconds.nil?
+    req.options.timeout = request_options.timeout_in_seconds
+  end
+  unless request_options&.api_key.nil?
+    req.headers["X-API-KEY"] = request_options.api_key
+  end
+  unless request_options&.api_version.nil?
+    req.headers["X-API-Version"] = request_options.api_version
+  else
+    req.headers["X-API-Version"] = "2025-07-30"
+  end
+  req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
+  unless request_options.nil? || request_options&.additional_query_parameters.nil?
+    req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+  end
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, node: node, inputs: inputs }.compact
+  req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/execute-node"
+end
+        Vellum::WorkflowSandboxExecuteNodeResponse.from_json(json_object: response.body)
       end
     end
 # Checks if a workflow execution is currently executing (not fulfilled, not
