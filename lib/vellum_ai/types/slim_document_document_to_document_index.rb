@@ -23,6 +23,8 @@ module Vellum
 #  * `INDEXED` - Indexed
 #  * `FAILED` - Failed
     attr_reader :indexing_state
+  # @return [String] 
+    attr_reader :processing_state
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -43,15 +45,17 @@ module Vellum
 #  * `INDEXING` - Indexing
 #  * `INDEXED` - Indexed
 #  * `FAILED` - Failed
+    # @param processing_state [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::SlimDocumentDocumentToDocumentIndex]
-    def initialize(id:, environment_document_index_id:, document_index_id: OMIT, indexing_state: OMIT, additional_properties: nil)
+    def initialize(id:, environment_document_index_id:, document_index_id: OMIT, indexing_state: OMIT, processing_state: OMIT, additional_properties: nil)
       @id = id
       @environment_document_index_id = environment_document_index_id
       @document_index_id = document_index_id if document_index_id != OMIT
       @indexing_state = indexing_state if indexing_state != OMIT
+      @processing_state = processing_state if processing_state != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state }.reject do | _k, v |
+      @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state, "processing_state": processing_state }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -66,11 +70,13 @@ end
       environment_document_index_id = parsed_json["environment_document_index_id"]
       document_index_id = parsed_json["document_index_id"]
       indexing_state = parsed_json["indexing_state"]
+      processing_state = parsed_json["processing_state"]
       new(
         id: id,
         environment_document_index_id: environment_document_index_id,
         document_index_id: document_index_id,
         indexing_state: indexing_state,
+        processing_state: processing_state,
         additional_properties: struct
       )
     end
@@ -91,6 +97,7 @@ end
       obj.environment_document_index_id.is_a?(String) != false || raise("Passed value for field obj.environment_document_index_id is not the expected type, validation failed.")
       obj.document_index_id&.is_a?(String) != false || raise("Passed value for field obj.document_index_id is not the expected type, validation failed.")
       obj.indexing_state&.is_a?(Vellum::IndexingStateEnum) != false || raise("Passed value for field obj.indexing_state is not the expected type, validation failed.")
+      obj.processing_state&.is_a?(String) != false || raise("Passed value for field obj.processing_state is not the expected type, validation failed.")
     end
   end
 end
