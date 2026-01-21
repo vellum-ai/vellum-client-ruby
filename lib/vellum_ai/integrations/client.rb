@@ -69,6 +69,10 @@ end
     #   * :provider (String) 
     #   * :arguments (Hash{String => Object}) 
     #   * :toolkit_version (String) 
+    #   * :integration_name (String) 
+    #   * :integration (String) 
+    #   * :tool_name (String) 
+    #   * :tool (String) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_RESPONSE]
     # @example
@@ -240,6 +244,10 @@ end
     #   * :provider (String) 
     #   * :arguments (Hash{String => Object}) 
     #   * :toolkit_version (String) 
+    #   * :integration_name (String) 
+    #   * :integration (String) 
+    #   * :tool_name (String) 
+    #   * :tool (String) 
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::COMPONENTS_SCHEMAS_COMPOSIO_EXECUTE_TOOL_RESPONSE]
     # @example

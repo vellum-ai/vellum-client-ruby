@@ -25,6 +25,8 @@ module Vellum
     attr_reader :indexing_state
   # @return [String] 
     attr_reader :extracted_text_file_url
+  # @return [String] 
+    attr_reader :processing_state
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -46,16 +48,18 @@ module Vellum
 #  * `INDEXED` - Indexed
 #  * `FAILED` - Failed
     # @param extracted_text_file_url [String] 
+    # @param processing_state [String] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::DocumentDocumentToDocumentIndex]
-    def initialize(id:, environment_document_index_id:, document_index_id: OMIT, indexing_state: OMIT, extracted_text_file_url: OMIT, additional_properties: nil)
+    def initialize(id:, environment_document_index_id:, document_index_id: OMIT, indexing_state: OMIT, extracted_text_file_url: OMIT, processing_state: OMIT, additional_properties: nil)
       @id = id
       @environment_document_index_id = environment_document_index_id
       @document_index_id = document_index_id if document_index_id != OMIT
       @indexing_state = indexing_state if indexing_state != OMIT
       @extracted_text_file_url = extracted_text_file_url if extracted_text_file_url != OMIT
+      @processing_state = processing_state if processing_state != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state, "extracted_text_file_url": extracted_text_file_url }.reject do | _k, v |
+      @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state, "extracted_text_file_url": extracted_text_file_url, "processing_state": processing_state }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -71,12 +75,14 @@ end
       document_index_id = parsed_json["document_index_id"]
       indexing_state = parsed_json["indexing_state"]
       extracted_text_file_url = parsed_json["extracted_text_file_url"]
+      processing_state = parsed_json["processing_state"]
       new(
         id: id,
         environment_document_index_id: environment_document_index_id,
         document_index_id: document_index_id,
         indexing_state: indexing_state,
         extracted_text_file_url: extracted_text_file_url,
+        processing_state: processing_state,
         additional_properties: struct
       )
     end
@@ -98,6 +104,7 @@ end
       obj.document_index_id&.is_a?(String) != false || raise("Passed value for field obj.document_index_id is not the expected type, validation failed.")
       obj.indexing_state&.is_a?(Vellum::IndexingStateEnum) != false || raise("Passed value for field obj.indexing_state is not the expected type, validation failed.")
       obj.extracted_text_file_url&.is_a?(String) != false || raise("Passed value for field obj.extracted_text_file_url is not the expected type, validation failed.")
+      obj.processing_state&.is_a?(String) != false || raise("Passed value for field obj.processing_state is not the expected type, validation failed.")
     end
   end
 end
