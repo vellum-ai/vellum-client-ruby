@@ -8,6 +8,7 @@ require_relative "../types/dataset_row_push_request"
 require_relative "../types/workflow_push_response"
 require_relative "../../core/file_utilities"
 require_relative "../types/runner_config_request"
+require_relative "../types/type_checker_enum"
 require "json"
 require "async"
 require "async"
@@ -53,8 +54,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -88,8 +87,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -124,8 +121,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -160,8 +155,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -204,8 +197,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -229,6 +220,11 @@ end
     #   * :sdk_version (String) 
     #   * :is_deployment_inlining_enabled (Boolean) 
     #   * :server_version (String) 
+    # @param type_checker [Vellum::TypeCheckerEnum] Optional type checker to run during serialization. Supported values: mypy,
+#  zuban, default.
+#  * `mypy` - Mypy
+#  * `zuban` - Zuban
+#  * `default` - Default
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -238,7 +234,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
-    def serialize_workflow_files(files:, module_: nil, runner_config: nil, request_options: nil)
+    def serialize_workflow_files(files:, module_: nil, runner_config: nil, type_checker: nil, request_options: nil)
       response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -248,14 +244,12 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_, runner_config: runner_config }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_, runner_config: runner_config, type_checker: type_checker }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
 end
       parsed_json = JSON.parse(response.body)
@@ -298,8 +292,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.options.on_data = on_data
@@ -335,8 +327,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -373,8 +363,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -411,8 +399,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -457,8 +443,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -483,6 +467,11 @@ end
     #   * :sdk_version (String) 
     #   * :is_deployment_inlining_enabled (Boolean) 
     #   * :server_version (String) 
+    # @param type_checker [Vellum::TypeCheckerEnum] Optional type checker to run during serialization. Supported values: mypy,
+#  zuban, default.
+#  * `mypy` - Mypy
+#  * `zuban` - Zuban
+#  * `default` - Default
     # @param request_options [Vellum::RequestOptions] 
     # @return [Hash{String => Object}]
     # @example
@@ -492,7 +481,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflows.serialize_workflow_files(files: { "files": {"key":"value"} })
-    def serialize_workflow_files(files:, module_: nil, runner_config: nil, request_options: nil)
+    def serialize_workflow_files(files:, module_: nil, runner_config: nil, type_checker: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -503,14 +492,12 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
     req.params = { **(request_options&.additional_query_parameters || {}) }.compact
   end
-  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_, runner_config: runner_config }.compact
+  req.body = { **(request_options&.additional_body_parameters || {}), files: files, module: module_, runner_config: runner_config, type_checker: type_checker }.compact
   req.url "#{@request_client.get_url(environment: Default, request_options: request_options)}/v1/workflows/serialize"
 end
         parsed_json = JSON.parse(response.body)
