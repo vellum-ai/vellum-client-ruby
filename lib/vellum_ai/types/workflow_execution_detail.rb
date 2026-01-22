@@ -51,10 +51,10 @@ module Vellum
     # @param state [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::WorkflowExecutionDetail]
-    def initialize(span_id:, parent_context: OMIT, start:, end_: OMIT, inputs:, outputs:, error: OMIT, usage_results: OMIT, spans:, state: OMIT, additional_properties: nil)
+    def initialize(span_id:, parent_context: OMIT, start: OMIT, end_: OMIT, inputs:, outputs:, error: OMIT, usage_results: OMIT, spans:, state: OMIT, additional_properties: nil)
       @span_id = span_id
       @parent_context = parent_context if parent_context != OMIT
-      @start = start
+      @start = start if start != OMIT
       @end_ = end_ if end_ != OMIT
       @inputs = inputs
       @outputs = outputs
@@ -143,7 +143,7 @@ end
     def self.validate_raw(obj:)
       obj.span_id.is_a?(String) != false || raise("Passed value for field obj.span_id is not the expected type, validation failed.")
       obj.parent_context.nil? || Vellum::ParentContext.validate_raw(obj: obj.parent_context)
-      obj.start.is_a?(DateTime) != false || raise("Passed value for field obj.start is not the expected type, validation failed.")
+      obj.start&.is_a?(DateTime) != false || raise("Passed value for field obj.start is not the expected type, validation failed.")
       obj.end_&.is_a?(DateTime) != false || raise("Passed value for field obj.end_ is not the expected type, validation failed.")
       obj.inputs.is_a?(Array) != false || raise("Passed value for field obj.inputs is not the expected type, validation failed.")
       obj.outputs.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
