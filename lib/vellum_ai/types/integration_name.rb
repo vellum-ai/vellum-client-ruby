@@ -29,6 +29,7 @@ module Vellum
 #  * `GMAIL` - Gmail
 #  * `GOOGLE_ADS` - Google Ads
 #  * `GOOGLE_ANALYTICS` - Google Analytics
+#  * `GOOGLE_BIGQUERY` - Google BigQuery
 #  * `GOOGLE_DOCS` - Google Docs
 #  * `GOOGLE_PHOTOS` - Google Photos
 #  * `GOOGLE_SEARCH_CONSOLE` - Google Search Console
@@ -131,6 +132,7 @@ module Vellum
     GMAIL = "GMAIL"
     GOOGLE_ADS = "GOOGLE_ADS"
     GOOGLE_ANALYTICS = "GOOGLE_ANALYTICS"
+    GOOGLE_BIGQUERY = "GOOGLE_BIGQUERY"
     GOOGLE_DOCS = "GOOGLE_DOCS"
     GOOGLE_PHOTOS = "GOOGLE_PHOTOS"
     GOOGLE_SEARCH_CONSOLE = "GOOGLE_SEARCH_CONSOLE"
