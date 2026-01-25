@@ -14,6 +14,8 @@ module Vellum
     attr_reader :content
   # @return [String] An optional identifier representing who or what generated this message.
     attr_reader :source
+  # @return [Hash{String => Object}] 
+    attr_reader :metadata
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -26,15 +28,17 @@ module Vellum
     # @param role [Vellum::ChatMessageRole] 
     # @param content [Vellum::ChatMessageContent] 
     # @param source [String] An optional identifier representing who or what generated this message.
+    # @param metadata [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::ChatMessage]
-    def initialize(text: OMIT, role:, content: OMIT, source: OMIT, additional_properties: nil)
+    def initialize(text: OMIT, role:, content: OMIT, source: OMIT, metadata: OMIT, additional_properties: nil)
       @text = text if text != OMIT
       @role = role
       @content = content if content != OMIT
       @source = source if source != OMIT
+      @metadata = metadata if metadata != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "text": text, "role": role, "content": content, "source": source }.reject do | _k, v |
+      @_field_set = { "text": text, "role": role, "content": content, "source": source, "metadata": metadata }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -54,11 +58,13 @@ end
         content = nil
       end
       source = parsed_json["source"]
+      metadata = parsed_json["metadata"]
       new(
         text: text,
         role: role,
         content: content,
         source: source,
+        metadata: metadata,
         additional_properties: struct
       )
     end
@@ -79,6 +85,7 @@ end
       obj.role.is_a?(Vellum::ChatMessageRole) != false || raise("Passed value for field obj.role is not the expected type, validation failed.")
       obj.content.nil? || Vellum::ChatMessageContent.validate_raw(obj: obj.content)
       obj.source&.is_a?(String) != false || raise("Passed value for field obj.source is not the expected type, validation failed.")
+      obj.metadata&.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
     end
   end
 end
