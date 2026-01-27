@@ -84,6 +84,7 @@ module Vellum
 #  * `SUPABASE` - Supabase
 #  * `TAVILY` - Tavily
 #  * `TELEGRAM` - Telegram
+#  * `TIKTOK` - TikTok
 #  * `TODOIST` - Todoist
 #  * `WEBFLOW` - Webflow
 #  * `YOUSEARCH` - You Search
@@ -187,6 +188,7 @@ module Vellum
     SUPABASE = "SUPABASE"
     TAVILY = "TAVILY"
     TELEGRAM = "TELEGRAM"
+    TIKTOK = "TIKTOK"
     TODOIST = "TODOIST"
     WEBFLOW = "WEBFLOW"
     YOUSEARCH = "YOUSEARCH"

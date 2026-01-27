@@ -36,6 +36,7 @@ module Vellum
 #  specified
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedDocumentIndexReadList]
     # @example
@@ -55,8 +56,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "search": search, "status": status }.compact
@@ -74,6 +73,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param indexing_config [Hash] Request of type Vellum::DocumentIndexIndexingConfigRequest, as a Hash
     #   * :vectorizer (Hash)
     #   * :chunking (Hash)
@@ -102,8 +102,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -137,8 +135,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "mask_indexing_config": mask_indexing_config }.compact
@@ -156,6 +152,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -175,8 +172,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -209,8 +204,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -229,6 +222,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -248,8 +242,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -285,8 +277,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -323,8 +313,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -357,6 +345,7 @@ end
 #  specified
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedDocumentIndexReadList]
     # @example
@@ -377,8 +366,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "search": search, "status": status }.compact
@@ -397,6 +384,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param indexing_config [Hash] Request of type Vellum::DocumentIndexIndexingConfigRequest, as a Hash
     #   * :vectorizer (Hash)
     #   * :chunking (Hash)
@@ -426,8 +414,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -463,8 +449,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "mask_indexing_config": mask_indexing_config }.compact
@@ -483,6 +467,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -503,8 +488,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -539,8 +522,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -560,6 +541,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -580,8 +562,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -619,8 +599,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -659,8 +637,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
