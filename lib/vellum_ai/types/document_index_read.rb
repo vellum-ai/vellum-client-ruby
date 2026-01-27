@@ -18,6 +18,7 @@ module Vellum
   # @return [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     attr_reader :status
   # @return [Vellum::DocumentIndexIndexingConfig] 
     attr_reader :indexing_config
@@ -36,6 +37,7 @@ module Vellum
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param indexing_config [Vellum::DocumentIndexIndexingConfig] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::DocumentIndexRead]

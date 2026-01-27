@@ -23,6 +23,7 @@ module Vellum
 #  status specified.
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
@@ -54,8 +55,6 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "entity_status": entity_status, "limit": limit, "offset": offset, "ordering": ordering, "parent_folder_id": parent_folder_id }.compact
@@ -97,8 +96,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -125,6 +122,7 @@ end
 #  status specified.
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
@@ -157,8 +155,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   req.params = { **(request_options&.additional_query_parameters || {}), "entity_status": entity_status, "limit": limit, "offset": offset, "ordering": ordering, "parent_folder_id": parent_folder_id }.compact
@@ -202,8 +198,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
