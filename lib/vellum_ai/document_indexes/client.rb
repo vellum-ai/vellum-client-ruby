@@ -36,6 +36,7 @@ module Vellum
 #  specified
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedDocumentIndexReadList]
     # @example
@@ -74,6 +75,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param indexing_config [Hash] Request of type Vellum::DocumentIndexIndexingConfigRequest, as a Hash
     #   * :vectorizer (Hash)
     #   * :chunking (Hash)
@@ -156,6 +158,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -229,6 +232,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -357,6 +361,7 @@ end
 #  specified
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedDocumentIndexReadList]
     # @example
@@ -397,6 +402,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param indexing_config [Hash] Request of type Vellum::DocumentIndexIndexingConfigRequest, as a Hash
     #   * :vectorizer (Hash)
     #   * :chunking (Hash)
@@ -483,6 +489,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
@@ -560,6 +567,7 @@ end
     # @param status [Vellum::EntityStatus] The current status of the document index
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::DocumentIndexRead]
     # @example
