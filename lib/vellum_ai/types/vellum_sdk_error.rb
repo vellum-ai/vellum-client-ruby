@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative "vellum_sdk_error_raw_data"
 require_relative "vellum_sdk_error_code_enum"
 require "ostruct"
 require "json"
@@ -7,10 +8,10 @@ module Vellum
   class VellumSdkError
   # @return [String] 
     attr_reader :message
+  # @return [Vellum::VellumSdkErrorRawData] 
+    attr_reader :raw_data
   # @return [Vellum::VellumSdkErrorCodeEnum] 
     attr_reader :code
-  # @return [Hash{String => Object}] 
-    attr_reader :raw_data
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -20,16 +21,16 @@ module Vellum
     OMIT = Object.new
 
     # @param message [String] 
+    # @param raw_data [Vellum::VellumSdkErrorRawData] 
     # @param code [Vellum::VellumSdkErrorCodeEnum] 
-    # @param raw_data [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::VellumSdkError]
-    def initialize(message:, code:, raw_data: OMIT, additional_properties: nil)
+    def initialize(message:, raw_data: OMIT, code:, additional_properties: nil)
       @message = message
-      @code = code
       @raw_data = raw_data if raw_data != OMIT
+      @code = code
       @additional_properties = additional_properties
-      @_field_set = { "message": message, "code": code, "raw_data": raw_data }.reject do | _k, v |
+      @_field_set = { "message": message, "raw_data": raw_data, "code": code }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -41,12 +42,17 @@ end
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       message = parsed_json["message"]
+      unless parsed_json["raw_data"].nil?
+        raw_data = parsed_json["raw_data"].to_json
+        raw_data = Vellum::VellumSdkErrorRawData.from_json(json_object: raw_data)
+      else
+        raw_data = nil
+      end
       code = parsed_json["code"]
-      raw_data = parsed_json["raw_data"]
       new(
         message: message,
-        code: code,
         raw_data: raw_data,
+        code: code,
         additional_properties: struct
       )
     end
@@ -64,8 +70,8 @@ end
     # @return [Void]
     def self.validate_raw(obj:)
       obj.message.is_a?(String) != false || raise("Passed value for field obj.message is not the expected type, validation failed.")
+      obj.raw_data.nil? || Vellum::VellumSdkErrorRawData.validate_raw(obj: obj.raw_data)
       obj.code.is_a?(Vellum::VellumSdkErrorCodeEnum) != false || raise("Passed value for field obj.code is not the expected type, validation failed.")
-      obj.raw_data&.is_a?(Hash) != false || raise("Passed value for field obj.raw_data is not the expected type, validation failed.")
     end
   end
 end
