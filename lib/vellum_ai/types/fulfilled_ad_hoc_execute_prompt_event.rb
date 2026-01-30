@@ -16,6 +16,8 @@ module Vellum
     attr_reader :execution_id
   # @return [Vellum::AdHocFulfilledPromptExecutionMeta] 
     attr_reader :meta
+  # @return [Hash{String => Object}] 
+    attr_reader :chat_message_metadata
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -28,15 +30,17 @@ module Vellum
     # @param outputs [Array<Vellum::PromptOutput>] 
     # @param execution_id [String] 
     # @param meta [Vellum::AdHocFulfilledPromptExecutionMeta] 
+    # @param chat_message_metadata [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::FulfilledAdHocExecutePromptEvent]
-    def initialize(state:, outputs:, execution_id:, meta: OMIT, additional_properties: nil)
+    def initialize(state:, outputs:, execution_id:, meta: OMIT, chat_message_metadata: OMIT, additional_properties: nil)
       @state = state
       @outputs = outputs
       @execution_id = execution_id
       @meta = meta if meta != OMIT
+      @chat_message_metadata = chat_message_metadata if chat_message_metadata != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "state": state, "outputs": outputs, "execution_id": execution_id, "meta": meta }.reject do | _k, v |
+      @_field_set = { "state": state, "outputs": outputs, "execution_id": execution_id, "meta": meta, "chat_message_metadata": chat_message_metadata }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -59,11 +63,13 @@ end
       else
         meta = nil
       end
+      chat_message_metadata = parsed_json["chat_message_metadata"]
       new(
         state: state,
         outputs: outputs,
         execution_id: execution_id,
         meta: meta,
+        chat_message_metadata: chat_message_metadata,
         additional_properties: struct
       )
     end
@@ -84,6 +90,7 @@ end
       obj.outputs.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
       obj.meta.nil? || Vellum::AdHocFulfilledPromptExecutionMeta.validate_raw(obj: obj.meta)
+      obj.chat_message_metadata&.is_a?(Hash) != false || raise("Passed value for field obj.chat_message_metadata is not the expected type, validation failed.")
     end
   end
 end

@@ -19,6 +19,8 @@ module Vellum
     attr_reader :state
   # @return [Array<Vellum::PromptOutput>] 
     attr_reader :outputs
+  # @return [Hash{String => Object}] 
+    attr_reader :chat_message_metadata
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -33,16 +35,18 @@ module Vellum
     # @param execution_id [String] The ID of the execution.
     # @param state [String] 
     # @param outputs [Array<Vellum::PromptOutput>] 
+    # @param chat_message_metadata [Hash{String => Object}] 
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::FulfilledExecutePromptResponse]
-    def initialize(meta: OMIT, raw: OMIT, execution_id:, state:, outputs:, additional_properties: nil)
+    def initialize(meta: OMIT, raw: OMIT, execution_id:, state:, outputs:, chat_message_metadata: OMIT, additional_properties: nil)
       @meta = meta if meta != OMIT
       @raw = raw if raw != OMIT
       @execution_id = execution_id
       @state = state
       @outputs = outputs
+      @chat_message_metadata = chat_message_metadata if chat_message_metadata != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "meta": meta, "raw": raw, "execution_id": execution_id, "state": state, "outputs": outputs }.reject do | _k, v |
+      @_field_set = { "meta": meta, "raw": raw, "execution_id": execution_id, "state": state, "outputs": outputs, "chat_message_metadata": chat_message_metadata }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -66,12 +70,14 @@ end
   item = item.to_json
   Vellum::PromptOutput.from_json(json_object: item)
 end
+      chat_message_metadata = parsed_json["chat_message_metadata"]
       new(
         meta: meta,
         raw: raw,
         execution_id: execution_id,
         state: state,
         outputs: outputs,
+        chat_message_metadata: chat_message_metadata,
         additional_properties: struct
       )
     end
@@ -93,6 +99,7 @@ end
       obj.execution_id.is_a?(String) != false || raise("Passed value for field obj.execution_id is not the expected type, validation failed.")
       obj.state.is_a?(String) != false || raise("Passed value for field obj.state is not the expected type, validation failed.")
       obj.outputs.is_a?(Array) != false || raise("Passed value for field obj.outputs is not the expected type, validation failed.")
+      obj.chat_message_metadata&.is_a?(Hash) != false || raise("Passed value for field obj.chat_message_metadata is not the expected type, validation failed.")
     end
   end
 end
