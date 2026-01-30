@@ -20,6 +20,7 @@ module Vellum
   # @return [Vellum::EntityStatus] The current status of the workflow deployment
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     attr_reader :status
   # @return [Vellum::EnvironmentEnum] Deprecated. The value returned will always be 'PRODUCTION'.
     attr_reader :environment
@@ -54,6 +55,7 @@ module Vellum
     # @param status [Vellum::EntityStatus] The current status of the workflow deployment
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param environment [Vellum::EnvironmentEnum] Deprecated. The value returned will always be 'PRODUCTION'.
     # @param created [DateTime] 
     # @param last_deployed_on [DateTime] 
