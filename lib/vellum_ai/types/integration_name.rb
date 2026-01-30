@@ -25,6 +25,7 @@ module Vellum
 #  * `GITHUB` - Github
 #  * `GOOGLE_SHEETS` - Google Sheets
 #  * `GOOGLE_CALENDAR` - Google Calendar
+#  * `GOOGLE_CLASSROOM` - Google Classroom
 #  * `GOOGLE_DRIVE` - Google Drive
 #  * `GMAIL` - Gmail
 #  * `GOOGLE_ADS` - Google Ads
@@ -59,6 +60,7 @@ module Vellum
 #  * `FIGMA` - Figma
 #  * `FIREFLIES` - Fireflies
 #  * `GOOGLE_MAPS` - Google Maps
+#  * `GOOGLEMEET` - Google Meet
 #  * `HEYGEN` - HeyGen
 #  * `JIRA` - Jira
 #  * `JUNGLESCOUT` - Jungle Scout
@@ -69,6 +71,7 @@ module Vellum
 #  * `PERPLEXITY` - Perplexity
 #  * `POSTHOG` - PostHog
 #  * `PRODUCTBOARD` - Productboard
+#  * `QUICKBOOKS` - QuickBooks
 #  * `REDDIT` - Reddit
 #  * `SALESFORCE` - Salesforce
 #  * `SEMRUSH` - Semrush
@@ -84,6 +87,7 @@ module Vellum
 #  * `SUPABASE` - Supabase
 #  * `TAVILY` - Tavily
 #  * `TELEGRAM` - Telegram
+#  * `TIKTOK` - TikTok
 #  * `TODOIST` - Todoist
 #  * `WEBFLOW` - Webflow
 #  * `YOUSEARCH` - You Search
@@ -97,11 +101,13 @@ module Vellum
 #  * `DISCORD` - Discord
 #  * `DOCUSIGN` - DocuSign
 #  * `TRELLO` - Trello
+#  * `TWITTER` - Twitter
 #  * `HEYREACH` - HeyReach
 #  * `ACTIVE_CAMPAIGN` - Active Campaign
 #  * `CUSTOMER_IO` - Customer.io
 #  * `SEGMENT` - Segment
 #  * `WHATSAPP` - WhatsApp
+#  * `YOUTUBE` - YouTube
   class IntegrationName
 
     SLACK = "SLACK"
@@ -128,6 +134,7 @@ module Vellum
     GITHUB = "GITHUB"
     GOOGLE_SHEETS = "GOOGLE_SHEETS"
     GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
+    GOOGLE_CLASSROOM = "GOOGLE_CLASSROOM"
     GOOGLE_DRIVE = "GOOGLE_DRIVE"
     GMAIL = "GMAIL"
     GOOGLE_ADS = "GOOGLE_ADS"
@@ -162,6 +169,7 @@ module Vellum
     FIGMA = "FIGMA"
     FIREFLIES = "FIREFLIES"
     GOOGLE_MAPS = "GOOGLE_MAPS"
+    GOOGLEMEET = "GOOGLEMEET"
     HEYGEN = "HEYGEN"
     JIRA = "JIRA"
     JUNGLESCOUT = "JUNGLESCOUT"
@@ -172,6 +180,7 @@ module Vellum
     PERPLEXITY = "PERPLEXITY"
     POSTHOG = "POSTHOG"
     PRODUCTBOARD = "PRODUCTBOARD"
+    QUICKBOOKS = "QUICKBOOKS"
     REDDIT = "REDDIT"
     SALESFORCE = "SALESFORCE"
     SEMRUSH = "SEMRUSH"
@@ -187,6 +196,7 @@ module Vellum
     SUPABASE = "SUPABASE"
     TAVILY = "TAVILY"
     TELEGRAM = "TELEGRAM"
+    TIKTOK = "TIKTOK"
     TODOIST = "TODOIST"
     WEBFLOW = "WEBFLOW"
     YOUSEARCH = "YOUSEARCH"
@@ -200,11 +210,13 @@ module Vellum
     DISCORD = "DISCORD"
     DOCUSIGN = "DOCUSIGN"
     TRELLO = "TRELLO"
+    TWITTER = "TWITTER"
     HEYREACH = "HEYREACH"
     ACTIVE_CAMPAIGN = "ACTIVE_CAMPAIGN"
     CUSTOMER_IO = "CUSTOMER_IO"
     SEGMENT = "SEGMENT"
     WHATSAPP = "WHATSAPP"
+    YOUTUBE = "YOUTUBE"
 
   end
 end

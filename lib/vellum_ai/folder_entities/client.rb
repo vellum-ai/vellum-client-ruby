@@ -23,6 +23,7 @@ module Vellum
 #  status specified.
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
@@ -125,6 +126,7 @@ end
 #  status specified.
 #  * `ACTIVE` - Active
 #  * `ARCHIVED` - Archived
+#  * `PENDING_DELETION` - Pending Deletion
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.

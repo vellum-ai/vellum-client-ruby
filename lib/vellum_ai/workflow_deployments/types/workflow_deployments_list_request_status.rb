@@ -6,6 +6,7 @@ module Vellum
 
       ACTIVE = "ACTIVE"
       ARCHIVED = "ARCHIVED"
+      PENDING_DELETION = "PENDING_DELETION"
 
     end
   end

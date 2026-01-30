@@ -36,9 +36,12 @@ module Vellum
     end
 # Used to list all Workflow Deployments.
     #
+    # @param has_story_config [String] has_story_config
+    # @param is_public [String] is_public
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
+    # @param owned_by [String] owned_by
     # @param status [Vellum::WorkflowDeployments::WorkflowDeploymentsListRequestStatus] status
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedSlimWorkflowDeploymentList]
@@ -49,7 +52,7 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflow_deployments.list
-    def list(limit: nil, offset: nil, ordering: nil, status: nil, request_options: nil)
+    def list(has_story_config: nil, is_public: nil, limit: nil, offset: nil, ordering: nil, owned_by: nil, status: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -63,7 +66,7 @@ module Vellum
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "status": status }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "has_story_config": has_story_config, "is_public": is_public, "limit": limit, "offset": offset, "ordering": ordering, "owned_by": owned_by, "status": status }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -425,9 +428,12 @@ end
     end
 # Used to list all Workflow Deployments.
     #
+    # @param has_story_config [String] has_story_config
+    # @param is_public [String] is_public
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
     # @param ordering [String] Which field to use when ordering the results.
+    # @param owned_by [String] owned_by
     # @param status [Vellum::WorkflowDeployments::WorkflowDeploymentsListRequestStatus] status
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PaginatedSlimWorkflowDeploymentList]
@@ -438,7 +444,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.workflow_deployments.list
-    def list(limit: nil, offset: nil, ordering: nil, status: nil, request_options: nil)
+    def list(has_story_config: nil, is_public: nil, limit: nil, offset: nil, ordering: nil, owned_by: nil, status: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -453,7 +459,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "limit": limit, "offset": offset, "ordering": ordering, "status": status }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "has_story_config": has_story_config, "is_public": is_public, "limit": limit, "offset": offset, "ordering": ordering, "owned_by": owned_by, "status": status }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
