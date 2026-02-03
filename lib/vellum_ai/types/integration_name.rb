@@ -22,6 +22,7 @@ module Vellum
 #  * `MONDAY` - Monday
 #  * `NEON` - Neon
 #  * `OUTLOOK` - Outlook
+#  * `MICROSOFT_TEAMS` - Microsoft Teams
 #  * `GITHUB` - Github
 #  * `GOOGLE_SHEETS` - Google Sheets
 #  * `GOOGLE_CALENDAR` - Google Calendar
@@ -131,6 +132,7 @@ module Vellum
     MONDAY = "MONDAY"
     NEON = "NEON"
     OUTLOOK = "OUTLOOK"
+    MICROSOFT_TEAMS = "MICROSOFT_TEAMS"
     GITHUB = "GITHUB"
     GOOGLE_SHEETS = "GOOGLE_SHEETS"
     GOOGLE_CALENDAR = "GOOGLE_CALENDAR"
