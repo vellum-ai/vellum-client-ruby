@@ -8,6 +8,8 @@ module Vellum
   class PromptDeploymentReleasePromptVersion
   # @return [String] 
     attr_reader :id
+  # @return [String] 
+    attr_reader :ml_model_to_workspace_id
   # @return [Vellum::COMPONENTS_SCHEMAS_PROMPT_VERSION_BUILD_CONFIG_SANDBOX] Configuration used to build this prompt version.
     attr_reader :build_config
   # @return [OpenStruct] Additional properties unmapped to the current class definition
@@ -19,14 +21,16 @@ module Vellum
     OMIT = Object.new
 
     # @param id [String] 
+    # @param ml_model_to_workspace_id [String] 
     # @param build_config [Vellum::COMPONENTS_SCHEMAS_PROMPT_VERSION_BUILD_CONFIG_SANDBOX] Configuration used to build this prompt version.
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::PromptDeploymentReleasePromptVersion]
-    def initialize(id:, build_config:, additional_properties: nil)
+    def initialize(id:, ml_model_to_workspace_id:, build_config:, additional_properties: nil)
       @id = id
+      @ml_model_to_workspace_id = ml_model_to_workspace_id
       @build_config = build_config
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "build_config": build_config }
+      @_field_set = { "id": id, "ml_model_to_workspace_id": ml_model_to_workspace_id, "build_config": build_config }
     end
 # Deserialize a JSON object to an instance of PromptDeploymentReleasePromptVersion
     #
@@ -36,6 +40,7 @@ module Vellum
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
       id = parsed_json["id"]
+      ml_model_to_workspace_id = parsed_json["ml_model_to_workspace_id"]
       unless parsed_json["build_config"].nil?
         build_config = parsed_json["build_config"].to_json
         build_config = Vellum::PromptVersionBuildConfigSandbox.from_json(json_object: build_config)
@@ -44,6 +49,7 @@ module Vellum
       end
       new(
         id: id,
+        ml_model_to_workspace_id: ml_model_to_workspace_id,
         build_config: build_config,
         additional_properties: struct
       )
@@ -62,6 +68,7 @@ module Vellum
     # @return [Void]
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+      obj.ml_model_to_workspace_id.is_a?(String) != false || raise("Passed value for field obj.ml_model_to_workspace_id is not the expected type, validation failed.")
       Vellum::PromptVersionBuildConfigSandbox.validate_raw(obj: obj.build_config)
     end
   end

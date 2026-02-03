@@ -40,7 +40,13 @@ module Vellum
     # @param is_public [String] is_public
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
-    # @param ordering [String] Which field to use when ordering the results.
+    # @param ordering [String] Specifies the ordering of the returned Workflow Deployments. Valid values are:
+#  - `created` - Orders by creation time in ascending order.
+#  - `-created` - Orders by creation time in descending order. (default)
+#  - `name` - Orders by name in ascending order.
+#  - `-name` - Orders by name in descending order.
+#  Compound orderings are supported by separating fields with commas, e.g.,
+#  `-created,name`.
     # @param owned_by [String] owned_by
     # @param status [Vellum::WorkflowDeployments::WorkflowDeploymentsListRequestStatus] status
     # @param request_options [Vellum::RequestOptions] 
@@ -432,7 +438,13 @@ end
     # @param is_public [String] is_public
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
-    # @param ordering [String] Which field to use when ordering the results.
+    # @param ordering [String] Specifies the ordering of the returned Workflow Deployments. Valid values are:
+#  - `created` - Orders by creation time in ascending order.
+#  - `-created` - Orders by creation time in descending order. (default)
+#  - `name` - Orders by name in ascending order.
+#  - `-name` - Orders by name in descending order.
+#  Compound orderings are supported by separating fields with commas, e.g.,
+#  `-created,name`.
     # @param owned_by [String] owned_by
     # @param status [Vellum::WorkflowDeployments::WorkflowDeploymentsListRequestStatus] status
     # @param request_options [Vellum::RequestOptions] 
