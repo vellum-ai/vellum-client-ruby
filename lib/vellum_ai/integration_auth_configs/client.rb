@@ -23,6 +23,7 @@ module Vellum
 #  - 'additional_parameters' (retrieve only) fetches additional parameter
 #  requirements for the auth config.
     # @param integration_name [String] 
+    # @param integration_names [String] Multiple values may be separated by commas.
     # @param integration_provider [String] 
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
@@ -37,7 +38,7 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integration_auth_configs.list_integration_auth_configs
-    def list_integration_auth_configs(expand: nil, integration_name: nil, integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, request_options: nil)
+    def list_integration_auth_configs(expand: nil, integration_name: nil, integration_names: nil, integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -51,7 +52,7 @@ module Vellum
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "integration_name": integration_name, "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "integration_name": integration_name, "integration_names": integration_names, "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -78,6 +79,7 @@ end
 #  - 'additional_parameters' (retrieve only) fetches additional parameter
 #  requirements for the auth config.
     # @param integration_name [String] 
+    # @param integration_names [String] Multiple values may be separated by commas.
     # @param integration_provider [String] 
     # @param limit [Integer] Number of results to return per page.
     # @param offset [Integer] The initial index from which to return the results.
@@ -92,7 +94,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.integration_auth_configs.list_integration_auth_configs
-    def list_integration_auth_configs(expand: nil, integration_name: nil, integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, request_options: nil)
+    def list_integration_auth_configs(expand: nil, integration_name: nil, integration_names: nil, integration_provider: nil, limit: nil, offset: nil, ordering: nil, search: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -107,7 +109,7 @@ end
     req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "integration_name": integration_name, "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "expand": expand, "integration_name": integration_name, "integration_names": integration_names, "integration_provider": integration_provider, "limit": limit, "offset": offset, "ordering": ordering, "search": search }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
