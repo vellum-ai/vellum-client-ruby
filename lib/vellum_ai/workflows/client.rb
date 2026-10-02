@@ -29,13 +29,21 @@ module Vellum
     def initialize(request_client:)
       @request_client = request_client
     end
-    # @param id [String] The ID of the Workflow to pull from
-    # @param exclude_code [Boolean] 
-    # @param exclude_display [Boolean] 
-    # @param include_json [Boolean] 
-    # @param include_sandbox [Boolean] 
+# Used to pull the definition of a Workflow from Vellum. Returns a zip archive of
+#  the Workflow's code by default, or a flattened plain-text representation if the
+#  Accept header is set to 'text/plain'.
+    #
+    # @param id [String] The ID or name of the Workflow Deployment, or the ID of the Workflow Sandbox, to
+#  pull from.
+    # @param exclude_code [Boolean] If true, omit the Workflow's code from the response.
+    # @param exclude_display [Boolean] If true, omit UI display metadata files when pulling from a Workflow Sandbox.
+    # @param include_json [Boolean] If true, include a JSON representation of the Workflow's definition alongside
+#  its code.
+    # @param include_sandbox [Boolean] If true, include the Workflow Sandbox's scenarios as sandbox inputs when pulling
+#  from a Workflow Sandbox.
     # @param release_tag [String] Release tag to use when pulling from deployment (implies deployment-only lookup)
-    # @param strict [Boolean] 
+    # @param strict [Boolean] If true, fail on any code generation error instead of returning best-effort
+#  code.
     # @param version [String] Semantic version range to validate against the Workflow SDK version (e.g.,
 #  '>=1.0.0,<1.2.3')
     # @param request_options [Vellum::RequestOptions] 
@@ -278,13 +286,21 @@ end
     def initialize(request_client:)
       @request_client = request_client
     end
-    # @param id [String] The ID of the Workflow to pull from
-    # @param exclude_code [Boolean] 
-    # @param exclude_display [Boolean] 
-    # @param include_json [Boolean] 
-    # @param include_sandbox [Boolean] 
+# Used to pull the definition of a Workflow from Vellum. Returns a zip archive of
+#  the Workflow's code by default, or a flattened plain-text representation if the
+#  Accept header is set to 'text/plain'.
+    #
+    # @param id [String] The ID or name of the Workflow Deployment, or the ID of the Workflow Sandbox, to
+#  pull from.
+    # @param exclude_code [Boolean] If true, omit the Workflow's code from the response.
+    # @param exclude_display [Boolean] If true, omit UI display metadata files when pulling from a Workflow Sandbox.
+    # @param include_json [Boolean] If true, include a JSON representation of the Workflow's definition alongside
+#  its code.
+    # @param include_sandbox [Boolean] If true, include the Workflow Sandbox's scenarios as sandbox inputs when pulling
+#  from a Workflow Sandbox.
     # @param release_tag [String] Release tag to use when pulling from deployment (implies deployment-only lookup)
-    # @param strict [Boolean] 
+    # @param strict [Boolean] If true, fail on any code generation error instead of returning best-effort
+#  code.
     # @param version [String] Semantic version range to validate against the Workflow SDK version (e.g.,
 #  '>=1.0.0,<1.2.3')
     # @param request_options [Vellum::RequestOptions] 
