@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require_relative "indexing_state_enum"
+require_relative "processing_failure_reason_enum"
 require "ostruct"
 require "json"
 
@@ -27,6 +28,12 @@ module Vellum
     attr_reader :extracted_text_file_url
   # @return [String] 
     attr_reader :processing_state
+  # @return [Vellum::ProcessingFailureReasonEnum] An enum value representing why the document could not be processed for this
+#  index. Is null unless processing_state is FAILED.
+#  * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit
+#  * `INVALID_FILE` - Invalid File
+#  * `INVALID_CREDENTIALS` - Invalid Credentials
+    attr_reader :processing_failure_reason
   # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
   # @return [Object] 
@@ -49,17 +56,23 @@ module Vellum
 #  * `FAILED` - Failed
     # @param extracted_text_file_url [String] 
     # @param processing_state [String] 
+    # @param processing_failure_reason [Vellum::ProcessingFailureReasonEnum] An enum value representing why the document could not be processed for this
+#  index. Is null unless processing_state is FAILED.
+#  * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit
+#  * `INVALID_FILE` - Invalid File
+#  * `INVALID_CREDENTIALS` - Invalid Credentials
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Vellum::DocumentDocumentToDocumentIndex]
-    def initialize(id:, environment_document_index_id:, document_index_id: OMIT, indexing_state: OMIT, extracted_text_file_url: OMIT, processing_state: OMIT, additional_properties: nil)
+    def initialize(id:, environment_document_index_id:, document_index_id: OMIT, indexing_state: OMIT, extracted_text_file_url: OMIT, processing_state: OMIT, processing_failure_reason: OMIT, additional_properties: nil)
       @id = id
       @environment_document_index_id = environment_document_index_id
       @document_index_id = document_index_id if document_index_id != OMIT
       @indexing_state = indexing_state if indexing_state != OMIT
       @extracted_text_file_url = extracted_text_file_url if extracted_text_file_url != OMIT
       @processing_state = processing_state if processing_state != OMIT
+      @processing_failure_reason = processing_failure_reason if processing_failure_reason != OMIT
       @additional_properties = additional_properties
-      @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state, "extracted_text_file_url": extracted_text_file_url, "processing_state": processing_state }.reject do | _k, v |
+      @_field_set = { "id": id, "environment_document_index_id": environment_document_index_id, "document_index_id": document_index_id, "indexing_state": indexing_state, "extracted_text_file_url": extracted_text_file_url, "processing_state": processing_state, "processing_failure_reason": processing_failure_reason }.reject do | _k, v |
   v == OMIT
 end
     end
@@ -76,6 +89,7 @@ end
       indexing_state = parsed_json["indexing_state"]
       extracted_text_file_url = parsed_json["extracted_text_file_url"]
       processing_state = parsed_json["processing_state"]
+      processing_failure_reason = parsed_json["processing_failure_reason"]
       new(
         id: id,
         environment_document_index_id: environment_document_index_id,
@@ -83,6 +97,7 @@ end
         indexing_state: indexing_state,
         extracted_text_file_url: extracted_text_file_url,
         processing_state: processing_state,
+        processing_failure_reason: processing_failure_reason,
         additional_properties: struct
       )
     end
@@ -105,6 +120,7 @@ end
       obj.indexing_state&.is_a?(Vellum::IndexingStateEnum) != false || raise("Passed value for field obj.indexing_state is not the expected type, validation failed.")
       obj.extracted_text_file_url&.is_a?(String) != false || raise("Passed value for field obj.extracted_text_file_url is not the expected type, validation failed.")
       obj.processing_state&.is_a?(String) != false || raise("Passed value for field obj.processing_state is not the expected type, validation failed.")
+      obj.processing_failure_reason&.is_a?(Vellum::ProcessingFailureReasonEnum) != false || raise("Passed value for field obj.processing_failure_reason is not the expected type, validation failed.")
     end
   end
 end

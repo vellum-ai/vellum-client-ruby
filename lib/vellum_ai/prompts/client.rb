@@ -19,9 +19,12 @@ module Vellum
     end
 # Used to pull the definition of a Prompt from Vellum.
     #
-    # @param id [String] The ID of the Prompt to pull from. Prompt Sandbox IDs are currently supported.
+    # @param id [String] The ID of the Prompt to pull from. Prompt Deployment IDs or names, Prompt
+#  Sandbox IDs, and Prompt Version IDs are currently supported.
     # @param prompt_variant_id [String] The ID of the Prompt Variant within a Prompt Sandbox to pull. Must be included
 #  if providing the ID of a Prompt Sandbox.
+    # @param release_tag [String] The Release Tag to pull when providing a Prompt Deployment ID or name. Defaults
+#  to LATEST.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PromptExecConfig]
     # @example
@@ -31,7 +34,7 @@ module Vellum
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.prompts.pull(id: "id")
-    def pull(id:, prompt_variant_id: nil, request_options: nil)
+    def pull(id:, prompt_variant_id: nil, release_tag: nil, request_options: nil)
       response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
     req.options.timeout = request_options.timeout_in_seconds
@@ -41,11 +44,9 @@ module Vellum
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}), "Accept": "application/json" }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "prompt_variant_id": prompt_variant_id }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "prompt_variant_id": prompt_variant_id, "release_tag": release_tag }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -96,8 +97,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
@@ -121,9 +120,12 @@ end
     end
 # Used to pull the definition of a Prompt from Vellum.
     #
-    # @param id [String] The ID of the Prompt to pull from. Prompt Sandbox IDs are currently supported.
+    # @param id [String] The ID of the Prompt to pull from. Prompt Deployment IDs or names, Prompt
+#  Sandbox IDs, and Prompt Version IDs are currently supported.
     # @param prompt_variant_id [String] The ID of the Prompt Variant within a Prompt Sandbox to pull. Must be included
 #  if providing the ID of a Prompt Sandbox.
+    # @param release_tag [String] The Release Tag to pull when providing a Prompt Deployment ID or name. Defaults
+#  to LATEST.
     # @param request_options [Vellum::RequestOptions] 
     # @return [Vellum::PromptExecConfig]
     # @example
@@ -133,7 +135,7 @@ end
 #    api_key: "YOUR_API_KEY"
 #  )
 #  api.prompts.pull(id: "id")
-    def pull(id:, prompt_variant_id: nil, request_options: nil)
+    def pull(id:, prompt_variant_id: nil, release_tag: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do | req |
   unless request_options&.timeout_in_seconds.nil?
@@ -144,11 +146,9 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}), "Accept": "application/json" }.compact
-  req.params = { **(request_options&.additional_query_parameters || {}), "prompt_variant_id": prompt_variant_id }.compact
+  req.params = { **(request_options&.additional_query_parameters || {}), "prompt_variant_id": prompt_variant_id, "release_tag": release_tag }.compact
   unless request_options.nil? || request_options&.additional_body_parameters.nil?
     req.body = { **(request_options&.additional_body_parameters || {}) }.compact
   end
@@ -201,8 +201,6 @@ end
   end
   unless request_options&.api_version.nil?
     req.headers["X-API-Version"] = request_options.api_version
-  else
-    req.headers["X-API-Version"] = "2025-07-30"
   end
   req.headers = { **(req.headers || {}), **@request_client.get_headers, **(request_options&.additional_headers || {}) }.compact
   unless request_options.nil? || request_options&.additional_query_parameters.nil?
